@@ -1,6 +1,7 @@
 package com.httpfriccotech.lastchancediet.Blog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.Food.FoodHolder;
@@ -54,7 +56,7 @@ public class BlogAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View grid;
         LayoutInflater inflater = (LayoutInflater) mContext
@@ -71,6 +73,13 @@ public class BlogAdapter extends BaseAdapter {
             txtName.setText(myData.getTitle());
             textDesc.setText(myData.getContent());
             ImageView imageView = (ImageView) grid.findViewById(R.id.imgImage);
+            grid.findViewById(R.id.read_more).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, BlogByIdActivity.class));
+//                    Toast.makeText(mContext, "Go to Details : " + itemList.get(position).getBlogId(), Toast.LENGTH_SHORT).show();
+                }
+            });
             new DownLoadImageTask(imageView).execute(myData.getBlogThumbUrl());
         } else {
             grid = (View) convertView;

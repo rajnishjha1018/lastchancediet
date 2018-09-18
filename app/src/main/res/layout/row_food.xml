@@ -82,6 +82,7 @@
 
 
     <View
+        android:id="@+id/view_divider"
         android:layout_marginTop="6dp"
         android:background="@color/greyLight"
         android:layout_width="match_parent"

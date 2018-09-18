@@ -52,7 +52,7 @@ public class FoodSelectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.view.setBackgroundColor(ContextCompat.getColor(context,R.color.white));
         viewHolder.txtFoodType.setText(myData.FoodType);
         viewHolder.txtProtein.setText(myData.Protein);
-        viewHolder.txtCarbs.setText(myData.Carbs);
+        viewHolder.txtCarbs.setText(myData.Carb);
         viewHolder.txtFat.setText(myData.Fat);
         viewHolder.txtFiber.setText(myData.Fiber);
         viewHolder.textAddFood.setTag(myData.FoodType);

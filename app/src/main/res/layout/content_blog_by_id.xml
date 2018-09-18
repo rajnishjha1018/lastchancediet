@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
+        <!-- android:layout_marginTop="?attr/actionBarSize"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:layout_marginTop="60dp"
             android:background="@color/customGray"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
-            <FrameLayout
+            <ImageView
+                android:id="@+id/profileImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_gravity="center_horizontal">
-
-                <ImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/_24sdp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="15dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/profile"
-                    android:textAlignment="center" />
-            </FrameLayout>
-            </LinearLayout>
+                android:scaleType="fitXY"
+                android:src="@drawable/profile"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -56,7 +47,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_17sdp"/>
+                android:textSize="@dimen/_17sdp" />
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:id="@+id/PostAuthor"
@@ -69,8 +60,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp">
-            </com.httpfriccotech.lastchancediet.ui.DietTextView>
+                android:textSize="@dimen/_15sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:id="@+id/PostContent"
@@ -83,8 +73,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp">
-            </com.httpfriccotech.lastchancediet.ui.DietTextView>
+                android:textSize="@dimen/_12sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
 
 
         </LinearLayout>

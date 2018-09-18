@@ -13,8 +13,8 @@ import com.httpfriccotech.lastchancediet.R;
  */
 public class FoodHolder extends RecyclerView.ViewHolder {
 
-
     View view;
+    View view_divider;
     TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber;
     ImageView textAddFood;
 
@@ -23,6 +23,7 @@ public class FoodHolder extends RecyclerView.ViewHolder {
         super(itemView);
         view = itemView;
         container = itemView.findViewById(R.id.ll_container);
+        view_divider = itemView.findViewById(R.id.view_divider);
         txtFoodType= (TextView) view.findViewById(R.id.textFoodType);
         txtProtein= (TextView) view.findViewById(R.id.textProtein);
         txtCarbs= (TextView) view.findViewById(R.id.textCarbs);

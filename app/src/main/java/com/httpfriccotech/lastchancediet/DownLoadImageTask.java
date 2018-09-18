@@ -18,10 +18,10 @@ import java.net.URL;
 /**
  * Created by RAJNISH on 02/23/2017.
  */
-public class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView imageView;
 
-    public DownLoadImageTask(ImageView imageView){
+    public DownLoadImageTask(ImageView imageView) {
         this.imageView = imageView;
     }
 
@@ -29,13 +29,13 @@ public class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
         doInBackground(Params... params)
             Override this method to perform a computation on a background thread.
      */
-    protected Bitmap doInBackground(String...urls){
+    protected Bitmap doInBackground(String... urls) {
         String urlOfImage = urls[0];
-        Bitmap logo=null;
-        try{
+        Bitmap logo = null;
+        try {
             InputStream is = new URL(urlOfImage).openStream();
             logo = BitmapFactory.decodeStream(is);
-        }catch(Exception e){ // Catch the download exception
+        } catch (Exception e) { // Catch the download exception
             e.printStackTrace();
         }
         return logo;
@@ -45,14 +45,18 @@ public class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
         onPostExecute(Result result)
             Runs on the UI thread after doInBackground(Params...).
      */
-    protected void onPostExecute(Bitmap result){
-       // imageView.setBackgroundResource(R.drawable.selectable_button_bg);
-        result=  getRoundedCornerBitmap(result,0);
-        imageView.setImageBitmap(result);
+    protected void onPostExecute(Bitmap result) {
+        // imageView.setBackgroundResource(R.drawable.selectable_button_bg);
+        result = getRoundedCornerBitmap(result, 0);
+        if (result != null)
+            imageView.setImageBitmap(result);
 
 
     }
+
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+        if (bitmap == null)
+            return null;
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -66,12 +70,12 @@ public class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
-         canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
         //canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
-       // Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-       // return _bmp;
+        // Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        // return _bmp;
 
         return output;
     }

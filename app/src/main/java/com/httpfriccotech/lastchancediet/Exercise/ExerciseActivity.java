@@ -134,7 +134,6 @@ public class ExerciseActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
-
             }
         });
 

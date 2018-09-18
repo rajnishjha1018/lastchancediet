@@ -16,26 +16,36 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
+import com.httpfriccotech.lastchancediet.Exercise.ExerciseActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class BlogActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<List<BlogData>> {
     BlogAdapter myAdapter;
     Context context;
-    String UserId, UserName,profileImage;
+    String UserId, UserName, profileImage;
     Bundle bundle;
     GridView gridView;
     ArrayList<BlogData> blogData = new ArrayList<BlogData>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +83,15 @@ public class BlogActivity extends AppCompatActivity
 
         getData();
     }
+
     private void getData() {
-        String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/getBlogList";
+        String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/getBlogList";
         Log.i("url", url);
-        Ion.with(context)
+
+        APIClient.startQuery().doGetBlogs().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(BlogActivity.this);
+        /*Ion.with(context)
                 .load(url)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
@@ -87,8 +102,9 @@ public class BlogActivity extends AppCompatActivity
                             setData(GetWorkoutResult);
                         }
                     }
-                });
+                });*/
     }
+
     private void setData(JsonArray GetGetRecipesResult) {
         int size = GetGetRecipesResult.size();
 
@@ -100,21 +116,22 @@ public class BlogActivity extends AppCompatActivity
         }
         for (int i = 0; i < size; i++) {
             JsonObject jsonObject = GetGetRecipesResult.get(i).getAsJsonObject();
-            String title=jsonObject.get("title").getAsString();
-            String content=jsonObject.get("content").getAsString();
-            String blogThumbUrl=jsonObject.get("blogThumbUrl").getAsString();
-            Integer blogId=Integer.parseInt(jsonObject.get("blogId").getAsString());
+            String title = jsonObject.get("title").getAsString();
+            String content = jsonObject.get("content").getAsString();
+            String blogThumbUrl = jsonObject.get("blogThumbUrl").getAsString();
+            Integer blogId = Integer.parseInt(jsonObject.get("blogId").getAsString());
 
-            BlogData recepieItem = new BlogData(title, blogThumbUrl, content, blogId);
+            /*BlogData recepieItem = new BlogData(title, blogThumbUrl, content, blogId);
             if (!blogData.contains(recepieItem)) {
                 blogData.add(recepieItem);
-            }
+            }*/
         }
         myAdapter = new com.httpfriccotech.lastchancediet.Blog.BlogAdapter(BlogActivity.this, blogData);
-        gridView=(GridView)findViewById(R.id.gridView);
+        gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,9 +163,11 @@ public class BlogActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
     private void showMessage(String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -182,8 +201,7 @@ public class BlogActivity extends AppCompatActivity
             Intent intent = new Intent(context, BlogActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_PROFILE) {
+        } else if (id == R.id.nav_PROFILE) {
 
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
@@ -194,5 +212,29 @@ public class BlogActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(List<BlogData> data) {
+        this.blogData = (ArrayList<BlogData>) data;
+        myAdapter = new com.httpfriccotech.lastchancediet.Blog.BlogAdapter(BlogActivity.this, this.blogData);
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

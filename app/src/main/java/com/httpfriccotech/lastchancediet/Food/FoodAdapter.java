@@ -59,21 +59,25 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         FoodHolder viewHolder = (FoodHolder) holder;
-        FoodData myData = itemList.get(position);
+        final FoodData myData = itemList.get(position);
         viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        viewHolder.txtFoodType.setText(myData.FoodType);
+        boolean isTitle = (position == 0 || isTitle(position));
+
+        viewHolder.txtFoodType.setText(isTitle ? myData.FoodType : "");
+        viewHolder.view_divider.setVisibility(isNextTitle(position) ? View.VISIBLE : View.GONE);
         viewHolder.txtProtein.setText(myData.Protein);
-        viewHolder.txtCarbs.setText(myData.Carbs);
+        viewHolder.txtCarbs.setText(myData.Carb);
         viewHolder.txtFat.setText(myData.Fat);
         viewHolder.txtFiber.setText(myData.Fiber);
         viewHolder.textAddFood.setTag(myData.FoodType);
+        viewHolder.textAddFood.setVisibility(View.VISIBLE);
+        viewHolder.textAddFood.setImageResource(R.drawable.ic_delete_black_24dp);
+        viewHolder.textAddFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type = (String) v.getTag();
 
-       // viewHolder.textAddFood.setVisibility(myData.Protein.equalsIgnoreCase("0") ? View.VISIBLE : View.INVISIBLE);
-       // viewHolder.textAddFood.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-         //   public void onClick(View v) {
-           //     String type = (String) v.getTag();
-                // Toast.makeText(context,"Add food for "+type,Toast.LENGTH_SHORT).show();
+                 Toast.makeText(context,"Delete food for "+type,Toast.LENGTH_SHORT).show();
                 /*LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 //LayoutInflater layoutInflater = (LayoutInflater) ExerciseActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View customView = inflater.inflate(R.layout.food_popup,null);
@@ -93,13 +97,31 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         popupWindow.dismiss();
                     }
                 });*/
-              //  if (addFoodListener != null) {
-              //      addFoodListener.addItem(type);
-               // }
-            //}
-       // });
+                //  if (addFoodListener != null) {
+                //      addFoodListener.addItem(type);
+                // }
+            }
+        });
     }
 
+    private boolean isTitle(int position) {
+        if (itemList.get(position - 1).FoodType.equalsIgnoreCase(itemList.get(position).FoodType))
+            return false;
+        return true;
+    }
+
+    private boolean isNextTitle(int position) {
+        if (itemList.size() < position + 2)
+            return false;
+        if (!itemList.get(position).FoodType.equalsIgnoreCase(itemList.get(position + 1).FoodType))
+            return true;
+        return false;
+    }
+
+    public void updateData(List<FoodData> itemList) {
+        this.itemList = itemList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
