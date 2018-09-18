@@ -77,7 +77,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View v) {
                 String type = (String) v.getTag();
 
-                // Toast.makeText(context,"Add food for "+type,Toast.LENGTH_SHORT).show();
+                 Toast.makeText(context,"Delete food for "+type,Toast.LENGTH_SHORT).show();
                 /*LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 //LayoutInflater layoutInflater = (LayoutInflater) ExerciseActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View customView = inflater.inflate(R.layout.food_popup,null);

@@ -26,6 +26,8 @@ import retrofit2.http.Query;
 public interface APIQueries {
     @GET("getRecipes")
     Observable<List<SelectFoodData>> doGetRecipies();
+    @GET("getBlogList")
+    Observable<List<BlogData>> doGetBlogs();
 
     @GET("ExerciseDetail")
     Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date);

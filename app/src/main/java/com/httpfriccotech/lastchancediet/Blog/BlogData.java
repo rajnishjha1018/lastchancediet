@@ -16,12 +16,12 @@ public class BlogData implements Serializable {
         private String content;
         private int blogId;
 
-        public BlogData(String Title, String BlogThumbUrl, String Content, int BlogId){
+        /*public BlogData(String Title, String BlogThumbUrl, String Content, int BlogId){
             title = Title;
             blogThumbUrl = BlogThumbUrl;
             content = Content;
             blogId = BlogId;
-        }
+        }*/
 
         public String getTitle(){
             return title;
