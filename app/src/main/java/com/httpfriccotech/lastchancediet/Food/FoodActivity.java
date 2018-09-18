@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,7 +50,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
 public class FoodActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,Observer <AddFoodDataResponse> {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> {
     RecyclerView recyclerView;
     FoodAdapter myAdapter;
     Context context;
@@ -58,6 +61,8 @@ public class FoodActivity extends AppCompatActivity
     String profileId, role, currentDate, profileImage, ClassName;
     Bundle bundle;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    FoodDetailResponseModel foodDetailResponseModel;
+    private boolean isTraining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +145,17 @@ public class FoodActivity extends AppCompatActivity
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
-
+        ((RadioGroup) findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioButton) {
+                    isTraining = true;
+                } else
+                    isTraining = false;
+                if (foodDetailResponseModel != null)
+                    setUpDetailData(foodDetailResponseModel.data.dailyLimit);
+            }
+        });
         getData();
     }
 
@@ -148,7 +163,7 @@ public class FoodActivity extends AppCompatActivity
 
         String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/FoodDetail?userId=" + UserId + "&CurrentDate=" + currentDate;
         Log.i("url", url);
-        Ion.with(context)
+       /* Ion.with(context)
                 .load(url)
                 .asJsonArray()
                 .setCallback(new FutureCallback<JsonArray>() {
@@ -159,7 +174,10 @@ public class FoodActivity extends AppCompatActivity
                             setData(result);
                         }
                     }
-                });
+                });*/
+        APIClient.startQuery().doGetFoodDetails(UserId, currentDate).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(FoodActivity.this);
     }
 
     private void setData(JsonArray GetAttendanceResult) {
@@ -178,12 +196,12 @@ public class FoodActivity extends AppCompatActivity
             String Carbs = jsonObject.get("Fiber").getAsString();
             String Fat = jsonObject.get("Fat").getAsString();
             String Fiber = jsonObject.get("Fiber").getAsString();
-            FoodData myData = new FoodData(FoodType, Protein, Carbs, Fat, Fiber);
-            if (!myDatas.contains(myData)) {
+//            FoodData myData = new FoodData(FoodType, Protein, Carbs, Fat, Fiber);
+           /* if (!myDatas.contains(myData)) {
                 myDatas.add(myData);
-            }
+            }*/
         }
-        myAdapter.notifyDataSetChanged();
+        myAdapter.updateData(myDatas);
     }
 
     private void showMessage(String s) {
@@ -283,7 +301,7 @@ public class FoodActivity extends AppCompatActivity
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData("tejrawal","rawal101","175000","is_"+type.toLowerCase() ,"1", foodData.fat,foodData.protein,foodData.carb,"FOOD-006",foodData.title, foodData.fiber,currentDate)
+                APIClient.startQuery().doAddFoodData("tejrawal", "rawal101", "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodActivity.this);
@@ -292,22 +310,64 @@ public class FoodActivity extends AppCompatActivity
             }
         }
     }
+
     @Override
     public void onSubscribe(@NonNull Disposable d) {
 
     }
 
     @Override
-    public void onNext(@NonNull AddFoodDataResponse data) {
-        if (data != null ) {
-            Toast.makeText(this, data.getSuccess(), Toast.LENGTH_LONG).show();
+    public void onNext(@NonNull Object data) {
+        if (data != null) {
+            if (data instanceof AddFoodDataResponse) {
+                Toast.makeText(this, ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
 
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
-            Intent intent = new Intent(context, FoodActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+                bundle.putString("userId", UserId);
+                bundle.putString("userName", UserName);
+                Intent intent = new Intent(context, FoodActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else if (data instanceof FoodDetailResponseModel) {
+                foodDetailResponseModel = (FoodDetailResponseModel) data;
+                setUpData((FoodDetailResponseModel) data);
             }
+        }
+    }
+
+    private void setUpData(FoodDetailResponseModel data) {
+        myDatas.clear();
+        myDatas.addAll(data.data.breakfast);
+        myDatas.addAll(data.data.lunch);
+        myDatas.addAll(data.data.dinner);
+        myDatas.addAll(data.data.snacks);
+        if (myDatas.size() == 0)
+            showMessage("No data found");
+        myAdapter.updateData(myDatas);
+        setUpDetailData(data.data.dailyLimit);
+    }
+
+    private void setUpDetailData(List<DailyLimitData> dailyLimit) {
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conclusion_container);
+        linearLayout.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (DailyLimitData myData : dailyLimit) {
+            View view = inflater.inflate(R.layout.row_food, linearLayout, false);
+            View view_divider = view.findViewById(R.id.view_divider);
+            TextView txtFoodType = (TextView) view.findViewById(R.id.textFoodType);
+            TextView txtProtein = (TextView) view.findViewById(R.id.textProtein);
+            TextView txtCarbs = (TextView) view.findViewById(R.id.textCarbs);
+            TextView txtFat = (TextView) view.findViewById(R.id.textFat);
+            TextView txtFiber = (TextView) view.findViewById(R.id.textFiber);
+            ImageView textAddFood = (ImageView) view.findViewById(R.id.textAddFood);
+            txtFoodType.setText(myData.FoodType);
+            view_divider.setVisibility(View.GONE);
+            txtProtein.setText("" + myData.Protein);
+            txtCarbs.setText("" + (isTraining ? myData.Carb2 : myData.Carb));
+            txtFat.setText("" + myData.Fat);
+            txtFiber.setText("" + (isTraining ? myData.Fiber2 : myData.Fiber));
+            textAddFood.setTag("" + myData.FoodType);
+            linearLayout.addView(view);
+        }
     }
 
     @Override
