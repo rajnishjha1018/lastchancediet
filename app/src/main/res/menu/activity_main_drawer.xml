@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_DASHBOARD"
+            android:icon="@drawable/dashboard"
+            android:title="DASHBOARD" />
+        <item
+            android:id="@+id/nav_SCIENCEBEHINDUS"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="SCIENCE BEHIND US" />
+        <item
+            android:id="@+id/nav_ABOUTUS"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="ABOUT US" />
+        <item
+        android:id="@+id/nav_RECIPES"
+        android:icon="@drawable/food"
+        android:title="RECIPES" />
+        <item
+            android:id="@+id/nav_WORKOUTS"
+            android:icon="@drawable/exercise"
+            android:title="WORKOUTS" />
+        <item
+            android:id="@+id/nav_BLOG"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="BLOG" />
+
+        <item
+            android:id="@+id/nav_CONTACTUS"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="CONTACT US" />
+        <item
+            android:id="@+id/nav_PROFILE"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="PROFILE" />
+        <item
+            android:id="@+id/nav_LOGOUT"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="LOGOUT" />
+    </group>
+
+
+
+</menu>

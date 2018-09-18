@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Last Chance Diet</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="title_activity_forgot">ForgotActivity</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_dashboard_new">DashboardNew</string>
+    <string name="title_activity_dashboardnew">DashboardnewActivity</string>
+    <string name="title_activity_recepies">RecepiesActivity</string>
+    <string name="title_activity_recepie">RecepieActivity</string>
+    <string name="ServiceURL">http://192.168.1.7:4433/lastchance/</string>
+    <!--<string name="ServiceURL">https://laststaging.wpengine.com/</string>-->
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">LOVE MUSIC</string>
+    <string name="backdrop_subtitle">This season top 20 albums</string>
+    <string name="title_activity_workout">WorkoutActivity</string>
+    <string name="font_fontFamily_medium">sans-serif-medium</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_food">FoodActivity</string>
+    <string name="title_activity_blog">BlogActivity</string>
+    <string name="title_activity_blog_by_id">BlogByIdActivity</string>
+</resources>

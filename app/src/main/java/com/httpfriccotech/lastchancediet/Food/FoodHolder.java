@@ -1,0 +1,34 @@
+package com.httpfriccotech.lastchancediet.Food;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.httpfriccotech.lastchancediet.R;
+
+/**
+ * Created by John on 9/7/2016.
+ */
+public class FoodHolder extends RecyclerView.ViewHolder {
+
+
+    View view;
+    TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber;
+    ImageView textAddFood;
+
+    View container;
+    public FoodHolder(View itemView) {
+        super(itemView);
+        view = itemView;
+        container = itemView.findViewById(R.id.ll_container);
+        txtFoodType= (TextView) view.findViewById(R.id.textFoodType);
+        txtProtein= (TextView) view.findViewById(R.id.textProtein);
+        txtCarbs= (TextView) view.findViewById(R.id.textCarbs);
+        txtFat= (TextView) view.findViewById(R.id.textFat);
+        txtFiber = (TextView) view.findViewById(R.id.textFiber);
+        textAddFood = (ImageView) view.findViewById(R.id.textAddFood);
+
+    }
+}

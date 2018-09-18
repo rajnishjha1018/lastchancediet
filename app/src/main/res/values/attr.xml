@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="customFont">
+        <attr name="s_font_type" format="enum">
+            <enum name="Montserrat_reg" value="1"></enum>
+            <enum name="Montserrat_bold" value="2"></enum>
+            <enum name="Montserrat_medium" value="3"></enum>
+            <enum name="Montserrat_light" value="4"></enum>
+        </attr>
+        <attr name="s_font_style" format="enum">
+            <enum name="normal" value="0"></enum>
+            <enum name="bold" value="1"></enum>
+            <enum name="italic" value="2"></enum>
+            <enum name="italic_bold" value="3"></enum>
+        </attr>
+    </declare-styleable>
+</resources>

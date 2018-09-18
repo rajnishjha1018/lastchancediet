@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType = "centerCrop"
+    android:background="@drawable/lcdbg" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        tools:ignore="HardcodedText"
+        tools:context="com.example.rajnish.test444.MainActivity"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:layout_width="224dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="67.7dp"
+                android:layout_marginRight="67.7dp"
+                android:layout_marginTop="34dp"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textColor="#154983"
+                android:gravity="center_horizontal"
+                android:text="Last Chance Diet"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="50dp"
+            android:layout_width="325dp"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_weight="0.48">
+
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="59.5dp"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/grey"
+                android:background="@drawable/border_edittext"
+                android:hint="Enter Email"
+                android:textSize="18sp"
+                android:paddingLeft="18dp"
+                android:drawablePadding="21dp"
+
+                android:drawableLeft="@drawable/email" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="55dp"
+            android:layout_width="325dp"
+            android:layout_gravity="center"
+            android:background="#154983"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_edittext"
+                android:drawablePadding="21dp"
+                android:text="Send Password"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textColorHint="@color/grey"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

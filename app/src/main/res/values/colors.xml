@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#1d4270</color>
+    <color name="white">#ffffff</color>
+    <color name="white_selected">#f0e9e9</color>
+    <color name="greyLight">#7f9ecb</color>
+    <color name="colorPrimaryLight">#2860af</color>
+    <color name="grey">#645e5e</color>
+    <color name="red">#0087f7</color>
+    <color name="rowodd">#f5f5f5</color>
+    <color name="theamcolor">#0087f7</color>
+    <color name="customGray">#ececec</color>
+    <color name="black">#000</color>
+    <color name="custBlue">#3071a9</color>
+
+    <color name="viewBg">#f1f5f8</color>
+    <color name="album_title">#4c4c4c</color>
+    <color name="nav_color">#154983</color>
+
+</resources>

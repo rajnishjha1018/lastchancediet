@@ -1,0 +1,161 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/vd1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="Filter By Date :"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:visibility="gone" />
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/selectedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.90"
+                android:drawableLeft="@android:drawable/ic_menu_my_calendar"
+                android:gravity="center_vertical"
+                android:text="Date :"
+                android:textColor="#000"
+                android:textSize="18dp" />
+
+            <ImageButton
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:background="@drawable/search"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cardio" />
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Training" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ececec"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:orientation="horizontal">
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Food Type"
+                android:textColor="#000"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:id="@+id/v1"
+                />
+            <ImageButton
+                android:id="@+id/btnAddFood"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@android:drawable/ic_input_add" />
+            <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:gravity="center"
+                android:id="@+id/btnAddFood"
+                android:src="@android:drawable/ic_input_add"
+                android:layout_marginLeft="5dp"
+                />-->
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:text="Protein"
+                android:textColor="#000"
+                android:textSize="12dp"
+                android:id="@+id/textClassName"
+                android:layout_marginLeft="10dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:text="Carbs"
+                android:textColor="#000"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:id="@+id/textAttendanceType"
+                android:layout_marginLeft="10dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:text="Fat"
+                android:textColor="#000"
+                android:textSize="12dp"
+                android:id="@+id/textDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:text="Fiber"
+                android:textColor="#000"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:id="@+id/textTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="6dp"
+            android:background="@color/greyLight"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="0.3dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

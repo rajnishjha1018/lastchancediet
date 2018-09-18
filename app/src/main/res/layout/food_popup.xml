@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10px">
+
+    <com.httpfriccotech.lastchancediet.ui.DietTextView
+        android:id="@+id/addfood.title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/_8sdp"
+        android:text="Add Food Item"
+        android:textSize="@dimen/_16sdp"
+        android:textStyle="bold"
+        app:s_font_style="bold"
+        app:s_font_type="Montserrat_bold" />
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addfood.title"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/textFoodTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:hint="Food Name"
+            android:textColor="#000"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/textProtein"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:hint="Protein"
+            android:textColor="#000"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/textCarbs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.1"
+            android:gravity="center"
+            android:hint="Carbs"
+            android:textColor="#000"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/textFat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Fat"
+            android:textColor="#000"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/textFiber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="Fiber"
+            android:textColor="#000"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/closePopupBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_container"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/nav_color"
+        android:text="Add"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
