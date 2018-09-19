@@ -90,7 +90,7 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="left"
             android:src="@android:drawable/ic_input_add" />
         <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
             android:layout_width="30dp"
@@ -166,7 +166,6 @@
     <LinearLayout
         android:id="@+id/conclusion_container"
         android:layout_width="match_parent"
-        android:background="#DFDFDF"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 

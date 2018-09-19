@@ -5,6 +5,7 @@ package com.httpfriccotech.lastchancediet.Food;
  */
 public class FoodData {
     public String FoodType;
+    public String Title;
     public String Protein;
     public String Carb;
     public String Fat;

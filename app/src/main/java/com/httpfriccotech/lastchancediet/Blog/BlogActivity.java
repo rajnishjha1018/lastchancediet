@@ -85,24 +85,9 @@ public class BlogActivity extends AppCompatActivity
     }
 
     private void getData() {
-        String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/getBlogList";
-        Log.i("url", url);
-
         APIClient.startQuery().doGetBlogs().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(BlogActivity.this);
-        /*Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if(result!=null) {
-                            JsonArray GetWorkoutResult = result.getAsJsonArray();
-                            setData(GetWorkoutResult);
-                        }
-                    }
-                });*/
     }
 
     private void setData(JsonArray GetGetRecipesResult) {

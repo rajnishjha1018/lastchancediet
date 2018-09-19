@@ -3,6 +3,7 @@ package com.httpfriccotech.lastchancediet.Food;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -160,48 +161,9 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void getData() {
-
-        String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/FoodDetail?userId=" + UserId + "&CurrentDate=" + currentDate;
-        Log.i("url", url);
-       /* Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if (result != null) {
-                            //JsonArray GetAttendanceResult = result.getAsJsonArray();
-                            setData(result);
-                        }
-                    }
-                });*/
         APIClient.startQuery().doGetFoodDetails(UserId, currentDate).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodActivity.this);
-    }
-
-    private void setData(JsonArray GetAttendanceResult) {
-        myDatas.clear();
-        int size = GetAttendanceResult.size();
-        if (size <= 0) {
-            showMessage("No data found");
-            myDatas.clear();
-            myAdapter.notifyDataSetChanged();
-            return;
-        }
-        for (int i = 0; i < size; i++) {
-            JsonObject jsonObject = GetAttendanceResult.get(i).getAsJsonObject();
-            String FoodType = jsonObject.get("FoodType").getAsString();
-            String Protein = jsonObject.get("Protein").getAsString();
-            String Carbs = jsonObject.get("Fiber").getAsString();
-            String Fat = jsonObject.get("Fat").getAsString();
-            String Fiber = jsonObject.get("Fiber").getAsString();
-//            FoodData myData = new FoodData(FoodType, Protein, Carbs, Fat, Fiber);
-           /* if (!myDatas.contains(myData)) {
-                myDatas.add(myData);
-            }*/
-        }
-        myAdapter.updateData(myDatas);
     }
 
     private void showMessage(String s) {
@@ -351,7 +313,7 @@ public class FoodActivity extends AppCompatActivity
         linearLayout.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(this);
         for (DailyLimitData myData : dailyLimit) {
-            View view = inflater.inflate(R.layout.row_food, linearLayout, false);
+            View view = inflater.inflate(R.layout.row_daily, linearLayout, false);
             View view_divider = view.findViewById(R.id.view_divider);
             TextView txtFoodType = (TextView) view.findViewById(R.id.textFoodType);
             TextView txtProtein = (TextView) view.findViewById(R.id.textProtein);
@@ -367,6 +329,7 @@ public class FoodActivity extends AppCompatActivity
             txtFiber.setText("" + (isTraining ? myData.Fiber2 : myData.Fiber));
             textAddFood.setTag("" + myData.FoodType);
             linearLayout.addView(view);
+            //linearLayout.setBackgroundColor(Color.parseColor("#64CBD8"));
         }
     }
 
