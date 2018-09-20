@@ -16,7 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/toolbar.title"
+                android:layout_width="match_parent"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:textSize="@dimen/_16sdp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="@string/app_name" />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

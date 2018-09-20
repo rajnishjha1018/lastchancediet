@@ -53,7 +53,7 @@ public class DashboardnewActivity extends AppCompatActivity
     private Intent intent;
     Context context;
     Bundle bundle;
-    String UserId, UserName, profileImage;
+    String UserId, UserName, profileImage,Password;
     HorizontalBarChart mChart;
     ProgressDialog progressDialog;
     // we're going to display pie chart for school attendance
@@ -71,9 +71,9 @@ public class DashboardnewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboardnew);
         context = this;
-        bundle = getIntent().getExtras();
         UserId = GlobalManage.getInstance().getUserId();
         UserName = GlobalManage.getInstance().getUserName();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -109,20 +109,14 @@ public class DashboardnewActivity extends AppCompatActivity
         findViewById(R.id.layoutfood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putString("userId", UserId);
-                bundle.putString("userName", UserName);
                 Intent intent = new Intent(context, FoodActivity.class);
-                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
         findViewById(R.id.layoutexercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bundle.putString("userId", UserId);
-                bundle.putString("userName", UserName);
                 Intent intent = new Intent(context, ExerciseActivity.class);
-                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -167,31 +161,19 @@ public class DashboardnewActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, DashboardnewActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, RecepieActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_WORKOUTS) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, WorkoutActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_BLOG) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, BlogActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
         }
         else if (id == R.id.nav_PROFILE) {

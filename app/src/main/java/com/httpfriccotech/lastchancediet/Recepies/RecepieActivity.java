@@ -23,10 +23,12 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.RecepieFragment;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -52,8 +54,8 @@ public class RecepieActivity extends AppCompatActivity
         setContentView(R.layout.activity_recepie);
         context = this;
         bundle = getIntent().getExtras();
-        UserId = bundle.getString("userId");
-        UserName = bundle.getString("userName");
+        UserId = GlobalManage.getInstance().getUserId();
+        UserName = GlobalManage.getInstance().getUserName();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -70,7 +72,13 @@ public class RecepieActivity extends AppCompatActivity
         email.setText("rajnish1018@gmail.com");
         getSupportActionBar().setTitle("");
         ((TextView) findViewById(R.id.toolbar_title)).setText("Recepies");
-
+        header.findViewById(R.id.navClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
         getData();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -221,24 +229,20 @@ public class RecepieActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_DASHBOARD) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, DashboardnewActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.nav_RECIPES) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, RecepieActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.nav_WORKOUTS) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, WorkoutActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
-        } else if (id == R.id.nav_PROFILE) {
+        }
+        else if (id == R.id.nav_BLOG) {
+            Intent intent = new Intent(context, BlogActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_PROFILE) {
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
         } else if (id == R.id.nav_LOGOUT) {
         }

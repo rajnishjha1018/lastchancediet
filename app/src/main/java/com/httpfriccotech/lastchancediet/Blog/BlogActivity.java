@@ -24,6 +24,7 @@ import com.httpfriccotech.lastchancediet.Exercise.ExerciseActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -54,10 +55,8 @@ public class BlogActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = this;
-        bundle = getIntent().getExtras();
-        UserId = bundle.getString("userId");
-        UserName = bundle.getString("userName");
-
+        UserId = GlobalManage.getInstance().getUserId();
+        UserName = GlobalManage.getInstance().getUserName();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,7 +71,7 @@ public class BlogActivity extends AppCompatActivity
         name.setText(this.UserName);
         email.setText("rajnish1018@gmail.com");
         getSupportActionBar().setTitle("");
-        ((TextView) findViewById(R.id.toolbar_title)).setText("Blog");
+        ((TextView) findViewById(R.id.toolbar_title)).setText("Blog List");
         header.findViewById(R.id.navClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,31 +159,19 @@ public class BlogActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, DashboardnewActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, RecepieActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_WORKOUTS) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, WorkoutActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_BLOG) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, BlogActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.nav_PROFILE) {
 

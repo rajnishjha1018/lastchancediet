@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.Food.FoodHolder;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
@@ -76,8 +77,9 @@ public class BlogAdapter extends BaseAdapter {
             grid.findViewById(R.id.read_more).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext, BlogByIdActivity.class));
-//                    Toast.makeText(mContext, "Go to Details : " + itemList.get(position).getBlogId(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, BlogByIdActivity.class);
+                    intent.putExtra("blogId", ""+ itemList.get(position).getBlogId());
+                    mContext.startActivity(intent);
                 }
             });
             new DownLoadImageTask(imageView).execute(myData.getBlogThumbUrl());

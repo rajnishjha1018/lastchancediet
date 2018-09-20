@@ -45,22 +45,46 @@
                 android:orientation="vertical"
                 android:text=""
                 android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_17sdp" />
-
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:id="@+id/PostAuthor"
+                android:textColor="@color/custBlue"
+                android:textSize="@dimen/_15sdp" />
+            <LinearLayout
+                android:id="@+id/ll_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical"
-                android:text=""
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_15sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.httpfriccotech.lastchancediet.ui.DietTextView
+                    android:id="@+id/PostAuthor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="66666 6666"
+                    android:textColor="@color/custBlue"
+                    android:textSize="@dimen/_13sdp"  />
+                <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
+                    android:id="@+id/PostDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".9"
+                    android:text="66666 6666"
+                    android:textColor="@color/custBlue"
+                    android:textSize="@dimen/_13sdp" />-->
+                <com.httpfriccotech.lastchancediet.ui.DietTextView
+                    android:id="@+id/PostView"
+                    android:layout_width="0dp"
+                    android:text="66666"
+                    android:textAllCaps="true"
+                    android:layout_weight=".4"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_13sdp" />
+            </LinearLayout>
+
+
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:id="@+id/PostContent"
@@ -71,7 +95,6 @@
                 android:orientation="vertical"
                 android:text=""
                 android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
 

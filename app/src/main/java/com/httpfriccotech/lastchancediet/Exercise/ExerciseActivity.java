@@ -19,10 +19,12 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.ArrayList;
@@ -51,9 +53,8 @@ public class ExerciseActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        bundle = getIntent().getExtras();
-        UserId = bundle.getString("userId");
-        UserName = bundle.getString("userName");
+        UserId = GlobalManage.getInstance().getUserId();
+        UserName = GlobalManage.getInstance().getUserId();
         setContentView(R.layout.activity_exercise);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -141,21 +142,6 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     private void getData() {
-
-        /*String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/ExerciseDetail?userId=" + UserId+ "&CurrentDate="+currentDate;
-        Log.i("url", url);
-        Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if(result!=null) {
-                            JsonArray GetAttendanceResult = result.getAsJsonArray();
-                            setData(GetAttendanceResult);
-                        }
-                    }
-                });*/
         APIClient.startQuery().doGetExcercises(UserId, currentDate).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ExerciseActivity.this);
@@ -226,26 +212,22 @@ public class ExerciseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, DashboardnewActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, RecepieActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_WORKOUTS) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, WorkoutActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
-        } else if (id == R.id.nav_PROFILE) {
+        }
+        else if (id == R.id.nav_BLOG) {
+            Intent intent = new Intent(context, BlogActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_PROFILE) {
 
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 

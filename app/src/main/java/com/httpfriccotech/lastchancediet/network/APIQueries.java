@@ -2,6 +2,7 @@ package com.httpfriccotech.lastchancediet.network;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.Blog.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.Blog.BlogData;
 import com.httpfriccotech.lastchancediet.Exercise.ExcerciseResponseModel;
 import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
@@ -49,6 +50,8 @@ public interface APIQueries {
 
     // @GET("getBlogList")
     //Observable<List<BlogData>> doGetBlogList();
+    @GET("getBlog")
+    Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId);
 
     @FormUrlEncoded
     @POST("init_session")

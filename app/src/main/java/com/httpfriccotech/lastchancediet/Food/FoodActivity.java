@@ -30,10 +30,12 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -69,9 +71,8 @@ public class FoodActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        bundle = getIntent().getExtras();
-        UserId = bundle.getString("userId");
-        UserName = bundle.getString("userName");
+        UserId = GlobalManage.getInstance().getUserId();
+        UserName = GlobalManage.getInstance().getUserId();
         setContentView(R.layout.activity_food);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -223,26 +224,22 @@ public class FoodActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, DashboardnewActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, RecepieActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
 
         } else if (id == R.id.nav_WORKOUTS) {
-            bundle.putString("userId", UserId);
-            bundle.putString("userName", UserName);
             Intent intent = new Intent(context, WorkoutActivity.class);
-            intent.putExtras(bundle);
             startActivity(intent);
-        } else if (id == R.id.nav_PROFILE) {
+        }
+        else if (id == R.id.nav_BLOG) {
+            Intent intent = new Intent(context, BlogActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_PROFILE) {
 
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
@@ -263,7 +260,7 @@ public class FoodActivity extends AppCompatActivity
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData("tejrawal", "rawal101", "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
+                APIClient.startQuery().doAddFoodData(GlobalManage.getInstance().getUserName(), GlobalManage.getInstance().getPassword(), "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodActivity.this);
@@ -283,11 +280,7 @@ public class FoodActivity extends AppCompatActivity
         if (data != null) {
             if (data instanceof AddFoodDataResponse) {
                 Toast.makeText(this, ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
-
-                bundle.putString("userId", UserId);
-                bundle.putString("userName", UserName);
                 Intent intent = new Intent(context, FoodActivity.class);
-                intent.putExtras(bundle);
                 startActivity(intent);
             } else if (data instanceof FoodDetailResponseModel) {
                 foodDetailResponseModel = (FoodDetailResponseModel) data;

@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void login(String user, String password) {
+    private void login(String user, final String password) {
         if (!NetworkStattus.getInstance(this).isOnline()) {
             new AlertDialog.Builder(this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity
                                 bundle.putString("userName", UserName);
                                 GlobalManage.getInstance().setUserId(UserId);
                                 GlobalManage.getInstance().setUserName(UserName);
+                                GlobalManage.getInstance().setPassword(password);
                                 Intent intent = new Intent(context, DashboardnewActivity.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
