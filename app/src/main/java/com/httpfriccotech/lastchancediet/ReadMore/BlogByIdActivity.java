@@ -1,10 +1,8 @@
-package com.httpfriccotech.lastchancediet.Blog;
+package com.httpfriccotech.lastchancediet.ReadMore;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,11 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.R;
@@ -27,19 +25,17 @@ import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class BlogByIdActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer<List<BlogByIdResponseData>> {
     Context context;
-    String UserId, UserName,profileImage,blogId;
+    String UserId, UserName,profileImage,blogId,postType;
     Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +46,7 @@ public class BlogByIdActivity extends AppCompatActivity
         context = this;
         bundle = getIntent().getExtras();
         blogId = getIntent().getExtras().getString("blogId");
+        postType = getIntent().getExtras().getString("postType");
         UserId = GlobalManage.getInstance().getUserId();
         UserName = GlobalManage.getInstance().getUserName();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,7 +75,7 @@ public class BlogByIdActivity extends AppCompatActivity
         getData(this.blogId);
     }
     private void getData(String blogId ) {
-        APIClient.startQuery().doGetBlogById(blogId).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetBlogById(blogId,postType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(BlogByIdActivity.this);
     }

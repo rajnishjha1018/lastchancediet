@@ -2,26 +2,17 @@ package com.httpfriccotech.lastchancediet.Blog;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
-import com.httpfriccotech.lastchancediet.Food.FoodHolder;
-import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
+import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,15 +65,17 @@ public class BlogAdapter extends BaseAdapter {
             txtName.setText(myData.getTitle());
             textDesc.setText(myData.getContent());
             ImageView imageView = (ImageView) grid.findViewById(R.id.imgImage);
+            new DownLoadImageTask(imageView).execute(myData.getBlogThumbUrl());
             grid.findViewById(R.id.read_more).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, BlogByIdActivity.class);
-                    intent.putExtra("blogId", ""+ itemList.get(position).getBlogId());
+                    intent.putExtra("blogId", ""+ itemList.get(position).getPostId());
+                    intent.putExtra("postType", "post");
                     mContext.startActivity(intent);
                 }
             });
-            new DownLoadImageTask(imageView).execute(myData.getBlogThumbUrl());
+
         } else {
             grid = (View) convertView;
         }

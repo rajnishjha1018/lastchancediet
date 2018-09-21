@@ -1,14 +1,19 @@
 package com.httpfriccotech.lastchancediet.Workout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdActivity;
+
 import java.util.List;
 
 /**
@@ -42,7 +47,7 @@ public class MyAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View grid;
         LayoutInflater inflater = (LayoutInflater) mContext
@@ -60,6 +65,19 @@ public class MyAdapter extends BaseAdapter{
             textDesc.setText(myData.getWorkoutDescription());
             ImageView imageView = (ImageView)grid.findViewById(R.id.imgImage);
             new DownLoadImageTask(imageView).execute(myData.getWorkoutImage());
+
+            grid.findViewById(R.id.read_more).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String msg = "read Mode button clicked";
+                    Toast.makeText(mContext,"see "+msg,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, BlogByIdActivity.class);
+                    intent.putExtra("blogId", ""+ itemList.get(position).getWorkoutPostId());
+                    intent.putExtra("postType", "cpt_workouts");
+
+                    mContext.startActivity(intent);
+                }
+            });
         } else {
             grid = (View) convertView;
         }

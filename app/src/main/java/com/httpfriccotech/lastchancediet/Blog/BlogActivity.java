@@ -89,34 +89,7 @@ public class BlogActivity extends AppCompatActivity
                 .subscribe(BlogActivity.this);
     }
 
-    private void setData(JsonArray GetGetRecipesResult) {
-        int size = GetGetRecipesResult.size();
-
-        if (size <= 0) {
-            showMessage("No data found");
-            blogData.clear();
-            myAdapter.notifyDataSetChanged();
-            return;
-        }
-        for (int i = 0; i < size; i++) {
-            JsonObject jsonObject = GetGetRecipesResult.get(i).getAsJsonObject();
-            String title = jsonObject.get("title").getAsString();
-            String content = jsonObject.get("content").getAsString();
-            String blogThumbUrl = jsonObject.get("blogThumbUrl").getAsString();
-            Integer blogId = Integer.parseInt(jsonObject.get("blogId").getAsString());
-
-            /*BlogData recepieItem = new BlogData(title, blogThumbUrl, content, blogId);
-            if (!blogData.contains(recepieItem)) {
-                blogData.add(recepieItem);
-            }*/
-        }
-        myAdapter = new com.httpfriccotech.lastchancediet.Blog.BlogAdapter(BlogActivity.this, blogData);
-        gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
-    }
-
-    @Override
+        @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

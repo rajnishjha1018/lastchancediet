@@ -1,4 +1,4 @@
-package com.httpfriccotech.lastchancediet.Blog;
+package com.httpfriccotech.lastchancediet.ReadMore;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -20,9 +20,9 @@ public class BlogByIdResponseData implements Serializable {
     @SerializedName("content")
     @Expose
     String content;
-    @SerializedName("blogId")
+    @SerializedName("postId")
     @Expose
-    String blogId;
+    String postId;
     ////
     @SerializedName("author")
     @Expose
@@ -55,11 +55,11 @@ public class BlogByIdResponseData implements Serializable {
         this.content = content;
     }
 
-    public String getBlogId() {
-        return blogId;
+    public String getPostId() {
+        return postId;
     }
-    public void setBlogId(String blogId) {
-        this.blogId = blogId;
+    public void setPostId(String blogId) {
+        this.postId = postId;
     }
 
     public String getAuthor() {

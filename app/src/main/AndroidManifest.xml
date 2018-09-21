@@ -53,7 +53,7 @@
             android:label="@string/title_activity_blog"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Blog.BlogByIdActivity"
+            android:name=".ReadMore.BlogByIdActivity"
             android:label="@string/title_activity_blog_by_id"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

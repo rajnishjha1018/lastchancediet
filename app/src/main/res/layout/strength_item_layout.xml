@@ -22,6 +22,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginRight="5dp"
+        android:visibility="gone"
         android:src="@android:drawable/ic_input_add" />
 
     <com.httpfriccotech.lastchancediet.ui.DietTextView

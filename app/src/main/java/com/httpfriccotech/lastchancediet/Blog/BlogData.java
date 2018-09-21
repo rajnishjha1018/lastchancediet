@@ -14,14 +14,8 @@ public class BlogData implements Serializable {
         private String title;
         private String blogThumbUrl;
         private String content;
-        private int blogId;
+        private int postId;
 
-        /*public BlogData(String Title, String BlogThumbUrl, String Content, int BlogId){
-            title = Title;
-            blogThumbUrl = BlogThumbUrl;
-            content = Content;
-            blogId = BlogId;
-        }*/
 
         public String getTitle(){
             return title;
@@ -32,8 +26,8 @@ public class BlogData implements Serializable {
         public String getContent(){
             return content;
         }
-        public int getBlogId(){
-            return blogId;
+        public int getPostId(){
+            return postId;
         }
 
         public void setTitle(String title){
@@ -43,8 +37,8 @@ public class BlogData implements Serializable {
         public void setContent(String content){
             this.content = content;
         }
-        public void setBlogId(int blogId){
-            this.blogId = blogId;
+        public void setPostId(int postId){
+            this.postId = postId;
         }
 
 

@@ -1,6 +1,7 @@
 package com.httpfriccotech.lastchancediet.Exercise;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.Exercise.ExerciseData;
 import com.httpfriccotech.lastchancediet.Exercise.ExerciseHolder;
+import com.httpfriccotech.lastchancediet.Food.FoodActivity;
+import com.httpfriccotech.lastchancediet.Food.SelectFoodActivity;
 import com.httpfriccotech.lastchancediet.R;
 
 import java.util.ArrayList;
@@ -67,26 +70,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             @Override
             public void onClick(View v) {
                 String type = (String) v.getTag();
-               /* LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-                //LayoutInflater layoutInflater = (LayoutInflater) ExerciseActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.food_popup,null);
-                closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
-                txtmsg = (TextView) customView.findViewById(R.id.txtmsg);
-                txtmsg.setText("List of Exercise for "+type +" will comming soon..");
-                //instantiate popup window
-                popupWindow = new PopupWindow(customView, RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-                View viewa = inflater.inflate(R.layout.row_exercise, null);
-                //display the popup window
-                popupWindow.showAtLocation(viewa, Gravity.CENTER, 0, 0);
-                //close the popup window on button click
-                closePopupBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });*/
-
-                Toast.makeText(context,"Add Exercise for "+type,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, SelectExerciseActivity.class);
+                context.startActivity(intent);
             }
         });
 

@@ -11,28 +11,56 @@ import java.io.Serializable;
 
 public class SelectExerciseData implements Serializable {
 
-    @SerializedName("ExerciseType")
+    @SerializedName("title")
     @Expose
-    String ExerciseType;
-    @SerializedName("Minutes")
+    String title;
+    @SerializedName("exerciseID")
     @Expose
-    String Minutes;
+    String exerciseID;
+
+    @SerializedName("strength_training_set")
+    @Expose
+    String strength_training_set;
+
+    @SerializedName("strength_training_reps_set")
+    @Expose
+    String strength_training_reps_set;
+
+    @SerializedName("strength_training_weight_set")
+    @Expose
+    String strength_training_weight_set;
+
+    @SerializedName("howlong")
+    @Expose
+    String howlong;
+
+    @SerializedName("Calories")
+    @Expose
+    String Calories;
 
 
-    public String getExerciseType() {
-        return ExerciseType;
+    public String getTitle() {
+        return title;
     }
 
-    public void setExerciseType(String ExerciseType) {
-        this.ExerciseType = ExerciseType;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMinutes() {
-        return Minutes;
+    public String getExerciseID() {
+        return exerciseID;
     }
 
-    public void setMinutes(String Minutes) {
-        this.Minutes = Minutes;
+    public void setExerciseID(String exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    public String getStrength_training_set() {
+        return strength_training_set;
+    }
+
+    public void setStrength_training_set(String strength_training_set) {
+        this.strength_training_set = strength_training_set;
     }
 
     }

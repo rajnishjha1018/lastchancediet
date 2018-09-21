@@ -53,10 +53,10 @@ public class DashboardnewActivity extends AppCompatActivity
     private Intent intent;
     Context context;
     Bundle bundle;
-    String UserId, UserName, profileImage,Password;
+    String UserId, UserName, profileImage,currentDate;
     HorizontalBarChart mChart;
     ProgressDialog progressDialog;
-    // we're going to display pie chart for school attendance
+    private int mYear, mMonth, mDay, mHour, mMinute;
     ArrayList dataSets = new ArrayList<>();
     ArrayList<BarEntry> entries;
     private String[] labels = {"Fat", "Carb", "Fiber", "Protein"};
@@ -90,6 +90,13 @@ public class DashboardnewActivity extends AppCompatActivity
         TextView email = (TextView) header.findViewById(R.id.useremail);
         name.setText(this.UserName);
         email.setText("rajnish1018@gmail.com");
+
+        final Calendar cd = Calendar.getInstance();
+        mYear = cd.get(Calendar.YEAR);
+        mMonth = cd.get(Calendar.MONTH);
+        mMonth = mMonth + 1;
+        mDay = cd.get(Calendar.DAY_OF_MONTH);
+        currentDate = mYear + "-" + mMonth + "-" + mDay;
 
         getSupportActionBar().setTitle("");
         ((TextView) findViewById(R.id.toolbar_title)).setText("Dashboard");
@@ -192,7 +199,7 @@ public class DashboardnewActivity extends AppCompatActivity
     private void getData() {
 
         progressDialog = ProgressDialog.show(DashboardnewActivity.this, "Loading...", "please wait...", false, false);
-        String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
+        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId +"&CurrentDate="+currentDate;
         //String url = context.getString(R.string.ServiceURL)+"/lastchance/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
         Log.i("url", url);
         Ion.with(context)
@@ -201,7 +208,7 @@ public class DashboardnewActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
                     public void onCompleted(Exception e, JsonArray result) {
-                        if (result == null) {
+                        if (result == null || result.size() > 0 ) {
                             TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
                             TodayDesc.setText("You haven missed everything today!");
                             entries = new ArrayList<BarEntry>();

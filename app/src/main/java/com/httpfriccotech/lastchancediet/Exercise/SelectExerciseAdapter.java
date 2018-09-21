@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
-
+import android.view.LayoutInflater;
 import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseHolder;
 import com.httpfriccotech.lastchancediet.Exercise.ExerciseData;
+import com.httpfriccotech.lastchancediet.Food.FoodHolder;
+import com.httpfriccotech.lastchancediet.Food.PopupFoodAdapter;
+import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.R;
 
 import java.util.ArrayList;
@@ -25,20 +28,24 @@ public class SelectExerciseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int YOU = 0;
     private static final int THEM = 1;
     private final LayoutInflater inflater;
-    private final OnItemClicked listener;
-    private List<ExerciseData> itemList;
+    private final SelectExerciseAdapter.OnItemClicked listener;
+    private List<SelectExerciseData> itemList;
     private Context context;
     ArrayList<Boolean> booleanGames = new ArrayList<>();
     SelectExerciseHolder viewHolder;
     Button closePopupBtn;
     PopupWindow popupWindow;
 
-    public SelectExerciseAdapter(Context context, List<ExerciseData> itemList, OnItemClicked listener) {
+
+
+
+    public SelectExerciseAdapter(Context context, List<SelectExerciseData> itemList, OnItemClicked listener) {
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.listener = listener;
     }
+
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -50,10 +57,10 @@ public class SelectExerciseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         SelectExerciseHolder viewHolder = (SelectExerciseHolder) holder;
-        ExerciseData myData = itemList.get(position);
+        SelectExerciseData myData = itemList.get(position);
         viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        viewHolder.txtExerciseName.setText("test 123");
-        viewHolder.txtMinutes.setText("Hello 123");
+        viewHolder.txtExerciseName.setText(myData.getTitle());
+        viewHolder.txtMinutes.setText(myData.getStrength_training_set());
     }
 
     @Override
@@ -61,12 +68,12 @@ public class SelectExerciseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return itemList.size();
     }
 
-    public void updateData(List<ExerciseData> data) {
+    public void updateData(List<SelectExerciseData> data) {
         itemList = data;
         notifyDataSetChanged();
     }
 
     public interface OnItemClicked {
-        public void onItemClick(ExerciseData data);
+        public void onItemClick(SelectExerciseData data);
     }
 }

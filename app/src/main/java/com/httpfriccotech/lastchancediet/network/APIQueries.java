@@ -1,13 +1,13 @@
 package com.httpfriccotech.lastchancediet.network;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.Blog.BlogByIdResponseData;
+import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseData;
+import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.Blog.BlogData;
 import com.httpfriccotech.lastchancediet.Exercise.ExcerciseResponseModel;
 import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
 import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
+import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +27,13 @@ import retrofit2.http.Query;
 public interface APIQueries {
     @GET("getRecipes")
     Observable<List<SelectFoodData>> doGetRecipies();
+
+    @GET("getRecipes")
+    Observable<List<RecepieItem>> doGetRecipieList();
+
+    @GET("ExercisrList")
+    Observable<List<SelectExerciseData>> doGetExercisrSearchList();
+
     @GET("getBlogList")
     Observable<List<BlogData>> doGetBlogs();
 
@@ -51,7 +58,7 @@ public interface APIQueries {
     // @GET("getBlogList")
     //Observable<List<BlogData>> doGetBlogList();
     @GET("getBlog")
-    Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId);
+    Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId,@Query("postType") String postType);
 
     @FormUrlEncoded
     @POST("init_session")

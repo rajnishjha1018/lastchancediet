@@ -9,16 +9,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
+import com.httpfriccotech.lastchancediet.Blog.BlogData;
 import com.httpfriccotech.lastchancediet.Food.AddFoodPopupFragment;
 import com.httpfriccotech.lastchancediet.Food.PopupFoodAdapter;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -29,13 +33,10 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
-public class SelectExerciseActivity extends AppCompatActivity implements Observer<List<SelectFoodData>> {
+public class SelectExerciseActivity extends AppCompatActivity implements Observer<List<SelectExerciseData>> {
 
-    private PopupFoodAdapter adapter;
-    private PopupWindow popupWindow;
-
-
-    @Override
+    private SelectExerciseAdapter adapter;
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_exercise);
@@ -78,7 +79,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
 
     private void getData() {
 
-        APIClient.startQuery().doGetRecipies().subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetExercisrSearchList().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SelectExerciseActivity.this);
 
@@ -95,23 +96,21 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
     }
 
     @Override
-    public void onNext(@NonNull List<SelectFoodData> data) {
+    public void onNext(@NonNull List<SelectExerciseData> data) {
+
         if (data != null && data.size() > 0) {
             if (adapter == null) {
                 ((RecyclerView) findViewById(R.id.search_recycle)).setLayoutManager(new LinearLayoutManager(this, VERTICAL, false));
 
-                adapter = new PopupFoodAdapter(this, data, new PopupFoodAdapter.OnItemClicked() {
+               /* adapter = new SelectExerciseAdapter(this, data, new PopupFoodAdapter.OnItemClicked() {
                     @Override
                     public void onItemClick(SelectFoodData data) {
-
-
                         Intent intent = new Intent();
                         intent.putExtra("data", data);
-                        //intent.putExtra("foodType", value);
                         setResult(RESULT_OK, intent);
                         finish();
                     }
-                });
+                });*/
                 ((RecyclerView) findViewById(R.id.search_recycle)).setAdapter(adapter);
 //                ((RecyclerView) findViewById(R.id.search_recycle))
             } else {

@@ -54,7 +54,7 @@ public class ExerciseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         context = this;
         UserId = GlobalManage.getInstance().getUserId();
-        UserName = GlobalManage.getInstance().getUserId();
+        UserName = GlobalManage.getInstance().getUserName();
         setContentView(R.layout.activity_exercise);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -134,6 +134,8 @@ public class ExerciseActivity extends AppCompatActivity
         content.findViewById(R.id.textAddExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               /* Intent intent = new Intent(context, SelectExerciseActivity.class);
+                context.startActivity(intent);*/
                 Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
             }
         });
