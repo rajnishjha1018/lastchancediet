@@ -208,7 +208,7 @@ public class DashboardnewActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
                     public void onCompleted(Exception e, JsonArray result) {
-                        if (result == null || result.size() > 0 ) {
+                        if (result == null || result.size() <= 0 ) {
                             TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
                             TodayDesc.setText("You haven missed everything today!");
                             entries = new ArrayList<BarEntry>();
@@ -220,10 +220,10 @@ public class DashboardnewActivity extends AppCompatActivity
 
                             entries = new ArrayList<BarEntry>();
                             JsonObject jsonObject = result.get(0).getAsJsonObject();
-                            entries.add(new BarEntry(Integer.parseInt(jsonObject.get("Protein").getAsString()), 3));
-                            entries.add(new BarEntry(Integer.parseInt(jsonObject.get("Fiber").getAsString()), 2));
-                            entries.add(new BarEntry(Integer.parseInt(jsonObject.get("Carb").getAsString()), 1));
-                            entries.add(new BarEntry(Integer.parseInt(jsonObject.get("Fat").getAsString()), 0));
+                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Protein").getAsString()), 3));
+                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fiber").getAsString()), 2));
+                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Carb").getAsString()), 1));
+                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fat").getAsString()), 0));
                             TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
                             if (Boolean.parseBoolean(jsonObject.get("IsMissed").getAsString())) {
                                 TodayDesc.setText("You haven missed something today");
