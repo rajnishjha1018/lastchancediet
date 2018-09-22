@@ -10,4 +10,5 @@ public class FoodData {
     public String Carb;
     public String Fat;
     public String Fiber;
+    public String PostId;
 }

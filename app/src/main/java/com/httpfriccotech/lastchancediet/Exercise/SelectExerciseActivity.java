@@ -79,7 +79,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
 
     private void getData() {
 
-        APIClient.startQuery().doGetExercisrSearchList().subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetExercisrSearchList("").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SelectExerciseActivity.this);
 

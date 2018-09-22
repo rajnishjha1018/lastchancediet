@@ -1,5 +1,7 @@
 package com.httpfriccotech.lastchancediet.network;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseData;
 import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.Blog.BlogData;
@@ -31,8 +33,27 @@ public interface APIQueries {
     @GET("getRecipes")
     Observable<List<RecepieItem>> doGetRecipieList();
 
+    @GET("DeleteFoodItem")
+    Observable<JsonObject> doDeleteFoodItem(
+            @Query("user") String username,
+            @Query("pass") String pass,
+            @Query("postId") String postId,
+            @Query("userId") String userId,
+            @Query("CurrentDate") String selectedDate
+    );
+    @GET("DeleteExercisItem")
+    Observable<JsonObject> doDeleteExercisItem(
+            @Query("user") String username,
+            @Query("pass") String pass,
+            @Query("postId") String postId,
+            @Query("userId") String userId,
+            @Query("CurrentDate") String selectedDate
+    );
+
     @GET("ExercisrList")
-    Observable<List<SelectExerciseData>> doGetExercisrSearchList();
+    Observable<List<SelectExerciseData>> doGetExercisrSearchList(
+            @Query("postName") String postName
+    );
 
     @GET("getBlogList")
     Observable<List<BlogData>> doGetBlogs();

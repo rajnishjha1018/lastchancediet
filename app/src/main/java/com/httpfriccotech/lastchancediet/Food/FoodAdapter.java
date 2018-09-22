@@ -69,37 +69,17 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.txtCarbs.setText(myData.Carb);
         viewHolder.txtFat.setText(myData.Fat);
         viewHolder.txtFiber.setText(myData.Fiber);
-        viewHolder.textAddFood.setTag(myData.FoodType);
+        viewHolder.textAddFood.setTag(myData.PostId);
         viewHolder.textAddFood.setVisibility(View.VISIBLE);
         viewHolder.textAddFood.setImageResource(R.drawable.ic_delete_black_24dp);
         viewHolder.textAddFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String type = (String) v.getTag();
+                Toast.makeText(context,"Delete food for "+type,Toast.LENGTH_SHORT).show();
 
-                 Toast.makeText(context,"Delete food for "+type,Toast.LENGTH_SHORT).show();
-                /*LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-                //LayoutInflater layoutInflater = (LayoutInflater) ExerciseActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View customView = inflater.inflate(R.layout.food_popup,null);
-                closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+                //doDeleteFoodItem
 
-                txtmsg = (TextView) customView.findViewById(R.id.txtmsg);
-                txtmsg.setText("List of food for "+type +" will comming soon..");
-                //instantiate popup window
-                popupWindow = new PopupWindow(customView, RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-                View viewa = inflater.inflate(R.layout.row_exercise, null);
-                //display the popup window
-                popupWindow.showAtLocation(viewa, Gravity.CENTER, 0, 0);
-                //close the popup window on button click
-                closePopupBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });*/
-                //  if (addFoodListener != null) {
-                //      addFoodListener.addItem(type);
-                // }
             }
         });
     }
