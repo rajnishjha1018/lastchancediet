@@ -1,5 +1,6 @@
 package com.httpfriccotech.lastchancediet.network;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogData;
 import com.httpfriccotech.lastchancediet.Exercise.ExcerciseResponseModel;
@@ -76,8 +77,19 @@ public interface APIQueries {
                                                   @Query("title") String title,
                                                   @Query("fiber") String fiber, @Query("selectedDate") String selectedDate);
 
-    // @GET("getBlogList")
-    //Observable<List<BlogData>> doGetBlogList();
+    @GET("ExerciseAdd")
+    Observable<JsonArray> doAddExercise(@Query("user") String uid, @Query("pass") String pass,
+                                        @Query("post_id") String post_id,
+                                        @Query("title") String title,
+                                        @Query("is_etype") String is_type,
+                                        @Query("how_long") String is_type_value,
+                                        @Query("fat_points") String fat_points,
+                                        @Query("user_how_many_set") String protein_points,
+                                        @Query("user_how_many_reps_set") String carb_points,
+                                        @Query("user_how_many_weight_set") String food_id,
+                                        @Query("selectedDate") String selectedDate);
+
+    
     @GET("getBlog")
     Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId,@Query("postType") String postType);
 
