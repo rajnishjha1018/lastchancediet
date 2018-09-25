@@ -199,7 +199,7 @@ public class DashboardnewActivity extends AppCompatActivity
     private void getData() {
 
         progressDialog = ProgressDialog.show(DashboardnewActivity.this, "Loading...", "please wait...", false, false);
-        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId +"&CurrentDate="+currentDate;
+        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId +"&CurrentDate="+currentDate +"&refno="+System.currentTimeMillis();
         //String url = context.getString(R.string.ServiceURL)+"/lastchance/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
         Log.i("url", url);
         Ion.with(context)
