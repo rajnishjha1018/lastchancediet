@@ -26,6 +26,7 @@ public class APIClient {
 
     private APIClient() {
         OkHttpClient okHttpSharedClient = new OkHttpClient.Builder()
+                .cache(null)
                 .readTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS)
                 .connectTimeout(DEFAULT_CONNECT_TIME_OUT, TimeUnit.SECONDS).build();
 

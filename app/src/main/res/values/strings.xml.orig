@@ -11,10 +11,13 @@
     <string name="title_activity_dashboardnew">DashboardnewActivity</string>
     <string name="title_activity_recepies">RecepiesActivity</string>
     <string name="title_activity_recepie">RecepieActivity</string>
-    <string name="ServiceURL">http://192.168.0.4:4433/lastchance/</string>
-    <!--<string name="ServiceURL">https://laststaging.wpengine.com/</string>-->
+<<<<<<< HEAD
+    <!--<string name="ServiceURL">http://192.168.1.13:4433/lastchance/</string>-->
+    <string name="ServiceURL">http://laststaging.wpengine.com/</string>
+=======
     <!--<string name="ServiceURL">http://192.168.0.4:4433/lastchance/</string>-->
     <string name="ServiceURL">https://laststaging.wpengine.com/</string>
+>>>>>>> 87a994d613c55bb8f6d185bb67f69b213e6ba251
     <string name="action_add_favourite">Add to Favourites</string>
     <string name="action_play_next">Play Next</string>
     <string name="backdrop_title">LOVE MUSIC</string>

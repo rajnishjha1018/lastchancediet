@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="6dp">
 
     <LinearLayout
         android:id="@+id/ll_container"
@@ -19,30 +19,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Food Type"
             android:textColor="#000"
-            android:textSize="12dp" />
-        <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
+            android:textSize="12sp" />
+        <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/textTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:text="lastchancediet title"
             android:textColor="#000"
-            android:textSize="12dp" />-->
+            android:textSize="12sp" />
 
-        <ImageButton
-            android:id="@+id/textAddFood"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="5dp"
-            android:visibility="invisible"
-             />
 
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/textProtein"
@@ -88,13 +80,21 @@
             android:textColor="#000"
             android:textSize="12dp" />
 
+        <ImageButton
+            android:id="@+id/textAddFood"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:visibility="invisible" />
+
     </LinearLayout>
 
 
     <View
         android:id="@+id/view_divider"
-        android:layout_marginTop="6dp"
-        android:background="@color/greyLight"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"/>
+        android:layout_height="0.3dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/greyLight" />
 </LinearLayout>

@@ -5,9 +5,11 @@ package com.httpfriccotech.lastchancediet.network;
  */
 
 public class CommunicationConstants {
-    public static final String BASE_URL_KNOWLAGE = "http://192.168.0.4:4433/lastchance/wp-json/users/v1/";
+<<<<<<< HEAD
+    /*public static final String BASE_URL_KNOWLAGE = "http://192.168.1.13:4433/lastchance/wp-json/users/v1/";*/
+=======
 //    public static final String BASE_URL_KNOWLAGE = "http://192.168.0.4:4433/lastchance/wp-json/users/v1/";
+>>>>>>> 87a994d613c55bb8f6d185bb67f69b213e6ba251
 
-    /*public static final String BASE_URL_KNOWLAGE = "https://laststaging.wpengine.com/wp-json/users/v1/";*/
     public static final String BASE_URL_KNOWLAGE = "https://laststaging.wpengine.com/wp-json/users/v1/";
 }

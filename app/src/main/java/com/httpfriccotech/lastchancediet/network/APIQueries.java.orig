@@ -62,7 +62,11 @@ public interface APIQueries {
     Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date);
 
     @GET("FoodDetailBycategory")
-     Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("time") long time);
+<<<<<<< HEAD
+    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("refNo") double refNo);
+=======
+    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("time") long time);
+>>>>>>> 87a994d613c55bb8f6d185bb67f69b213e6ba251
 
     @GET("FoodDetailAdd")
     Observable<AddFoodDataResponse> doAddFoodData(@Query("user") String uid, @Query("pass") String pass,
