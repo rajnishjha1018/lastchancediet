@@ -3,33 +3,26 @@ package com.httpfriccotech.lastchancediet.Food;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
@@ -37,8 +30,6 @@ import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,10 +41,8 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
-
 public class FoodActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> ,View.OnClickListener{
     RecyclerView recyclerView;
     FoodAdapter myAdapter;
     Context context;
@@ -123,7 +112,7 @@ public class FoodActivity extends AppCompatActivity
                                                   int monthOfYear, int dayOfMonth) {
                                 int nmonth = monthOfYear + 1;
                                 currentDate = year + "-" + nmonth + "-" + dayOfMonth;
-                                getData();
+                                getData();//date select
                                 dDate.setText(nmonth + "-" + dayOfMonth + "-" + year);
                             }
                         }, mYear, mMonth, mDay);
@@ -158,11 +147,11 @@ public class FoodActivity extends AppCompatActivity
                     setUpDetailData(foodDetailResponseModel.data.dailyLimit);
             }
         });
-        getData();
+        getData();//oncreate
     }
 
     private void getData() {
-        APIClient.startQuery().doGetFoodDetails(UserId, currentDate).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetFoodDetails(UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodActivity.this);
     }
@@ -181,7 +170,7 @@ public class FoodActivity extends AppCompatActivity
                 intent.putExtra("foodType", foodType);
                 startActivityForResult(intent, 1214);
             }
-        });
+        },this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapter);
     }
@@ -280,11 +269,14 @@ public class FoodActivity extends AppCompatActivity
         if (data != null) {
             if (data instanceof AddFoodDataResponse) {
                 Toast.makeText(this, ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(context, FoodActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(context, FoodActivity.class);
+//                startActivity(intent);
+                getData();//After added data
             } else if (data instanceof FoodDetailResponseModel) {
                 foodDetailResponseModel = (FoodDetailResponseModel) data;
                 setUpData((FoodDetailResponseModel) data);
+            }else {
+                getData();
             }
         }
     }
@@ -334,5 +326,22 @@ public class FoodActivity extends AppCompatActivity
     @Override
     public void onComplete() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.textAddFood:{
+                int pos=(int)v.getTag();
+                deleteFoodData(pos);
+                break;
+            }
+        }
+    }
+
+    private void deleteFoodData(int pos) {
+        APIClient.startQuery().doDeleteFoodItem("tejrawal","rawal101",myDatas.get(pos).PostId,UserId,currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(FoodActivity.this);
     }
 }
