@@ -3,7 +3,6 @@ package com.httpfriccotech.lastchancediet.Food;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.httpfriccotech.lastchancediet.R;
@@ -15,7 +14,7 @@ public class FoodHolder extends RecyclerView.ViewHolder {
 
     View view;
     View view_divider;
-    TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber;
+    TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber,titleTV;
     ImageView textAddFood;
 
     View container;
@@ -30,6 +29,7 @@ public class FoodHolder extends RecyclerView.ViewHolder {
         txtFat= (TextView) view.findViewById(R.id.textFat);
         txtFiber = (TextView) view.findViewById(R.id.textFiber);
         textAddFood = (ImageView) view.findViewById(R.id.textAddFood);
+        titleTV = (TextView) view.findViewById(R.id.textTitle);
 
     }
 }

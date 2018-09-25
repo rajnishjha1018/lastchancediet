@@ -1,14 +1,13 @@
 package com.httpfriccotech.lastchancediet.network;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseData;
-import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.Blog.BlogData;
 import com.httpfriccotech.lastchancediet.Exercise.ExcerciseResponseModel;
+import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseData;
 import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
 import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
+import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
 
 import java.util.List;
@@ -39,7 +38,8 @@ public interface APIQueries {
             @Query("pass") String pass,
             @Query("postId") String postId,
             @Query("userId") String userId,
-            @Query("CurrentDate") String selectedDate
+            @Query("CurrentDate") String selectedDate,
+            @Query("time") long time
     );
     @GET("DeleteExercisItem")
     Observable<JsonObject> doDeleteExercisItem(
@@ -62,7 +62,7 @@ public interface APIQueries {
     Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date);
 
     @GET("FoodDetailBycategory")
-    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date);
+    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("time") long time);
 
     @GET("FoodDetailAdd")
     Observable<AddFoodDataResponse> doAddFoodData(@Query("user") String uid, @Query("pass") String pass,
