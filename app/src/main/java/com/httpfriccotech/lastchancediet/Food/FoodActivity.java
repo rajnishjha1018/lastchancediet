@@ -43,6 +43,7 @@ import com.koushikdutta.ion.Ion;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -162,7 +163,8 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void getData() {
-        APIClient.startQuery().doGetFoodDetails(UserId, currentDate).subscribeOn(Schedulers.io())
+        Random r = new Random();
+        APIClient.startQuery().doGetFoodDetails(UserId, currentDate,r.nextDouble()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodActivity.this);
     }

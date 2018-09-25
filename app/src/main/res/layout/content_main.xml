@@ -40,12 +40,13 @@
         android:layout_height="50dp"
         android:layout_below="@+id/tv_last_change"
         android:layout_gravity="center"
-        android:background="@color/white"
+        android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        >
 
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/textViewInvalid"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

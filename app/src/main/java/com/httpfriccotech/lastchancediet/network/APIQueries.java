@@ -62,7 +62,7 @@ public interface APIQueries {
     Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date);
 
     @GET("FoodDetailBycategory")
-    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date);
+    Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("refNo") double refNo);
 
     @GET("FoodDetailAdd")
     Observable<AddFoodDataResponse> doAddFoodData(@Query("user") String uid, @Query("pass") String pass,

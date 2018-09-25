@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
                 .setCallback(new FutureCallback<JsonArray>() {
                     @Override
                     public void onCompleted(Exception e, JsonArray result) {
-                        Bundle bundle = new Bundle();
+                       Bundle bundle = new Bundle();
                         if (result == null) {
                             textViewInvalid.setVisibility(View.VISIBLE);
                             textViewInvalid.setText("Something went wrong. Please try again!");
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity
                             String UserName = jsonObject.get("userName").getAsString();
 
                             if (!(UserId.equalsIgnoreCase(""))) {
-                                bundle.putString("userId", UserId);
+                               bundle.putString("userId", UserId);
                                 bundle.putString("userName", UserName);
                                 GlobalManage.getInstance().setUserId(UserId);
                                 GlobalManage.getInstance().setUserName(UserName);
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             } else {
-                                LinearViewInvalid.setVisibility(View.VISIBLE);
+                                textViewInvalid.setVisibility(View.VISIBLE);
                                 textViewInvalid.setText("Invalid username or password.");
 
                             }
