@@ -1,25 +1,14 @@
 package com.httpfriccotech.lastchancediet.Exercise;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.httpfriccotech.lastchancediet.Exercise.ExerciseData;
-import com.httpfriccotech.lastchancediet.Exercise.ExerciseHolder;
-import com.httpfriccotech.lastchancediet.Food.FoodActivity;
-import com.httpfriccotech.lastchancediet.Food.SelectFoodActivity;
 import com.httpfriccotech.lastchancediet.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,12 +23,14 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<ExerciseDataModel> itemList;
     private Context context;
     boolean isstrength;
+    private View.OnClickListener onClickListener;
 
-    public ExerciseAdapter(Context context, List<ExerciseDataModel> itemList, boolean isstrength) {
+    public ExerciseAdapter(Context context, List<ExerciseDataModel> itemList, boolean isstrength, View.OnClickListener onClickListener) {
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.isstrength = isstrength;
+        this.onClickListener=onClickListener;
     }
 
     public void updateData(List<ExerciseDataModel> itemList) {
@@ -58,22 +49,30 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ExerciseHolder viewHolder = (ExerciseHolder) holder;
         ExerciseDataModel myData = itemList.get(position);
+
+        if (position==0 && viewHolder.titleTV!=null){
+            viewHolder.titleTV.setVisibility(View.VISIBLE);
+            viewHolder.caloriesLayout.setVisibility(View.VISIBLE);
+            viewHolder.titleTV.setText(myData.getEx_type());
+        }else{
+            if (viewHolder.titleTV!=null)
+                viewHolder.titleTV.setVisibility(View.GONE);
+            if (viewHolder.caloriesLayout!=null)
+                viewHolder.caloriesLayout.setVisibility(View.GONE);
+        }
         viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        viewHolder.txtExerciseType.setText(myData.getEx_type());
+        viewHolder.txtExerciseType.setText(myData.getTitle());
         viewHolder.txtMinutes.setText(myData.getVal1());
         viewHolder.txtCaloriesBurned.setText(myData.getVal2());
         if (viewHolder.valueThree != null)
             viewHolder.valueThree.setText(myData.getVal3());
-        viewHolder.textAddExercise.setTag(myData.getEx_type());
-       // viewHolder.textAddExercise.setVisibility(myData.getVal1().equalsIgnoreCase("0") ? View.VISIBLE : View.INVISIBLE);
-        viewHolder.textAddExercise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String type = (String) v.getTag();
-                Intent intent = new Intent(context, SelectExerciseActivity.class);
-                context.startActivity(intent);
-            }
-        });
+        if (viewHolder.addExerciseIB1!=null) {
+            viewHolder.addExerciseIB1.setTag(position);
+            viewHolder.addExerciseIB1.setOnClickListener(onClickListener);
+        } if (viewHolder.addExerciseIB2!=null) {
+            viewHolder.addExerciseIB2.setTag(position);
+            viewHolder.addExerciseIB2.setOnClickListener(onClickListener);
+        }
 
     }
 

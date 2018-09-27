@@ -37,73 +37,24 @@
                 android:textColor="#000"
                 android:textSize="18dp" />
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Cardio" />
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Training" />
-            </RadioGroup>
+            <!--<RadioGroup-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:orientation="horizontal">-->
+            <!--<RadioButton-->
+                <!--android:id="@+id/radioButton2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:checked="true"-->
+                <!--android:text="Cardio" />-->
+            <!--<RadioButton-->
+                <!--android:id="@+id/radioButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Training" />-->
+            <!--</RadioGroup>-->
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ececec"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:layout_width="0dp"
-                android:layout_weight="1.12"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Exercise"
-                android:textColor="#000"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:id="@+id/Ex1"
-                android:layout_marginLeft="10dp"
-                />
-            <ImageButton
-                android:id="@+id/btnAddExercise"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-
-                android:src="@android:drawable/ic_input_add" />
-
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Minutes"
-                android:textColor="#000"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:id="@+id/v1"
-                android:layout_marginLeft="10dp"
-                />
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:text="Calories Burned"
-                android:textColor="#000"
-                android:textSize="12dp"
-                android:id="@+id/textCaloriesBurned"
-                android:layout_marginLeft="10dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
         </LinearLayout>
         <View
             android:layout_marginTop="6dp"
@@ -115,25 +66,10 @@
         android:layout_marginTop="10dp"
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp">
 
     </android.support.v7.widget.RecyclerView>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ececec"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <include layout="@layout/strength_item_layout"/>
-        </LinearLayout>
-        <View
-            android:layout_marginTop="6dp"
-            android:background="@color/greyLight"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"/>
-
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="10dp"
             android:id="@+id/recycler1"

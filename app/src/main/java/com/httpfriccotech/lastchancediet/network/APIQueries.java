@@ -60,7 +60,7 @@ public interface APIQueries {
     Observable<List<BlogData>> doGetBlogs();
 
     @GET("ExerciseDetail")
-    Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date);
+    Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date, @Query("time") long time);
 
     @GET("FoodDetailBycategory")
      Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date,@Query("time") long time);
