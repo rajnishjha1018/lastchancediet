@@ -27,7 +27,6 @@ import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.reactivex.Observer;
@@ -37,7 +36,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ExerciseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer<ExcerciseResponseModel> {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<ExcerciseResponseModel>,View.OnClickListener {
     RecyclerView recyclerView;
     ExerciseAdapter cardioAdapter;
     ExerciseAdapter strengthAdapter;
@@ -124,27 +123,27 @@ public class ExerciseActivity extends AppCompatActivity
             }
         });
 
-        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,"Add Exercise for btnAddExercise",Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        content.findViewById(R.id.textAddExercise).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* Intent intent = new Intent(context, SelectExerciseActivity.class);
-                context.startActivity(intent);*/
-                Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context,"Add Exercise for btnAddExercise",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//        content.findViewById(R.id.textAddExercise).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               /* Intent intent = new Intent(context, SelectExerciseActivity.class);
+//                context.startActivity(intent);*/
+//                Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         getData();
     }
 
     private void getData() {
-        APIClient.startQuery().doGetExcercises(UserId, currentDate).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetExcercises(UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ExerciseActivity.this);
     }
@@ -158,7 +157,7 @@ public class ExerciseActivity extends AppCompatActivity
         if (cardioAdapter == null) {
             recyclerView = (RecyclerView) findViewById(R.id.recycler);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-            cardioAdapter = new ExerciseAdapter(context, model.getCardio(),false);
+            cardioAdapter = new ExerciseAdapter(context, model.getCardio(),false,this);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(cardioAdapter);
         } else {
@@ -168,7 +167,7 @@ public class ExerciseActivity extends AppCompatActivity
         if (strengthAdapter == null) {
             RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-            strengthAdapter = new ExerciseAdapter(context, model.getStrength(),true);
+            strengthAdapter = new ExerciseAdapter(context, model.getStrength(),true,this);
             recyclerView1.setLayoutManager(linearLayoutManager);
             recyclerView1.setAdapter(strengthAdapter);
         } else {
@@ -260,5 +259,21 @@ public class ExerciseActivity extends AppCompatActivity
     @Override
     public void onComplete() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ib_add_ex1:{
+                Intent intent = new Intent(context, SelectExerciseActivity.class);
+                context.startActivity(intent);
+                break;
+            }
+            case R.id.ib_add_ex2:{
+                Intent intent = new Intent(context, SelectExerciseActivity.class);
+                context.startActivity(intent);
+                break;
+            }
+        }
     }
 }
