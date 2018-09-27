@@ -89,7 +89,7 @@ public interface APIQueries {
                                         @Query("user_how_many_weight_set") String food_id,
                                         @Query("selectedDate") String selectedDate);
 
-    
+
     @GET("getBlog")
     Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId,@Query("postType") String postType);
 

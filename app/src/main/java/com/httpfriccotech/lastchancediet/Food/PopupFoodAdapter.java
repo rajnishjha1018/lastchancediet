@@ -59,6 +59,7 @@ public class PopupFoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.txtFiber.setText(myData.getFiber());
         viewHolder.textAddFood.setTag(myData.getTitle());
         viewHolder.textAddFood.setVisibility(myData.getProtein().equalsIgnoreCase("0") ? View.VISIBLE : View.INVISIBLE);
+        viewHolder.titleTV.setVisibility(View.GONE);
         viewHolder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
