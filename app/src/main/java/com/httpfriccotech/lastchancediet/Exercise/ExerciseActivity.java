@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,9 @@ public class ExerciseActivity extends AppCompatActivity
     String currentDate;
     Bundle bundle;
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private final int CARDIO_REQ=1001;
+    private final int STRENGTH_REQ=100;
+    private RelativeLayout progressLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class ExerciseActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
 
         final Calendar cd = Calendar.getInstance();
         mYear = cd.get(Calendar.YEAR);
@@ -146,6 +151,7 @@ public class ExerciseActivity extends AppCompatActivity
         APIClient.startQuery().doGetExcercises(UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ExerciseActivity.this);
+        showProgress();
     }
 
 
@@ -249,16 +255,17 @@ public class ExerciseActivity extends AppCompatActivity
     @Override
     public void onNext(@NonNull ExcerciseResponseModel excerciseResponseModel) {
         setupRecycler(excerciseResponseModel);
+        hideProgress();
     }
 
     @Override
     public void onError(@NonNull Throwable e) {
-
+        hideProgress();
     }
 
     @Override
     public void onComplete() {
-
+        hideProgress();
     }
 
     @Override
@@ -266,14 +273,33 @@ public class ExerciseActivity extends AppCompatActivity
         switch (v.getId()){
             case R.id.ib_add_ex1:{
                 Intent intent = new Intent(context, SelectExerciseActivity.class);
-                context.startActivity(intent);
+                intent.putExtra("type","cardio");
+                startActivityForResult(intent,CARDIO_REQ);
                 break;
             }
             case R.id.ib_add_ex2:{
                 Intent intent = new Intent(context, SelectExerciseActivity.class);
-                context.startActivity(intent);
+                intent.putExtra("type","strength");
+                startActivityForResult(intent,STRENGTH_REQ);
                 break;
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==CARDIO_REQ)
+            getData();
+        else if (requestCode==STRENGTH_REQ)
+            getData();
+
+    }
+    private void showProgress() {
+        if (progressLayout != null) progressLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        if (progressLayout != null) progressLayout.setVisibility(View.GONE);
     }
 }

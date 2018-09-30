@@ -38,6 +38,37 @@ public class SelectExerciseData implements Serializable {
     @Expose
     String Calories;
 
+    public String getStrength_training_reps_set() {
+        return strength_training_reps_set;
+    }
+
+    public void setStrength_training_reps_set(String strength_training_reps_set) {
+        this.strength_training_reps_set = strength_training_reps_set;
+    }
+
+    public String getStrength_training_weight_set() {
+        return strength_training_weight_set;
+    }
+
+    public void setStrength_training_weight_set(String strength_training_weight_set) {
+        this.strength_training_weight_set = strength_training_weight_set;
+    }
+
+    public String getHowlong() {
+        return howlong;
+    }
+
+    public void setHowlong(String howlong) {
+        this.howlong = howlong;
+    }
+
+    public String getCalories() {
+        return Calories;
+    }
+
+    public void setCalories(String calories) {
+        Calories = calories;
+    }
 
     public String getTitle() {
         return title;

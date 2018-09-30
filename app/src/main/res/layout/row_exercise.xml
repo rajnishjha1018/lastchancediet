@@ -48,16 +48,9 @@
                 android:text="Exercise"
                 android:textColor="#000"
                 android:textSize="12sp"
-                android:gravity="center"
+                android:gravity="left"
                 android:id="@+id/Ex1"
                 android:layout_marginLeft="10dp" />
-            <!--<ImageButton-->
-            <!--android:id="@+id/btnAddExercise"-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="center"-->
-
-            <!--android:src="@android:drawable/ic_input_add" />-->
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:layout_width="0dp"
@@ -105,7 +98,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="left"
             android:text="Exercise"
             android:textColor="#000"
             android:textSize="12dp" />
