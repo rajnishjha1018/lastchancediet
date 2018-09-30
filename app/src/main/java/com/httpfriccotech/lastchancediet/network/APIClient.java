@@ -3,6 +3,7 @@ package com.httpfriccotech.lastchancediet.network;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,18 +26,20 @@ public class APIClient {
     }
 
     private APIClient() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpSharedClient = new OkHttpClient.Builder()
                 .cache(null)
+                .addInterceptor(loggingInterceptor)
                 .readTimeout(DEFAULT_READ_TIME_OUT, TimeUnit.SECONDS)
                 .connectTimeout(DEFAULT_CONNECT_TIME_OUT, TimeUnit.SECONDS).build();
-
         Retrofit _retrofit = new Retrofit.Builder()
                 .baseUrl(CommunicationConstants.BASE_URL_KNOWLAGE)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpSharedClient)
-                .build();
 
+                .build();
         apiQueries = _retrofit.create(APIQueries.class);
     }
 }
