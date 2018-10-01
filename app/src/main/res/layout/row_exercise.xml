@@ -8,86 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/caloriesLayout">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:gravity="center"
-                android:text="Category"
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:layout_marginBottom="10dp"/>
-            <ImageButton
-                android:id="@+id/ib_add_ex1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/md_transparent"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_add"/>
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/caloriesLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ececec"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp">
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Exercise"
-                android:textColor="#000"
-                android:textSize="12sp"
-                android:gravity="left"
-                android:id="@+id/Ex1"
-                android:layout_marginLeft="10dp" />
-
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Minutes"
-                android:textColor="#000"
-                android:layout_weight="1"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:id="@+id/v1"
-                android:layout_marginLeft="10dp"
-                />
-            <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:text="Calories Burned"
-                android:textColor="#000"
-                android:textSize="12dp"
-                android:id="@+id/textCaloriesBurned"
-                android:layout_marginLeft="10dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <View
-            android:layout_marginTop="6dp"
-            android:background="@color/greyLight"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_marginBottom="4dp"/>
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -122,7 +42,8 @@
             android:gravity="center"
             android:text=""
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

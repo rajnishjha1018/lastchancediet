@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +53,11 @@ public class ExerciseActivity extends AppCompatActivity
     private final int CARDIO_REQ=1001;
     private final int STRENGTH_REQ=100;
     private RelativeLayout progressLayout;
+    private ImageButton addExerciseIB1;
+    private ImageButton addExerciseIB2;
+    private TextView titleTV;
+    private LinearLayout caloriesLayout;
+    private LinearLayout strengthLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +134,13 @@ public class ExerciseActivity extends AppCompatActivity
 
             }
         });
+        addExerciseIB1 = (ImageButton)findViewById(R.id.ib_add_ex1);
+        addExerciseIB1.setOnClickListener(this);
+        addExerciseIB2= (ImageButton)findViewById(R.id.ib_add_ex2);
+        addExerciseIB2.setOnClickListener(this);
+        titleTV=(TextView)findViewById(R.id.title);
+        caloriesLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
+        strengthLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
 
 //        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
 //            @Override
