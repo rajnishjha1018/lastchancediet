@@ -303,6 +303,18 @@ public class ExerciseActivity extends AppCompatActivity
                deleExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
                 break;
             }
+            case R.id.ib_add_ex1:{
+                Intent intent = new Intent(context, SelectExerciseActivity.class);
+                intent.putExtra("type","cardio");
+                startActivityForResult(intent,CARDIO_REQ);
+                break;
+            }
+            case R.id.ib_add_ex2:{
+                Intent intent = new Intent(context, SelectExerciseActivity.class);
+                intent.putExtra("type","strength");
+                startActivityForResult(intent,STRENGTH_REQ);
+                break;
+            }
         }
     }
 
