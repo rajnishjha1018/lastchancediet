@@ -16,10 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
@@ -37,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ExerciseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer<ExcerciseResponseModel>,View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object>,View.OnClickListener {
     RecyclerView recyclerView;
     ExerciseAdapter cardioAdapter;
     ExerciseAdapter strengthAdapter;
@@ -51,6 +54,13 @@ public class ExerciseActivity extends AppCompatActivity
     private final int CARDIO_REQ=1001;
     private final int STRENGTH_REQ=100;
     private RelativeLayout progressLayout;
+    private ImageButton addExerciseIB1;
+    private ImageButton addExerciseIB2;
+    private TextView titleTV;
+    private LinearLayout caloriesLayout;
+    private LinearLayout strengthLayout;
+    private RecyclerView recyclerView1;
+    private ExcerciseResponseModel excerciseResponseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +137,13 @@ public class ExerciseActivity extends AppCompatActivity
 
             }
         });
+        addExerciseIB1 = (ImageButton)findViewById(R.id.ib_add_ex1);
+        addExerciseIB1.setOnClickListener(this);
+        addExerciseIB2= (ImageButton)findViewById(R.id.ib_add_ex2);
+        addExerciseIB2.setOnClickListener(this);
+        titleTV=(TextView)findViewById(R.id.title);
+        caloriesLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
+        strengthLayout=(LinearLayout)findViewById(R.id.strLayout);
 
 //        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -171,7 +188,7 @@ public class ExerciseActivity extends AppCompatActivity
         }
 
         if (strengthAdapter == null) {
-            RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
+            recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             strengthAdapter = new ExerciseAdapter(context, model.getStrength(),true,this);
             recyclerView1.setLayoutManager(linearLayoutManager);
@@ -253,9 +270,15 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     @Override
-    public void onNext(@NonNull ExcerciseResponseModel excerciseResponseModel) {
-        setupRecycler(excerciseResponseModel);
-        hideProgress();
+    public void onNext(Object response) {
+        if (response instanceof ExcerciseResponseModel) {
+            this.excerciseResponseModel = (ExcerciseResponseModel) response;
+            setupRecycler(this.excerciseResponseModel);
+            hideProgress();
+        }else if (response instanceof JsonObject){
+            getData();
+            showProgress();
+        }
     }
 
     @Override
@@ -271,6 +294,15 @@ public class ExerciseActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.ib_delete_cal:{
+                int pos=(int)v.getTag();
+               deleExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
+                break;
+            } case R.id.ib_delete_str:{
+                int pos=(int)v.getTag();
+               deleExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
+                break;
+            }
             case R.id.ib_add_ex1:{
                 Intent intent = new Intent(context, SelectExerciseActivity.class);
                 intent.putExtra("type","cardio");
@@ -286,6 +318,13 @@ public class ExerciseActivity extends AppCompatActivity
         }
     }
 
+    private void deleExcercise(String exerciseID) {
+        APIClient.startQuery().doDeleteExercisItem(UserName,GlobalManage.getInstance().getPassword(),exerciseID,UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this);
+        showProgress();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -297,9 +336,19 @@ public class ExerciseActivity extends AppCompatActivity
     }
     private void showProgress() {
         if (progressLayout != null) progressLayout.setVisibility(View.VISIBLE);
+        if (caloriesLayout!=null)caloriesLayout.setVisibility(View.GONE);
+        if (strengthLayout!=null)strengthLayout.setVisibility(View.GONE);
+        if (recyclerView!=null)recyclerView.setVisibility(View.GONE);
+        if (recyclerView1!=null)recyclerView1.setVisibility(View.GONE);
+
     }
 
     private void hideProgress() {
         if (progressLayout != null) progressLayout.setVisibility(View.GONE);
+        if (caloriesLayout!=null)caloriesLayout.setVisibility(View.VISIBLE);
+        if (strengthLayout!=null)strengthLayout.setVisibility(View.VISIBLE);
+        if (recyclerView!=null)recyclerView.setVisibility(View.VISIBLE);
+        if (recyclerView1!=null)recyclerView1.setVisibility(View.VISIBLE);
+
     }
 }

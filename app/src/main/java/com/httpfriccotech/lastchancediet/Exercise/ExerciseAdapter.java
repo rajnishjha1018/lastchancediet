@@ -49,29 +49,19 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ExerciseHolder viewHolder = (ExerciseHolder) holder;
         ExerciseDataModel myData = itemList.get(position);
-
-        if (position==0 && viewHolder.titleTV!=null){
-            viewHolder.titleTV.setVisibility(View.VISIBLE);
-            viewHolder.caloriesLayout.setVisibility(View.VISIBLE);
-            viewHolder.titleTV.setText(myData.getEx_type());
-        }else{
-            if (viewHolder.titleTV!=null)
-                viewHolder.titleTV.setVisibility(View.GONE);
-            if (viewHolder.caloriesLayout!=null)
-                viewHolder.caloriesLayout.setVisibility(View.GONE);
-        }
         viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         viewHolder.txtExerciseType.setText(myData.getTitle());
         viewHolder.txtMinutes.setText(myData.getVal1());
+        if (viewHolder.txtCaloriesBurned!=null)
         viewHolder.txtCaloriesBurned.setText(myData.getVal2());
         if (viewHolder.valueThree != null)
             viewHolder.valueThree.setText(myData.getVal3());
-        if (viewHolder.addExerciseIB1!=null) {
-            viewHolder.addExerciseIB1.setTag(position);
-            viewHolder.addExerciseIB1.setOnClickListener(onClickListener);
-        } if (viewHolder.addExerciseIB2!=null) {
-            viewHolder.addExerciseIB2.setTag(position);
-            viewHolder.addExerciseIB2.setOnClickListener(onClickListener);
+        if (viewHolder.deleteEx!=null) {
+            viewHolder.deleteEx.setOnClickListener(onClickListener);
+            viewHolder.deleteEx.setTag(position);
+        }if (viewHolder.deleteStr!=null) {
+            viewHolder.deleteStr.setOnClickListener(onClickListener);
+            viewHolder.deleteStr.setTag(position);
         }
 
     }

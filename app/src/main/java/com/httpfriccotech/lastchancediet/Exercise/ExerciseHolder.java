@@ -16,7 +16,7 @@ public class ExerciseHolder extends RecyclerView.ViewHolder {
 
     View view;
     TextView txtExerciseType, txtMinutes, txtCaloriesBurned, valueThree,titleTV;
-    ImageButton addExerciseIB1,addExerciseIB2;
+    ImageButton deleteEx,deleteStr;
      LinearLayout caloriesLayout,strengthLayout;
 
     public ExerciseHolder(View itemView, boolean isstrength) {
@@ -24,13 +24,10 @@ public class ExerciseHolder extends RecyclerView.ViewHolder {
         view = itemView;
         txtExerciseType = (TextView) view.findViewById(isstrength ? R.id.txtSetsType : R.id.textExercise);
         txtMinutes = (TextView) view.findViewById(isstrength ? R.id.txtSets : R.id.textMinutes);
-        txtCaloriesBurned = (TextView) view.findViewById(isstrength ? R.id.textReps : R.id.textCaloriesBurned);
+        txtCaloriesBurned = (TextView) view.findViewById(R.id.textReps);
         valueThree = (TextView) view.findViewById(R.id.textWeight);
-        addExerciseIB1 = (ImageButton) view.findViewById(R.id.ib_add_ex1);
-        addExerciseIB2= (ImageButton) view.findViewById(R.id.ib_add_ex2);
-        titleTV=(TextView)view.findViewById(R.id.title);
-        caloriesLayout=(LinearLayout) view.findViewById(R.id.caloriesLayout);
-        strengthLayout=(LinearLayout) view.findViewById(R.id.caloriesLayout);
+        deleteEx=(ImageButton)view.findViewById(R.id.ib_delete_cal);
+        deleteStr=(ImageButton)view.findViewById(R.id.ib_delete_str);
 
     }
 }
