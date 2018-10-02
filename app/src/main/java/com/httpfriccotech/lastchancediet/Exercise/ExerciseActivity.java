@@ -58,6 +58,7 @@ public class ExerciseActivity extends AppCompatActivity
     private TextView titleTV;
     private LinearLayout caloriesLayout;
     private LinearLayout strengthLayout;
+    private RecyclerView recyclerView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +141,7 @@ public class ExerciseActivity extends AppCompatActivity
         addExerciseIB2.setOnClickListener(this);
         titleTV=(TextView)findViewById(R.id.title);
         caloriesLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
-        strengthLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
+        strengthLayout=(LinearLayout)findViewById(R.id.strLayout);
 
 //        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -185,7 +186,7 @@ public class ExerciseActivity extends AppCompatActivity
         }
 
         if (strengthAdapter == null) {
-            RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
+            recyclerView1 = (RecyclerView) findViewById(R.id.recycler1);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             strengthAdapter = new ExerciseAdapter(context, model.getStrength(),true,this);
             recyclerView1.setLayoutManager(linearLayoutManager);
@@ -311,9 +312,19 @@ public class ExerciseActivity extends AppCompatActivity
     }
     private void showProgress() {
         if (progressLayout != null) progressLayout.setVisibility(View.VISIBLE);
+        if (caloriesLayout!=null)caloriesLayout.setVisibility(View.GONE);
+        if (strengthLayout!=null)strengthLayout.setVisibility(View.GONE);
+        if (recyclerView!=null)recyclerView.setVisibility(View.GONE);
+        if (recyclerView1!=null)recyclerView1.setVisibility(View.GONE);
+
     }
 
     private void hideProgress() {
         if (progressLayout != null) progressLayout.setVisibility(View.GONE);
+        if (caloriesLayout!=null)caloriesLayout.setVisibility(View.VISIBLE);
+        if (strengthLayout!=null)strengthLayout.setVisibility(View.VISIBLE);
+        if (recyclerView!=null)recyclerView.setVisibility(View.VISIBLE);
+        if (recyclerView1!=null)recyclerView1.setVisibility(View.VISIBLE);
+
     }
 }
