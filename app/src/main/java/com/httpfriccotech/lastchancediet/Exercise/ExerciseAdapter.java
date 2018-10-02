@@ -56,6 +56,13 @@ public class ExerciseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.txtCaloriesBurned.setText(myData.getVal2());
         if (viewHolder.valueThree != null)
             viewHolder.valueThree.setText(myData.getVal3());
+        if (viewHolder.deleteEx!=null) {
+            viewHolder.deleteEx.setOnClickListener(onClickListener);
+            viewHolder.deleteEx.setTag(position);
+        }if (viewHolder.deleteStr!=null) {
+            viewHolder.deleteStr.setOnClickListener(onClickListener);
+            viewHolder.deleteStr.setTag(position);
+        }
 
     }
 

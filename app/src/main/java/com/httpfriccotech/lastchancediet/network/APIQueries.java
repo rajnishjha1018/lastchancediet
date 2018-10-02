@@ -36,7 +36,7 @@ public interface APIQueries {
     Observable<JsonObject> doDeleteFoodItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
     @GET("DeleteExercisItem")
-    Observable<JsonObject> doDeleteExercisItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate);
+    Observable<JsonObject> doDeleteExercisItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
     @GET("ExercisrList")
     Observable<ExcerciseMainResponseModel> doGetExercisrSearchList(@Query("postName") String postName,@Query("time") long time);

@@ -147,7 +147,8 @@
                     android:gravity="center"
                     android:text="Minutes"
                     android:textColor="#000"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:layout_marginRight="24dp"/>
 
                 <com.httpfriccotech.lastchancediet.ui.DietTextView
                     android:id="@+id/textCaloriesBurned1"
@@ -278,7 +279,8 @@
                     android:gravity="center"
                     android:text="Weight/Set"
                     android:textColor="#000"
-                    android:textSize="12dp" />
+                    android:textSize="12sp"
+                    android:layout_marginRight="24dp"/>
             </LinearLayout>
 
             <View

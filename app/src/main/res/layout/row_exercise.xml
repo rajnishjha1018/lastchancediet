@@ -32,7 +32,12 @@
             android:text="Minutes"
             android:textColor="#000"
             android:textSize="12dp" />
-
+            <ImageButton
+                android:id="@+id/ib_delete_cal"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_remove_circle_black_24dp"
+                android:background="@android:color/transparent"/>
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/calories_burned"
             android:layout_width="0dp"

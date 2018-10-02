@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
@@ -39,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ExerciseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer<ExcerciseResponseModel>,View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object>,View.OnClickListener {
     RecyclerView recyclerView;
     ExerciseAdapter cardioAdapter;
     ExerciseAdapter strengthAdapter;
@@ -59,6 +60,7 @@ public class ExerciseActivity extends AppCompatActivity
     private LinearLayout caloriesLayout;
     private LinearLayout strengthLayout;
     private RecyclerView recyclerView1;
+    private ExcerciseResponseModel excerciseResponseModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,9 +270,15 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     @Override
-    public void onNext(@NonNull ExcerciseResponseModel excerciseResponseModel) {
-        setupRecycler(excerciseResponseModel);
-        hideProgress();
+    public void onNext(Object response) {
+        if (response instanceof ExcerciseResponseModel) {
+            this.excerciseResponseModel = (ExcerciseResponseModel) response;
+            setupRecycler(this.excerciseResponseModel);
+            hideProgress();
+        }else if (response instanceof JsonObject){
+            getData();
+            showProgress();
+        }
     }
 
     @Override
@@ -286,19 +294,23 @@ public class ExerciseActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ib_add_ex1:{
-                Intent intent = new Intent(context, SelectExerciseActivity.class);
-                intent.putExtra("type","cardio");
-                startActivityForResult(intent,CARDIO_REQ);
+            case R.id.ib_delete_cal:{
+                int pos=(int)v.getTag();
+               deleExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
                 break;
-            }
-            case R.id.ib_add_ex2:{
-                Intent intent = new Intent(context, SelectExerciseActivity.class);
-                intent.putExtra("type","strength");
-                startActivityForResult(intent,STRENGTH_REQ);
+            } case R.id.ib_delete_str:{
+                int pos=(int)v.getTag();
+               deleExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
                 break;
             }
         }
+    }
+
+    private void deleExcercise(String exerciseID) {
+        APIClient.startQuery().doDeleteExercisItem(UserName,GlobalManage.getInstance().getPassword(),exerciseID,UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this);
+        showProgress();
     }
 
     @Override

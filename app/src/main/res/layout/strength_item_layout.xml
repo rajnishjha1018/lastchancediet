@@ -55,6 +55,12 @@
         android:text="Weight/Set"
         android:textColor="#000"
         android:textSize="12dp" />
+        <ImageButton
+            android:id="@+id/ib_delete_str"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_remove_circle_black_24dp"
+            android:background="@android:color/transparent"/>
 </LinearLayout>
     <View
         android:layout_marginTop="6dp"
