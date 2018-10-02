@@ -2,8 +2,6 @@ package com.httpfriccotech.lastchancediet.Exercise;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.Food.AddFoodPopupFragment;
+import com.httpfriccotech.lastchancediet.Exercise.dialog.AddExerciseFragmentDialog;
+import com.httpfriccotech.lastchancediet.Exercise.interfaces.AddExerciseListener;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
@@ -26,7 +25,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SelectExerciseActivity extends AppCompatActivity implements Observer<Object>, View.OnClickListener {
+public class SelectExerciseActivity extends AppCompatActivity implements Observer<Object>, View.OnClickListener, AddExerciseListener {
 
     private AddExerciseAdapterForCardio cardioAdapter;
     private AddExerciseAdapterForStrength strenghAdapter;
@@ -83,14 +82,17 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
         findViewById(R.id.addNewExercise).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                Fragment frag = manager.findFragmentByTag("fragment_edit_name");
-                if (frag != null) {
-                    manager.beginTransaction().remove(frag).commit();
+                android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                AddExerciseFragmentDialog addExerciseFragmentDialog = null;
+                if (type.equalsIgnoreCase("cardio")) {
+                    addExerciseFragmentDialog = AddExerciseFragmentDialog.newInstance("c", "Add New Calories Exercise");
+                } else if (type.equalsIgnoreCase("strength")) {
+                    addExerciseFragmentDialog = AddExerciseFragmentDialog.newInstance("s", "Add New Strength Exercise");
+                } else {
+                    return;
                 }
-                AddFoodPopupFragment editNameDialog = new AddFoodPopupFragment();
-                editNameDialog.show(manager, "fragment_edit_name");
-                //close the popup window on button click
+                addExerciseFragmentDialog.addExercise(SelectExerciseActivity.this);
+                addExerciseFragmentDialog.show(fm, "");
 
             }
         });
@@ -138,7 +140,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
         strenghAdapter = new AddExerciseAdapterForStrength(this, data.getExcersise().getStrength(), new AddExerciseAdapterForStrength.ExcerciseSelectedListener<SelectExerciseData>() {
             @Override
             public void onExcerciseSelected(SelectExerciseData excercise) {
-                addExercise(excercise, "strength_training");
+                addExercise1(excercise, "strength_training");
             }
         });
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -154,7 +156,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
         cardioAdapter = new AddExerciseAdapterForCardio(this, data.getExcersise().getCardio(), new AddExerciseAdapterForStrength.ExcerciseSelectedListener<SelectExerciseData>() {
             @Override
             public void onExcerciseSelected(SelectExerciseData excercise) {
-                addExercise(excercise, "cardiovascular");
+                addExercise1(excercise, "cardiovascular");
             }
         });
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -177,7 +179,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
             case R.id.cardio_content:
 //                showToast("Clicked on Cardio item");
                 int pos = (int) v.getTag();
-                addExercise(data.getExcersise().getCardio().get(pos), "Cardiovascular");
+                addExercise1(data.getExcersise().getCardio().get(pos), "Cardiovascular");
                 break;
             case R.id.s_content:
 //                showToast("Clicked on Strenght item");
@@ -186,7 +188,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
         }
     }
 
-    private void addExercise(SelectExerciseData excercise, String type) {
+    private void addExercise1(SelectExerciseData excercise, String type) {
         APIClient.startQuery().doAddExercise(GlobalManage.getInstance().getUserName(), GlobalManage.getInstance().getPassword(), "01", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
 
     }
@@ -197,5 +199,10 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
 
     private void hideProgress() {
         if (progressLayout != null) progressLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void addExercise(SelectExerciseData excercise, String type) {
+        APIClient.startQuery().doAddExercise(GlobalManage.getInstance().getUserName(), GlobalManage.getInstance().getPassword(), "01", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
     }
 }
