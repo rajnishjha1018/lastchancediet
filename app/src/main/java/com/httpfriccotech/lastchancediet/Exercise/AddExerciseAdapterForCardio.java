@@ -56,7 +56,7 @@ public class AddExerciseAdapterForCardio extends RecyclerView.Adapter<RecyclerVi
         if (position == 0) {
             viewHolder.titleLayout.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.titleLayout.setVisibility(View.INVISIBLE);
+            viewHolder.titleLayout.setVisibility(View.GONE);
         }
         viewHolder.nameTV.setText(myData.getTitle());
         viewHolder.valueET.setText(myData.howlong);

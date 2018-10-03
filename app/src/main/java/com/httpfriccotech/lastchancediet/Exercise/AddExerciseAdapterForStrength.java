@@ -38,7 +38,7 @@ class AddExerciseAdapterForStrength extends RecyclerView.Adapter<RecyclerView.Vi
         if (position==0){
             viewHolder.titleLayout.setVisibility(View.VISIBLE);
         }else{
-            viewHolder.titleLayout.setVisibility(View.INVISIBLE);
+            viewHolder.titleLayout.setVisibility(View.GONE);
         }
         viewHolder.nameTV.setText(myData.getTitle());
         viewHolder.setsET.setText(myData.getStrength_training_set());
