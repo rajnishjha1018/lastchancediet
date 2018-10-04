@@ -160,7 +160,7 @@ public class ExerciseActivity extends AppCompatActivity
 //                Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
+        excerciseResponseModel=new ExcerciseResponseModel();
         getData();
     }
 

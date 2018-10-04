@@ -54,7 +54,8 @@
         android:gravity="center"
         android:text="Weight/Set"
         android:textColor="#000"
-        android:textSize="12dp" />
+        android:textSize="12dp"
+        android:layout_gravity="center"/>
         <ImageButton
             android:id="@+id/ib_delete_str"
             android:layout_width="24dp"
