@@ -73,7 +73,7 @@
         android:background="#ececec"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/_10sdp">
+        android:padding="7dp">
 
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/v1"
@@ -86,13 +86,7 @@
             android:textColor="#000"
             android:textSize="12dp" />
 
-        <ImageButton
-            android:id="@+id/btnAddFood"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="left"
-            android:src="@android:drawable/ic_input_add" />
+
         <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
             android:layout_width="30dp"
             android:layout_height="wrap_content"
@@ -144,6 +138,14 @@
             android:text="Fiber"
             android:textColor="#000"
             android:textSize="12dp" />
+        <ImageButton
+            android:id="@+id/btnAddFood"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:src="@drawable/ic_add"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
