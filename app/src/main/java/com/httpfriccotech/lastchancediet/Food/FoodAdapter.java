@@ -64,10 +64,6 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.txtCarbs.setText(myData.Carb);
         viewHolder.txtFat.setText(myData.Fat);
         viewHolder.txtFiber.setText(myData.Fiber);
-//        viewHolder.textAddFood.setTag(myData.PostId);
-        viewHolder.textAddFood.setVisibility(View.VISIBLE);
-        viewHolder.txtFoodType.setVisibility(View.GONE);
-        viewHolder.textAddFood.setImageResource(R.drawable.ic_delete_black_24dp);
         viewHolder.textAddFood.setOnClickListener(onClickListener);
         viewHolder.textAddFood.setTag(position);
     }
