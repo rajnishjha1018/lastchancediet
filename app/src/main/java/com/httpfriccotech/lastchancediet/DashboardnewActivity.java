@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,23 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -40,20 +35,25 @@ import com.httpfriccotech.lastchancediet.Exercise.ExerciseActivity;
 import com.httpfriccotech.lastchancediet.Food.FoodActivity;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
-import com.httpfriccotech.lastchancediet.global.GlobalManage;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
+import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class DashboardnewActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,Observer<Object> {
     private Intent intent;
     Context context;
     Bundle bundle;
-    String UserId, UserName, profileImage,currentDate;
+    String UserId, UserName, profileImage, currentDate;
     HorizontalBarChart mChart;
     ProgressDialog progressDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -61,24 +61,19 @@ public class DashboardnewActivity extends AppCompatActivity
     ArrayList<BarEntry> entries;
     private String[] labels = {"Fat", "Carb", "Fiber", "Protein"};
     // colors for different sections in pieChart
-    public static final int[] MY_COLORS = {
-            Color.rgb(214, 68, 11), Color.rgb(255, 178, 88), Color.rgb(31, 212, 148),
-            Color.rgb(38, 40, 53), Color.rgb(215, 60, 55)
-    };
+    public static final int[] MY_COLORS = {Color.rgb(214, 68, 11), Color.rgb(255, 178, 88), Color.rgb(31, 212, 148), Color.rgb(38, 40, 53), Color.rgb(215, 60, 55)};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboardnew);
         context = this;
-        UserId = GlobalManage.getInstance().getUserId();
-        UserName = GlobalManage.getInstance().getUserName();
-
+        UserId = SharedPref.getUserId(context);
+        UserName = SharedPref.getNickName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -182,8 +177,7 @@ public class DashboardnewActivity extends AppCompatActivity
         } else if (id == R.id.nav_BLOG) {
             Intent intent = new Intent(context, BlogActivity.class);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_PROFILE) {
+        } else if (id == R.id.nav_PROFILE) {
 
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
@@ -199,58 +193,28 @@ public class DashboardnewActivity extends AppCompatActivity
     private void getData() {
 
         progressDialog = ProgressDialog.show(DashboardnewActivity.this, "Loading...", "please wait...", false, false);
-        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId +"&CurrentDate="+currentDate +"&refno="+System.currentTimeMillis();
+        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId + "&CurrentDate=" + currentDate + "&refno=" + System.currentTimeMillis();
+        getDashData(UserId, currentDate, System.currentTimeMillis() + "");
         //String url = context.getString(R.string.ServiceURL)+"/lastchance/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
-        Log.i("url", url);
-        Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if (result == null || result.size() <= 0 ) {
-                            TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
-                            TodayDesc.setText("You haven missed everything today!");
-                            entries = new ArrayList<BarEntry>();
-                            entries.add(new BarEntry(0, 0));
-                            entries.add(new BarEntry(0, 1));
-                            entries.add(new BarEntry(0, 2));
-                            entries.add(new BarEntry(0, 3));
-                        } else {
+//        Log.i("url", url);
+//        Ion.with(context)
+//                .load(url)
+//                .addHeader("Bearer",SharedPref.getToken(context))
+//                .asJsonArray()
+//                .setCallback(new FutureCallback<JsonArray>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonArray result) {
+//
+//                });
+    }
 
-                            entries = new ArrayList<BarEntry>();
-                            JsonObject jsonObject = result.get(0).getAsJsonObject();
-                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Protein").getAsString()), 3));
-                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fiber").getAsString()), 2));
-                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Carb").getAsString()), 1));
-                            entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fat").getAsString()), 0));
-                            TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
-                            if (Boolean.parseBoolean(jsonObject.get("IsMissed").getAsString())) {
-                                TodayDesc.setText("You haven missed something today");
-                            } else {
-                                TodayDesc.setText("You haven’t missed anything today");
-                            }
-                        }
+    private void getDashData(String userId, String currentDate, String s) {
+        GenericRequestModel genericRequestModel = new GenericRequestModel();
+        genericRequestModel.setUserId(userId);
+        genericRequestModel.setCurrentDate(currentDate);
+        genericRequestModel.setRefno(s);
+        APIClient.startQuery().doGetDashBoard(genericRequestModel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
-
-                        mChart = (HorizontalBarChart) findViewById(R.id.chart);
-                        mChart.setDescription("");
-                        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-                            @Override
-                            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                                if (e == null)
-                                    return;
-                                Toast.makeText(DashboardnewActivity.this, labels[e.getXIndex()] + " is " + e.getVal() + "", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onNothingSelected() {
-                            }
-                        });
-                        setDataForChart();
-                        progressDialog.dismiss();
-                    }
-                });
     }
 
     public void setDataForChart() {
@@ -299,6 +263,73 @@ public class DashboardnewActivity extends AppCompatActivity
         l.setYEntrySpace(15f); // set t
         //.setAlign(LegendRenderer.LegendAlign.TOP);
         mChart.invalidate();
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Object o) {
+        if (o instanceof JsonArray) {
+            JsonArray result=(JsonArray)o;
+            if (result == null || result.size() <= 0) {
+                TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
+                TodayDesc.setText("You haven missed everything today!");
+                entries = new ArrayList<BarEntry>();
+                entries.add(new BarEntry(0, 0));
+                entries.add(new BarEntry(0, 1));
+                entries.add(new BarEntry(0, 2));
+                entries.add(new BarEntry(0, 3));
+            } else {
+
+                entries = new ArrayList<BarEntry>();
+                JsonObject jsonObject = result.get(0).getAsJsonObject();
+                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Protein").getAsString()), 3));
+                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fiber").getAsString()), 2));
+                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Carb").getAsString()), 1));
+                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fat").getAsString()), 0));
+                TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
+                if (Boolean.parseBoolean(jsonObject.get("IsMissed").getAsString())) {
+                    TodayDesc.setText("You haven missed something today");
+                } else {
+                    TodayDesc.setText("You haven’t missed anything today");
+                }
+            }
+
+
+            mChart = (HorizontalBarChart) findViewById(R.id.chart);
+            mChart.setDescription("");
+            mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                @Override
+                public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                    if (e == null) return;
+                    Toast.makeText(DashboardnewActivity.this, labels[e.getXIndex()] + " is " + e.getVal() + "", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNothingSelected() {
+                }
+            });
+            setDataForChart();
+            if (progressDialog!=null)
+                progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+        if (progressDialog!=null)
+            progressDialog.dismiss();
+    }
+
+    @Override
+    public void onComplete() {
+
+        if (progressDialog!=null)
+            progressDialog.dismiss();
     }
 
     public class MyValueFormatter implements ValueFormatter {

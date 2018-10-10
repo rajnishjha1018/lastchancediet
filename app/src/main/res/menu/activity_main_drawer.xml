@@ -9,7 +9,8 @@
         <item
             android:id="@+id/nav_SCIENCEBEHINDUS"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="SCIENCE BEHIND US" />
+            android:title="SCIENCE BEHIND US"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_ABOUTUS"
             android:icon="@drawable/ic_menu_slideshow"
