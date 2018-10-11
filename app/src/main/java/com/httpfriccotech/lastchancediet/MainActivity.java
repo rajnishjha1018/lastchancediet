@@ -7,36 +7,33 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.database.DatabaseUtilsCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.global.GlobalManage;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.httpfriccotech.lastchancediet.model.LoginModel;
+import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
+import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
-import org.json.JSONObject;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> {
     EditText editTextUser, editTextPassword;
     Spinner spinnerRole;
     String role;
@@ -59,11 +56,14 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
         context = this;
+        if (SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) {
+            launchDashBoard();
+            finish();
+            return;
+        }
         initView();
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -142,59 +142,25 @@ public class MainActivity extends AppCompatActivity
 
     private void login(String user, final String password) {
         if (!NetworkStattus.getInstance(this).isOnline()) {
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Closing the App")
-                    .setMessage("No Internet Connection,check your network settings")
-                    .setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-                    .show();
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Closing the App").setMessage("No Internet Connection,check your network settings").setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }).show();
 
         }
 
         progressDialog = ProgressDialog.show(MainActivity.this, "Loading...", "please wait...", false, false);
+        doLogin(user, password);
 
-        String url = context.getString(R.string.ServiceURL) + "/wp-json/users/v1/authenticate?user=" + user + "&pass=" + password;
-        Log.i("url", url);
-        Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                       Bundle bundle = new Bundle();
-                        if (result == null) {
-                            textViewInvalid.setVisibility(View.VISIBLE);
-                            textViewInvalid.setText("Something went wrong. Please try again!");
-                        } else {
-                            // JSONObject jsonObj = new JSONObject(result);
-                            JsonObject jsonObject = result.get(0).getAsJsonObject();
-                            String UserId = jsonObject.get("userId").getAsString();
-                            String UserName = jsonObject.get("userName").getAsString();
+    }
 
-                            if (!(UserId.equalsIgnoreCase(""))) {
-                               bundle.putString("userId", UserId);
-                                bundle.putString("userName", UserName);
-                                GlobalManage.getInstance().setUserId(UserId);
-                                GlobalManage.getInstance().setUserName(UserName);
-                                GlobalManage.getInstance().setPassword(password);
-                                Intent intent = new Intent(context, DashboardnewActivity.class);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            } else {
-                                textViewInvalid.setVisibility(View.VISIBLE);
-                                textViewInvalid.setText("Invalid username or password.");
-
-                            }
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-
+    private void doLogin(String user, String password) {
+        LoginModel jsonObject = new LoginModel();
+        jsonObject.setPassword(password);
+        jsonObject.setUsername(user);
+        APIClient.startQuery().goLogin(jsonObject).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -202,10 +168,56 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Object o) {
+        if (o instanceof LoginResponseModel) {
+            LoginResponseModel result = (LoginResponseModel) o;
+            Bundle bundle = new Bundle();
+            if (result == null) {
+                textViewInvalid.setVisibility(View.VISIBLE);
+                textViewInvalid.setText("Something went wrong. Please try again!");
+            } else {
+                String email = result.getUser_email();
+                String nickName = result.getUser_nicename();
+                String displayName = result.getUser_display_name();
+                String token = result.getToken();
+                if (!(token.equalsIgnoreCase(""))) {
+                    SharedPref.setToken(context, "Bearer "+token);
+                    SharedPref.setUserEmail(context, email);
+                    SharedPref.setNickName(context, nickName);
+                    SharedPref.setDisplayName(context, displayName);
+                    launchDashBoard();
+                } else {
+                    textViewInvalid.setVisibility(View.VISIBLE);
+                    textViewInvalid.setText("Authentication fail ...");
+                }
+            }
+            if (progressDialog != null) progressDialog.dismiss();
+        }
+    }
+
+    private void launchDashBoard() {
+        Intent intent = new Intent(context, DashboardnewActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        if (progressDialog != null) progressDialog.dismiss();
+    }
+
+    @Override
+    public void onComplete() {
+        if (progressDialog != null) progressDialog.dismiss();
     }
 }
