@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,7 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> ,View.OnClickListener{
     EditText editTextUser, editTextPassword;
     Spinner spinnerRole;
     String role;
@@ -256,5 +257,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void hideProgress() {
         if (progressDialog != null) progressDialog.dismiss();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.SignUP){
+            openSignup();
+        }
+    }
+
+    private void openSignup() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://laststaging.wpengine.com/signup/"));
+        startActivity(browserIntent);
     }
 }
