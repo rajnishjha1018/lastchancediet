@@ -30,6 +30,7 @@ import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.Calendar;
 
@@ -165,7 +166,7 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     private void getData() {
-        APIClient.startQuery().doGetExcercises("122", currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetExcercises(SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ExerciseActivity.this);
         showProgress();
@@ -296,11 +297,11 @@ public class ExerciseActivity extends AppCompatActivity
         switch (v.getId()){
             case R.id.ib_delete_cal:{
                 int pos=(int)v.getTag();
-               deleExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
+               deleteExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
                 break;
             } case R.id.ib_delete_str:{
                 int pos=(int)v.getTag();
-               deleExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
+               deleteExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
                 break;
             }
             case R.id.ib_add_ex1:{
@@ -318,8 +319,8 @@ public class ExerciseActivity extends AppCompatActivity
         }
     }
 
-    private void deleExcercise(String exerciseID) {
-        APIClient.startQuery().doDeleteExercisItem("tejrawal", "rawal101",exerciseID,"122", currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+    private void deleteExcercise(String exerciseID) {
+        APIClient.startQuery().doDeleteExercisItem(SharedPref.getUserName(this), SharedPref.getPassword(this),exerciseID,SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
         showProgress();

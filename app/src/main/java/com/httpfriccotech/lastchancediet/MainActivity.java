@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
         context = this;
-        if (SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) {
+        if ((SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) && !TextUtils.isEmpty(SharedPref.getUserId(this))) {
             launchDashBoard();
             finish();
             return;
@@ -148,18 +151,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     finish();
                 }
             }).show();
-
         }
-
-        progressDialog = ProgressDialog.show(MainActivity.this, "Loading...", "please wait...", false, false);
+        showProgress();
         doLogin(user, password);
+    }
 
+    private void showProgress() {
+        progressDialog = ProgressDialog.show(MainActivity.this, "Loading...", "please wait...", false, false);
     }
 
     private void doLogin(String user, String password) {
         LoginModel jsonObject = new LoginModel();
         jsonObject.setPassword(password);
         jsonObject.setUsername(user);
+        SharedPref.setPassword(this, password);
+        SharedPref.setUserName(this, user);
         APIClient.startQuery().goLogin(jsonObject).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
     }
 
@@ -192,18 +198,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String displayName = result.getUser_display_name();
                 String token = result.getToken();
                 if (!(token.equalsIgnoreCase(""))) {
-                    SharedPref.setToken(context, "Bearer "+token);
+                    SharedPref.setToken(context, "Bearer " + token);
                     SharedPref.setUserEmail(context, email);
-                    SharedPref.setNickName(context, nickName);
+                    SharedPref.setUserName(context, nickName);
                     SharedPref.setDisplayName(context, displayName);
-                    launchDashBoard();
                 } else {
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Authentication fail ...");
                 }
+                goGetLoginCallBack();
             }
-            if (progressDialog != null) progressDialog.dismiss();
+
+        }else if (o instanceof JsonArray){
+            hideProgress();
+            JsonArray jsonArray =(JsonArray)o;
+            if (jsonArray!=null && jsonArray.size()>0) {
+                JsonObject jsonObject=jsonArray.get(0).getAsJsonObject();
+                String userId=jsonObject.get("userId").getAsString();
+                boolean isAdmin=jsonObject.get("isAdmin").getAsBoolean();
+                if (TextUtils.isEmpty(userId)) {
+                    textViewInvalid.setVisibility(View.VISIBLE);
+                    textViewInvalid.setText("Authentication fail ...");
+                    return;
+                }
+                SharedPref.setUserId(this,userId);
+                SharedPref.setIsAdmin(this,isAdmin);
+                launchDashBoard();
+            }else{
+                textViewInvalid.setVisibility(View.VISIBLE);
+                textViewInvalid.setText("Authentication fail ...");
+            }
         }
+    }
+
+    private void goGetLoginCallBack() {
+        LoginModel jsonObject = new LoginModel();
+        jsonObject.setPassword(SharedPref.getPassword(this));
+        jsonObject.setUsername(SharedPref.getUserName(this));
+        APIClient.startQuery().doLoginCallBack(SharedPref.getUserName(this),SharedPref.getPassword(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+
     }
 
     private void launchDashBoard() {
@@ -213,11 +246,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onError(Throwable e) {
-        if (progressDialog != null) progressDialog.dismiss();
+        hideProgress();
     }
 
     @Override
     public void onComplete() {
+//        hideProgress();
+    }
+
+    private void hideProgress() {
         if (progressDialog != null) progressDialog.dismiss();
     }
 }

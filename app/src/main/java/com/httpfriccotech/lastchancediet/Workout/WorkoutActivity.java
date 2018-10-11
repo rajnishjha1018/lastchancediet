@@ -3,14 +3,12 @@ package com.httpfriccotech.lastchancediet.Workout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +21,19 @@ import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
-import com.httpfriccotech.lastchancediet.Workout.MyAdapter;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class WorkoutActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,Observer<Object> {
     GridView gridView;
     TextView textView;
     MyAdapter myAdapter;
@@ -78,20 +78,22 @@ public class WorkoutActivity extends AppCompatActivity
 
     }
     private void getData() {
-        String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/getWorkouts";
-        Log.i("url", url);
-        Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if(result!=null) {
-                            JsonArray GetWorkoutResult = result.getAsJsonArray();
-                            setData(GetWorkoutResult);
-                        }
-                    }
-                });
+        APIClient.startQuery().doGetWorkoutList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+
+//        String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/getWorkouts";
+//        Log.i("url", url);
+//        Ion.with(context)
+//                .load(url)
+//                .asJsonArray()
+//                .setCallback(new FutureCallback<JsonArray>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonArray result) {
+//                        if(result!=null) {
+//                            JsonArray GetWorkoutResult = result.getAsJsonArray();
+//                            setData(GetWorkoutResult);
+//                        }
+//                    }
+//                });
     }
 
     private void setData(JsonArray GetGetRecipesResult) {
@@ -190,5 +192,29 @@ public class WorkoutActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Object o) {
+        if (o instanceof JsonArray) {
+            JsonArray result =(JsonArray)o;
+            JsonArray GetRecipesResult = result.getAsJsonArray();
+            setData(GetRecipesResult);
+        }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

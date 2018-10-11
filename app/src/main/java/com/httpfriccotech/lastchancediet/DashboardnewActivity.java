@@ -69,7 +69,7 @@ public class DashboardnewActivity extends AppCompatActivity
         setContentView(R.layout.activity_dashboardnew);
         context = this;
         UserId = SharedPref.getUserId(context);
-        UserName = SharedPref.getNickName(context);
+        UserName = SharedPref.getUserName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
