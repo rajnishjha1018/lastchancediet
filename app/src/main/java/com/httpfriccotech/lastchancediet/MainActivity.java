@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         context = this;
         if ((SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) && !TextUtils.isEmpty(SharedPref.getUserId(this))) {
             launchDashBoard();
-            finish();
             return;
         }
         initView();
@@ -242,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void launchDashBoard() {
         Intent intent = new Intent(context, DashboardnewActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
