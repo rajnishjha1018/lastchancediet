@@ -129,7 +129,8 @@
             android:text="Sign Up"
             android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:onClick="onClick"/>
 
         <View
             android:layout_width="0dp"

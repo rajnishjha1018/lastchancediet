@@ -37,6 +37,7 @@ import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.Global;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.text.DecimalFormat;
@@ -182,12 +183,22 @@ public class DashboardnewActivity extends AppCompatActivity
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
         } else if (id == R.id.nav_LOGOUT) {
-
+            SharedPref.setUserId(this,"");
+            SharedPref.setToken(this,"");
+            SharedPref.setPassword(this,"");
+            SharedPref.setUserName(this,"");
+            reDirectToLogin();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void reDirectToLogin() {
+        Toast.makeText(Global.getMyApplicationContext(),"Logout Successfully..",Toast.LENGTH_LONG).show();
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void getData() {
