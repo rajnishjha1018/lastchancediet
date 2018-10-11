@@ -3,14 +3,13 @@ package com.httpfriccotech.lastchancediet.Recepies;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,18 +24,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.DashboardnewActivity;
-import com.httpfriccotech.lastchancediet.RecepieFragment;
 import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.RecepieFragment;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class RecepieActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,Observer<Object> {
         TextView textView;
         MyAdapter myAdapter;
         Context context;
@@ -93,6 +96,31 @@ public class RecepieActivity extends AppCompatActivity
         adapter.addFragment(new RecepieFragment(), "Category 2");
         viewPager.setAdapter(adapter);
     }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Object o) {
+        if (o instanceof JsonArray) {
+            JsonArray result =(JsonArray)o;
+            JsonArray GetRecipesResult = result.getAsJsonArray();
+            setData(GetRecipesResult);
+        }
+    }
+
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -148,20 +176,22 @@ public class RecepieActivity extends AppCompatActivity
         }
     }
     private void getData() {
-        String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/getRecipes";
-        Log.i("url", url);
-        Ion.with(context)
-                .load(url)
-                .asJsonArray()
-                .setCallback(new FutureCallback<JsonArray>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonArray result) {
-                        if(result!=null) {
-                            JsonArray GetRecipesResult = result.getAsJsonArray();
-                            setData(GetRecipesResult);
-                        }
-                    }
-                });
+        APIClient.startQuery().doGetRecipieList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+
+//        String url = context.getString(R.string.ServiceURL)+"/wp-json/users/v1/getRecipes";
+//        Log.i("url", url);
+//        Ion.with(context)
+//                .load(url)
+//                .asJsonArray()
+//                .setCallback(new FutureCallback<JsonArray>() {
+//                    @Override
+//                    public void onCompleted(Exception e, JsonArray result) {
+//                        if(result!=null) {
+//                            JsonArray GetRecipesResult = result.getAsJsonArray();
+//                            setData(GetRecipesResult);
+//                        }
+//                    }
+//                });
     }
 
     private void setData(JsonArray GetGetRecipesResult) {

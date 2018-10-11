@@ -9,7 +9,6 @@ import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
 import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
-import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
@@ -21,7 +20,6 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -33,13 +31,17 @@ import retrofit2.http.Query;
 public interface APIQueries {
     @POST("jwt-auth/v1/token")
     Observable<LoginResponseModel> goLogin(@Body LoginModel jsonObject);
+    @POST("wp/v2/authenticate")
+    Observable<JsonArray> doLoginCallBack(@Body LoginModel genericRequestModel);
     @POST("wp/v2/UserFoodDetail")
     Observable<JsonArray> doGetDashBoard(@Body GenericRequestModel genericRequestModel);
     @POST("wp/v2/getRecipes")
     Observable<List<SelectFoodData>> doGetRecipies();
 
     @POST("wp/v2/getRecipes")
-    Observable<List<RecepieItem>> doGetRecipieList();
+    Observable<JsonArray> doGetRecipieList();
+    @POST("wp/v2/getWorkouts")
+    Observable<JsonArray> doGetWorkoutList();
 
     @POST("wp/v2/DeleteFoodItem")
     Observable<JsonObject> doDeleteFoodItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);

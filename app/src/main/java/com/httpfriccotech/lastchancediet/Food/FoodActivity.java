@@ -30,11 +30,11 @@ import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -152,7 +152,7 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void getData() {
-         APIClient.startQuery().doGetFoodDetails("122", currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+         APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                .subscribe(FoodActivity.this);
     }
@@ -250,7 +250,7 @@ public class FoodActivity extends AppCompatActivity
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData("tejrawal", "rawal101", "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserName(this), SharedPref.getPassword(this), "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodActivity.this);
@@ -341,7 +341,7 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem("tejrawal", "rawal101",myDatas.get(pos).PostId,"122",currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteFoodItem(SharedPref.getUserName(this), SharedPref.getPassword(this),myDatas.get(pos).PostId,SharedPref.getUserId(this),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodActivity.this);
     }

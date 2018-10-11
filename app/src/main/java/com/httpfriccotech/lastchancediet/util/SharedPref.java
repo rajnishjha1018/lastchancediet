@@ -20,9 +20,34 @@ public class SharedPref {
         String displayName = "displayName";
         String token = "token";
         String userId = "userId";
+        String password = "password";
+        String isAdmin = "isAdmin";
 
     }
 
+    public static boolean getIsAdmin(Context context) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        boolean referral = preferences.getBoolean(PREF_KEYS.isAdmin, false);
+        return referral;
+    }
+
+    public static void setIsAdmin(Context context, boolean str) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(PREF_KEYS.isAdmin, str);
+        editor.commit();
+    } public static String getPassword(Context context) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        String referral = preferences.getString(PREF_KEYS.password, "");
+        return referral;
+    }
+
+    public static void setPassword(Context context, String str) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_KEYS.password, str);
+        editor.commit();
+    }
     public static String getUserId(Context context) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         String referral = preferences.getString(PREF_KEYS.userId, "122");
@@ -48,13 +73,13 @@ public class SharedPref {
         editor.commit();
     }
 
-    public static String getNickName(Context context) {
+    public static String getUserName(Context context) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         String referral = preferences.getString(PREF_KEYS.nickName, "");
         return referral;
     }
 
-    public static void setNickName(Context context, String str) {
+    public static void setUserName(Context context, String str) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(PREF_KEYS.nickName, str);
