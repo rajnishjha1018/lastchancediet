@@ -189,7 +189,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
     }
 
     private void addExercise1(SelectExerciseData excercise, String type) {
-        APIClient.startQuery().doAddExercise(GlobalManage.getInstance().getUserName(), GlobalManage.getInstance().getPassword(),System.currentTimeMillis()+"", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
+        APIClient.startQuery().doAddExercise("tejrawal", "rawal101",System.currentTimeMillis()+"", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
 
     }
 
@@ -203,6 +203,6 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
 
     @Override
     public void addExercise(SelectExerciseData excercise, String type) {
-        APIClient.startQuery().doAddExercise(GlobalManage.getInstance().getUserName(), GlobalManage.getInstance().getPassword(), System.currentTimeMillis()+"", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
+        APIClient.startQuery().doAddExercise("tejrawal", "rawal101", System.currentTimeMillis()+"", excercise.getExerciseID(), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
     }
 }

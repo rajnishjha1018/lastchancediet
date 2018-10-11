@@ -165,7 +165,7 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     private void getData() {
-        APIClient.startQuery().doGetExcercises(UserId, currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetExcercises("122", currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ExerciseActivity.this);
         showProgress();
