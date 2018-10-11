@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().hide();
         context = this;
-        if (SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) {
+        if ((SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) && !TextUtils.isEmpty(SharedPref.getUserId(this))) {
             launchDashBoard();
             finish();
             return;
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LoginModel jsonObject = new LoginModel();
         jsonObject.setPassword(SharedPref.getPassword(this));
         jsonObject.setUsername(SharedPref.getUserName(this));
-        APIClient.startQuery().doLoginCallBack(jsonObject).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().doLoginCallBack(SharedPref.getUserName(this),SharedPref.getPassword(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
     }
 

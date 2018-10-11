@@ -32,7 +32,7 @@ public interface APIQueries {
     @POST("jwt-auth/v1/token")
     Observable<LoginResponseModel> goLogin(@Body LoginModel jsonObject);
     @POST("wp/v2/authenticate")
-    Observable<JsonArray> doLoginCallBack(@Body LoginModel genericRequestModel);
+    Observable<JsonArray> doLoginCallBack(@Query("user") String username, @Query("pass") String pass);
     @POST("wp/v2/UserFoodDetail")
     Observable<JsonArray> doGetDashBoard(@Body GenericRequestModel genericRequestModel);
     @POST("wp/v2/getRecipes")
