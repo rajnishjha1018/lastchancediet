@@ -341,7 +341,7 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem(UserName,GlobalManage.getInstance().getPassword(),myDatas.get(pos).PostId,UserId,currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteFoodItem("tejrawal", "rawal101",myDatas.get(pos).PostId,"122",currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodActivity.this);
     }
