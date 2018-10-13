@@ -28,7 +28,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.Exercise.ExerciseActivity;
@@ -85,7 +84,7 @@ public class DashboardnewActivity extends AppCompatActivity
         TextView name = (TextView) header.findViewById(R.id.currentuser);
         TextView email = (TextView) header.findViewById(R.id.useremail);
         name.setText(this.UserName);
-        email.setText("rajnish1018@gmail.com");
+        email.setText(SharedPref.getUserEmail(this));
 
         final Calendar cd = Calendar.getInstance();
         mYear = cd.get(Calendar.YEAR);
@@ -204,7 +203,6 @@ public class DashboardnewActivity extends AppCompatActivity
     private void getData() {
 
         progressDialog = ProgressDialog.show(DashboardnewActivity.this, "Loading...", "please wait...", false, false);
-        String url = context.getString(R.string.ServiceURL) + "wp-json/users/v1/UserFoodDetail?userId=" + UserId + "&CurrentDate=" + currentDate + "&refno=" + System.currentTimeMillis();
         getDashData(UserId, currentDate, System.currentTimeMillis() + "");
         //String url = context.getString(R.string.ServiceURL)+"/lastchance/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
 //        Log.i("url", url);
@@ -228,22 +226,27 @@ public class DashboardnewActivity extends AppCompatActivity
 
     }
 
-    public void setDataForChart() {
+    public void setDataForChart(JsonObject dailyObject) {
         int intColor = Color.BLACK;
+//        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(75f, 0); // Jan
+        BarEntry v1e1 = new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 0); // Jan
         valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(75f, 1); // Feb
+        BarEntry v1e2 = new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 1); // Feb
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(75f, 2); // Mar
+        BarEntry v1e3 = new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 2); // Mar
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(75f, 3); // Apr
+        BarEntry v1e4 = new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 3); // Apr
         valueSet1.add(v1e4);
-
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "DAILY GOAL");
-        barDataSet1.setColor(Color.rgb(216, 216, 216));
+//        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 3));
+//        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 2));
+//        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 1));
+//        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 0));
         BarDataSet barDataSet2 = new BarDataSet(entries, "ACTUAL INTAKE");
         barDataSet2.setColors(MY_COLORS);
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "DAILY GOAL");
+        barDataSet1.setColor(Color.rgb(216, 216, 216));
+
 
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);
@@ -254,7 +257,7 @@ public class DashboardnewActivity extends AppCompatActivity
         mChart.setData(data);
         mChart.animateXY(2000, 2000);
         //mChart.getAxisLeft().setInverted(true);
-        mChart.setAutoScaleMinMaxEnabled(true);
+        mChart.setAutoScaleMinMaxEnabled(false);
         mChart.getAxisLeft().setEnabled(false);
         mChart.getAxisRight().setEnabled(false);
 
@@ -283,8 +286,10 @@ public class DashboardnewActivity extends AppCompatActivity
 
     @Override
     public void onNext(Object o) {
-        if (o instanceof JsonArray) {
-            JsonArray result=(JsonArray)o;
+        if (o instanceof JsonObject) {
+            JsonObject result=(JsonObject) o;
+            JsonObject dailyObject = result.get("data").getAsJsonObject().get("DailyLimit").getAsJsonObject();
+            JsonObject todayObject = result.get("data").getAsJsonObject().get("Today").getAsJsonObject();
             if (result == null || result.size() <= 0) {
                 TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
                 TodayDesc.setText("You haven missed everything today!");
@@ -296,17 +301,27 @@ public class DashboardnewActivity extends AppCompatActivity
             } else {
 
                 entries = new ArrayList<BarEntry>();
-                JsonObject jsonObject = result.get(0).getAsJsonObject();
-                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Protein").getAsString()), 3));
-                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fiber").getAsString()), 2));
-                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Carb").getAsString()), 1));
-                entries.add(new BarEntry(Float.parseFloat(jsonObject.get("Fat").getAsString()), 0));
+                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Protein").getAsString()), 3));
+                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Fiber").getAsString()), 2));
+                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Carb").getAsString()), 1));
+                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Fat").getAsString()), 0));
                 TextView TodayDesc = (TextView) findViewById(R.id.TodayDescription);
-                if (Boolean.parseBoolean(jsonObject.get("IsMissed").getAsString())) {
-                    TodayDesc.setText("You haven missed something today");
-                } else {
-                    TodayDesc.setText("You haven’t missed anything today");
+                String str="You have missed";
+                if (Float.parseFloat(todayObject.get("Protein").getAsString())==0){
+                    str=str+" Protein,";
+                }if (Float.parseFloat(todayObject.get("Fiber").getAsString())==0){
+                    str=str+" Fiber,";
+                }if (Float.parseFloat(todayObject.get("Carb").getAsString())==0){
+                    str=str+" Carb,";
+                }if (Float.parseFloat(todayObject.get("Fat").getAsString())==0){
+                    str=str+" Fat";
                 }
+                if (str.equalsIgnoreCase("You have missed")) {
+                    TodayDesc.setText("You haven’t missed anything today");
+                } else {
+                    TodayDesc.setText(str);
+                }
+
             }
 
 
@@ -323,7 +338,7 @@ public class DashboardnewActivity extends AppCompatActivity
                 public void onNothingSelected() {
                 }
             });
-            setDataForChart();
+            setDataForChart(dailyObject);
             if (progressDialog!=null)
                 progressDialog.dismiss();
         }
