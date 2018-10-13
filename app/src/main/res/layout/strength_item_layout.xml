@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dp">
+    android:padding="6dp"
+    android:background="@color/bg">
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -15,7 +16,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
         android:layout_weight="2"
         android:gravity="left"
         android:text="Sets Type"
@@ -31,30 +31,30 @@
         android:gravity="center"
         android:text="Sets"
         android:textColor="#000"
-        android:textSize="12dp" />
+        android:textSize="10dp" />
 
     <com.httpfriccotech.lastchancediet.ui.DietTextView
         android:id="@+id/textReps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="7dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="Reps/Set"
         android:textColor="#000"
-        android:textSize="12dp"
+        android:textSize="10sp"
         android:layout_gravity="center"/>
 
     <com.httpfriccotech.lastchancediet.ui.DietTextView
         android:id="@+id/textWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="7dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="Weight/Set"
         android:textColor="#000"
-        android:textSize="12dp"
+        android:textSize="10sp"
         android:layout_gravity="center"/>
         <ImageButton
             android:id="@+id/ib_delete_str"

@@ -5,42 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bg"
     tools:context="com.httpfriccotech.lastchancediet.Food.SelectFoodActivity">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/progressLayout"
-    android:background="@color/white">
-    <ProgressBar
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"/>
-</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg">
+
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
     <android.support.v7.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
         android:clickable="true"
-        android:focusable="true"
-        android:layout_marginBottom="7dp"/>
+        android:focusable="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_recycle"
         android:layout_width="match_parent"
-        android:layout_margin="7dp"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:layout_below="@+id/search_view"/>
+        android:layout_below="@+id/search_view"
+        android:background="@color/bg"
+        android:padding="7dp"/>
 
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addNewExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/_16sdp"
         android:src="@android:drawable/ic_input_add"
-        android:tint="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:tint="@color/white" />
 </RelativeLayout>

@@ -48,7 +48,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class DashboardnewActivity extends AppCompatActivity
+public class DashboardNewActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,Observer<Object> {
     private Intent intent;
     Context context;
@@ -163,7 +163,7 @@ public class DashboardnewActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            Intent intent = new Intent(context, DashboardnewActivity.class);
+            Intent intent = new Intent(context, DashboardNewActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {
@@ -202,19 +202,8 @@ public class DashboardnewActivity extends AppCompatActivity
 
     private void getData() {
 
-        progressDialog = ProgressDialog.show(DashboardnewActivity.this, "Loading...", "please wait...", false, false);
+        progressDialog = ProgressDialog.show(DashboardNewActivity.this, "Loading...", "please wait...", false, false);
         getDashData(UserId, currentDate, System.currentTimeMillis() + "");
-        //String url = context.getString(R.string.ServiceURL)+"/lastchance/wp-json/users/v1/UserFoodDetail?userId=" + UserId;
-//        Log.i("url", url);
-//        Ion.with(context)
-//                .load(url)
-//                .addHeader("Bearer",SharedPref.getToken(context))
-//                .asJsonArray()
-//                .setCallback(new FutureCallback<JsonArray>() {
-//                    @Override
-//                    public void onCompleted(Exception e, JsonArray result) {
-//
-//                });
     }
 
     private void getDashData(String userId, String currentDate, String s) {
@@ -223,7 +212,6 @@ public class DashboardnewActivity extends AppCompatActivity
         genericRequestModel.setCurrentDate(currentDate);
         genericRequestModel.setRefno(s);
         APIClient.startQuery().doGetDashBoard(genericRequestModel).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
-
     }
 
     public void setDataForChart(JsonObject dailyObject) {
@@ -331,7 +319,7 @@ public class DashboardnewActivity extends AppCompatActivity
                 @Override
                 public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
                     if (e == null) return;
-                    Toast.makeText(DashboardnewActivity.this, labels[e.getXIndex()] + " is " + e.getVal() + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DashboardNewActivity.this, labels[e.getXIndex()] + " is " + e.getVal() + "", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

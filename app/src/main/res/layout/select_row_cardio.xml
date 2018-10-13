@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg">
 
     <LinearLayout
         android:id="@+id/cardio_header"
@@ -11,7 +12,7 @@
         android:orientation="horizontal"
         android:padding="7dp"
         android:layout_marginTop="10dp"
-        android:background="@color/white_selected">
+        android:background="@color/colorAccent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,14 +20,16 @@
             android:layout_weight="1"
             android:gravity="left"
             android:text="Exercise Name"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Minutes"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
     <LinearLayout

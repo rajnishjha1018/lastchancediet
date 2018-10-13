@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void launchDashBoard() {
-        Intent intent = new Intent(context, DashboardnewActivity.class);
+        Intent intent = new Intent(context, DashboardNewActivity.class);
         startActivity(intent);
         finish();
     }

@@ -22,16 +22,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/bg"
         android:orientation="vertical"
-        android:padding="6dp"
+        android:paddingBottom="7dp"
         android:weightSum="10">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="#fff"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="5dp">
 
 
             <!--<com.httpfriccotech.lastchancediet.ui.DietTextView-->
@@ -49,8 +50,8 @@
                 android:id="@+id/selectedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="10dp"
+                android:layout_gravity="left|center"
+                android:padding="10dp"
                 android:drawableLeft="@android:drawable/ic_menu_my_calendar"
                 android:gravity="center_vertical"
                 android:text="Date :"
@@ -77,17 +78,10 @@
             <!--</RadioGroup>-->
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_marginTop="6dp"
-            android:background="@color/greyLight" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/bg"
             android:orientation="vertical"
             android:padding="6dp"
             android:weightSum="10">
@@ -95,14 +89,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <LinearLayout
                 android:id="@+id/caloriesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -113,11 +108,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
                         android:gravity="center"
-                        android:text="Calories Burned"
+                        android:text="Cardiovascular"
                         android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
 
                     <ImageButton
                         android:id="@+id/ib_add_ex1"
@@ -125,14 +121,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/md_transparent"
-                        android:src="@drawable/ic_add" />
+                        android:src="@drawable/ic_add"
+                        android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/caloriesLayout12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ececec"
+                    android:background="@color/colorAccent"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="7dp"
@@ -147,8 +144,8 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="Exercise"
-                        android:textColor="#000"
-                        android:textSize="12sp" />
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
 
                     <com.httpfriccotech.lastchancediet.ui.DietTextView
                         android:id="@+id/v1T"
@@ -160,8 +157,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Minutes"
-                        android:textColor="#000"
-                        android:textSize="12dp" />
+                        android:textColor="@color/white"
+                        android:textSize="13dp" />
 
                     <com.httpfriccotech.lastchancediet.ui.DietTextView
                         android:id="@+id/textCaloriesBurned1"
@@ -175,35 +172,30 @@
                         android:textSize="12dp"
                         android:visibility="gone" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/greyLight" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:background="@color/bg"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="7dp">
 
             <LinearLayout
                 android:id="@+id/strLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -214,11 +206,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginBottom="10dp"
+                        android:padding="10dp"
                         android:gravity="center"
                         android:text="Strength Exercise"
                         android:textColor="@color/colorAccent"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
 
                     <ImageButton
                         android:id="@+id/ib_add_ex2"
@@ -226,14 +219,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/md_transparent"
-                        android:src="@drawable/ic_add" />
+                        android:src="@drawable/ic_add"
+                        android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/strLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#ececec"
+                    android:background="@color/colorAccent"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="7dp"
@@ -248,7 +242,7 @@
                         android:layout_weight="2"
                         android:gravity="left"
                         android:text="Sets type"
-                        android:textColor="#000"
+                        android:textColor="@color/white"
                         android:textSize="12sp" />
                     <!--<ImageButton-->
                     <!--android:id="@+id/btnAddExercise"-->
@@ -267,48 +261,41 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Sets"
-                        android:textColor="#000"
-                        android:textSize="12dp" />
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
 
                     <com.httpfriccotech.lastchancediet.ui.DietTextView
                         android:id="@+id/v12"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="7dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Reps/Set"
-                        android:textColor="#000"
-                        android:textSize="12dp" />
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
 
                     <com.httpfriccotech.lastchancediet.ui.DietTextView
                         android:id="@+id/textCaloriesBurned"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="7dp"
                         android:layout_marginRight="24dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="Weight/Set"
-                        android:textColor="#000"
-                        android:textSize="12sp" />
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.3dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/greyLight" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:background="@color/bg"/>
         </LinearLayout>
         </LinearLayout>
 

@@ -24,11 +24,10 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
-import com.httpfriccotech.lastchancediet.DashboardnewActivity;
+import com.httpfriccotech.lastchancediet.DashboardNewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
-import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -67,8 +66,8 @@ public class ExerciseActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        UserId = GlobalManage.getInstance().getUserId();
-        UserName = GlobalManage.getInstance().getUserName();
+        UserId = SharedPref.getUserId(this);
+        UserName = SharedPref.getUserName(this);
         setContentView(R.layout.activity_exercise);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,8 +93,7 @@ public class ExerciseActivity extends AppCompatActivity
         TextView name = (TextView) header.findViewById(R.id.currentuser);
         TextView email = (TextView) header.findViewById(R.id.useremail);
         name.setText(this.UserName);
-        email.setText("rajnish1018@gmail.com");
-
+        email.setText(SharedPref.getUserEmail(this));
         getSupportActionBar().setTitle("");
         ((TextView) findViewById(R.id.toolbar_title)).setText("Your Exercise Diary");
 
@@ -145,22 +143,6 @@ public class ExerciseActivity extends AppCompatActivity
         titleTV=(TextView)findViewById(R.id.title);
         caloriesLayout=(LinearLayout)findViewById(R.id.caloriesLayout);
         strengthLayout=(LinearLayout)findViewById(R.id.strLayout);
-
-//        content.findViewById(R.id.btnAddExercise).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(context,"Add Exercise for btnAddExercise",Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//        content.findViewById(R.id.textAddExercise).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               /* Intent intent = new Intent(context, SelectExerciseActivity.class);
-//                context.startActivity(intent);*/
-//                Toast.makeText(context,"Add Exercise for textAddExercise",Toast.LENGTH_SHORT).show();
-//            }
-//        });
         excerciseResponseModel=new ExcerciseResponseModel();
         getData();
     }
@@ -237,7 +219,7 @@ public class ExerciseActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            Intent intent = new Intent(context, DashboardnewActivity.class);
+            Intent intent = new Intent(context, DashboardNewActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_RECIPES) {

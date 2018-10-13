@@ -1,68 +1,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ececec"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/bg"
     android:orientation="vertical">
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_120sdp">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:padding="8dp"
+        app:cardElevation="2dp">
 
-        <ImageView
-            android:id="@+id/imgImage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/lcdbg"></ImageView>
-
-        <com.httpfriccotech.lastchancediet.ui.DietTextView
-            android:id="@+id/textName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/custBlueTrans"
-            android:gravity="center"
-            android:padding="7dp"
-            android:text="Recipe Name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_12sdp"
-            android:textStyle="bold"></com.httpfriccotech.lastchancediet.ui.DietTextView>
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="vertical">
 
 
-        <com.httpfriccotech.lastchancediet.ui.DietTextView
-            android:id="@+id/txtDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
 
-        <com.httpfriccotech.lastchancediet.ui.DietTextView
-            android:id="@+id/read_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@color/custBlue"
-            android:gravity="center"
-            android:padding="@dimen/_12sdp"
-            android:text="Read More"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/_12sdp" />
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/imgImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/lcdbg" />
+            </FrameLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.httpfriccotech.lastchancediet.ui.DietTextView
+                    android:id="@+id/textName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:minLines="2"
+                    android:padding="7dp"
+                    android:text="Recipe Name"
+                    android:maxLines="2"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <com.httpfriccotech.lastchancediet.ui.DietTextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:minLines="3"
+                    android:maxLines="3"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/read_more"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:text="Read More"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
-
-
 
 
 
