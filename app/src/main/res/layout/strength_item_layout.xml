@@ -4,12 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="6dp"
-    android:background="@color/bg">
+    android:background="@color/white">
 
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+        android:paddingBottom="7dp">
 
     <com.httpfriccotech.lastchancediet.ui.DietTextView
         android:id="@+id/txtSetsType"
@@ -64,8 +65,7 @@
             android:background="@android:color/transparent"/>
 </LinearLayout>
     <View
-        android:layout_marginTop="6dp"
-        android:background="@color/greyLight"
+        android:background="@color/cardview_dark_background"
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:layout_marginBottom="4dp"/>
