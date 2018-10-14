@@ -37,7 +37,6 @@ public interface APIQueries {
     Observable<JsonObject> doGetDashBoard(@Body GenericRequestModel genericRequestModel);
     @POST("wp/v2/getRecipes")
     Observable<List<SelectFoodData>> doGetRecipies();
-
     @POST("wp/v2/getRecipes")
     Observable<JsonArray> doGetRecipieList();
     @POST("wp/v2/getWorkouts")
