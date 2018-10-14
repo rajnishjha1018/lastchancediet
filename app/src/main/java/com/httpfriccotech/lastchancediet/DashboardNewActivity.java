@@ -36,6 +36,7 @@ import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.program.YourProgramActivity;
 import com.httpfriccotech.lastchancediet.util.Global;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -119,6 +120,12 @@ public class DashboardNewActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ExerciseActivity.class);
+                startActivity(intent);
+            }
+        }); findViewById(R.id.btnAssignment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, YourProgramActivity.class);
                 startActivity(intent);
             }
         });
