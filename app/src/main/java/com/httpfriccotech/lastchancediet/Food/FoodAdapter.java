@@ -34,6 +34,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     PopupFoodAdapter myAdapter;
     TextView txtmsg;
     private View.OnClickListener onClickListener;
+    private boolean isB,isL,isD,isS;
 
     public FoodAdapter(Context context, List<FoodData> itemList, AddFoodListener addFoodListener, View.OnClickListener onClickListener) {
         this.itemList = itemList;
@@ -66,6 +67,46 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.txtFiber.setText(myData.Fiber);
         viewHolder.textAddFood.setOnClickListener(onClickListener);
         viewHolder.textAddFood.setTag(position);
+        if (myData.FoodType.equalsIgnoreCase("Breakfast")){
+            if (!isB) {
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setVisibility(View.VISIBLE);
+                isB=true;
+            }else{
+                viewHolder.foodTypeTV.setVisibility(View.GONE);
+            }
+
+        }else if(myData.FoodType.equalsIgnoreCase("Lunch")&& !isL){
+            if (!isL) {
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setVisibility(View.VISIBLE);
+                isL=true;
+            }else{
+                viewHolder.foodTypeTV.setVisibility(View.GONE);
+            }
+        }else if(myData.FoodType.equalsIgnoreCase("Dinner") && !isD){
+            if (!isD) {
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setVisibility(View.VISIBLE);
+
+                isD=true;
+            }else{
+                viewHolder.foodTypeTV.setVisibility(View.GONE);
+            }
+        }else if(myData.FoodType.equalsIgnoreCase("Snacks") && !isS){
+            if (!isS) {
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setText(myData.FoodType);
+                viewHolder.foodTypeTV.setVisibility(View.VISIBLE);
+
+                isS=true;
+            }else{
+                viewHolder.foodTypeTV.setVisibility(View.GONE);
+            }
+        }
     }
 
     private boolean isTitle(int position) {
@@ -86,6 +127,10 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void updateData(List<FoodData> itemList) {
+        isB=false;
+        isL=false;
+        isD=false;
+        isS=false;
         this.itemList = itemList;
         notifyDataSetChanged();
     }

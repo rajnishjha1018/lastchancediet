@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +29,6 @@ import com.httpfriccotech.lastchancediet.DashboardNewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
-import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -61,8 +61,8 @@ public class FoodActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        UserId = GlobalManage.getInstance().getUserId();
-        UserName = GlobalManage.getInstance().getUserName();
+        UserId = SharedPref.getUserId(this);
+        UserName = SharedPref.getDisplayName(this);
         setContentView(R.layout.activity_food);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,8 +86,8 @@ public class FoodActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         TextView name = (TextView) header.findViewById(R.id.currentuser);
         TextView email = (TextView) header.findViewById(R.id.useremail);
-        name.setText(this.UserName);
-        email.setText("rajnish1018@gmail.com");
+        name.setText(SharedPref.getDisplayName(this));
+        email.setText(SharedPref.getUserEmail(this));
 
 
         getSupportActionBar().setTitle("");
@@ -307,6 +307,7 @@ public class FoodActivity extends AppCompatActivity
             TextView txtFat = (TextView) view.findViewById(R.id.textFat);
             TextView txtFiber = (TextView) view.findViewById(R.id.textFiber);
             ImageView textAddFood = (ImageView) view.findViewById(R.id.textAddFood);
+            txtFoodType.setGravity(Gravity.LEFT);
             txtFoodType.setText(myData.FoodType);
             view_divider.setVisibility(View.GONE);
             txtProtein.setText("" + myData.Protein);

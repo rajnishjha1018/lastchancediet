@@ -14,7 +14,7 @@ public class FoodHolder extends RecyclerView.ViewHolder {
 
     View view;
     View view_divider;
-    TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber,titleTV;
+    TextView txtFoodType, txtProtein,txtCarbs,txtFat,txtFiber,titleTV,foodTypeTV;
     ImageView textAddFood;
 
     View container;
@@ -28,6 +28,7 @@ public class FoodHolder extends RecyclerView.ViewHolder {
         txtCarbs= (TextView) view.findViewById(R.id.textCarbs);
         txtFat= (TextView) view.findViewById(R.id.textFat);
         txtFiber = (TextView) view.findViewById(R.id.textFiber);
+        foodTypeTV = (TextView) view.findViewById(R.id.foodType);
         textAddFood = (ImageView) view.findViewById(R.id.textAddFood);
         titleTV = (TextView) view.findViewById(R.id.textTitle);
 

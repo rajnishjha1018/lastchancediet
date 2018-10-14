@@ -79,7 +79,11 @@ public interface APIQueries {
 
 
     @POST("wp/v2/getBlog")
-    Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId, @Query("postType") String postType);
+    Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId);
+    @POST("wp/v2/getWorkout")
+    Observable<List<BlogByIdResponseData>> doGetWorkoutById(@Query("postId") String blogId);
+    @POST("wp/v2/getRecipe")
+    Observable<List<BlogByIdResponseData>> doGetRecipeById(@Query("postId") String blogId);
 
     @FormUrlEncoded
     @POST("init_session")

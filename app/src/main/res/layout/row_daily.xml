@@ -3,9 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp"
-    android:background="@color/white"
+    android:background="@color/customGray"
     android:orientation="vertical">
-
+    <View
+        android:id="@+id/view_divider"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"/>
     <LinearLayout
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
@@ -89,12 +94,4 @@
             android:textSize="12dp" />
 
     </LinearLayout>
-
-
-    <View
-        android:id="@+id/view_divider"
-        android:layout_marginTop="6dp"
-        android:background="@color/greyLight"
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"/>
 </LinearLayout>
