@@ -5,6 +5,7 @@
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +17,7 @@
         <!-- android:layout_marginTop="?attr/actionBarSize"-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="160dp"
             android:background="@color/customGray"
             android:orientation="vertical">
 
@@ -46,13 +47,15 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/custBlue"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="16sp"
+                android:padding="7dp"/>
             <LinearLayout
                 android:id="@+id/ll_container"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="7dp">
 
                 <com.httpfriccotech.lastchancediet.ui.DietTextView
                     android:id="@+id/PostAuthor"
@@ -60,10 +63,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
 
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="10dp"
                     android:text="66666 6666"
                     android:textColor="@color/custBlue"
-                    android:textSize="@dimen/_13sdp"  />
+                    android:textSize="14sp"  />
                 <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
                     android:id="@+id/PostDate"
                     android:layout_width="0dp"
@@ -81,7 +84,7 @@
                     android:layout_weight=".4"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
 
@@ -96,8 +99,8 @@
                 android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
-
+                android:textSize="12sp"
+                android:padding="7dp"/>
 
         </LinearLayout>
     </LinearLayout>

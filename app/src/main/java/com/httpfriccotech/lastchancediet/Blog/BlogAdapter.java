@@ -42,7 +42,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BlogAdapter.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, BlogByIdActivity.class);
                     intent.putExtra("blogId", ""+ itemList.get(position).getPostId());
-                    intent.putExtra("postType", "post");
+                    intent.putExtra("postType", "blog");
                     mContext.startActivity(intent);
                 }
             });

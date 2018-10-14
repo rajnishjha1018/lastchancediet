@@ -42,7 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, BlogByIdActivity.class);
                 intent.putExtra("blogId", ""+ itemList.get(position).getWorkoutPostId());
-                intent.putExtra("postType", "post");
+                intent.putExtra("postType", "work");
                 mContext.startActivity(intent);
             }
         });
