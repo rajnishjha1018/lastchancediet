@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
-import com.httpfriccotech.lastchancediet.DashboardnewActivity;
+import com.httpfriccotech.lastchancediet.DashboardNewActivity;
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
@@ -157,7 +157,7 @@ public class BlogByIdActivity extends AppCompatActivity
         if (id == R.id.nav_DASHBOARD) {
             bundle.putString("userId", UserId);
             bundle.putString("userName", UserName);
-            Intent intent = new Intent(context, DashboardnewActivity.class);
+            Intent intent = new Intent(context, DashboardNewActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
 

@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="7dp">
 
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/textExercise"
@@ -21,7 +22,7 @@
             android:gravity="left"
             android:text="Exercise"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
         <com.httpfriccotech.lastchancediet.ui.DietTextView
             android:id="@+id/textMinutes"
             android:layout_width="0dp"
@@ -31,7 +32,7 @@
             android:gravity="center"
             android:text="Minutes"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="10sp" />
             <ImageButton
                 android:id="@+id/ib_delete_cal"
                 android:layout_width="24dp"
@@ -42,12 +43,12 @@
             android:id="@+id/calories_burned"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="7dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text=""
             android:textColor="#000"
-            android:textSize="12dp"
+            android:textSize="10dp"
             android:visibility="gone"/>
 
 
@@ -55,8 +56,7 @@
 
 
     <View
-        android:layout_marginTop="6dp"
-        android:background="@color/greyLight"
+        android:background="@color/bg"
         android:layout_width="match_parent"
-        android:layout_height="0.3dp"/>
+        android:layout_height="1dp"/>
 </LinearLayout>

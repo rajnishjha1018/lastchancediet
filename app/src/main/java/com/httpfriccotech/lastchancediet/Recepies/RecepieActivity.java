@@ -1,32 +1,23 @@
 package com.httpfriccotech.lastchancediet.Recepies;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
-import com.httpfriccotech.lastchancediet.DashboardnewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.RecepieFragment;
-import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
@@ -38,14 +29,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RecepieActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,Observer<Object> {
-        TextView textView;
-        MyAdapter myAdapter;
-        Context context;
-        String UserId, UserName,profileImage;
-        Bundle bundle;
-        ArrayList<RecepieItem> recepieList = new ArrayList<RecepieItem>();
+public class RecepieActivity extends AppCompatActivity implements Observer<Object> {
+    TextView textView;
+    MyAdapter myAdapter;
+    Context context;
+    String UserId, UserName, profileImage;
+    Bundle bundle;
+    ArrayList<RecepieItem> recepieList = new ArrayList<RecepieItem>();
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -61,27 +51,11 @@ public class RecepieActivity extends AppCompatActivity
         UserName = GlobalManage.getInstance().getUserName();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
-        TextView name = (TextView) header.findViewById(R.id.currentuser);
-        TextView email = (TextView) header.findViewById(R.id.useremail);
-        name.setText(this.UserName);
-        email.setText("rajnish1018@gmail.com");
-        getSupportActionBar().setTitle("");
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         ((TextView) findViewById(R.id.toolbar_title)).setText("Recepies");
-        header.findViewById(R.id.navClose).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        });
         getData();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -91,7 +65,7 @@ public class RecepieActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RecepieFragment(),"All");
+        adapter.addFragment(new RecepieFragment(), "All");
         adapter.addFragment(new RecepieFragment(), "Category 1");
         adapter.addFragment(new RecepieFragment(), "Category 2");
         viewPager.setAdapter(adapter);
@@ -105,7 +79,7 @@ public class RecepieActivity extends AppCompatActivity
     @Override
     public void onNext(Object o) {
         if (o instanceof JsonArray) {
-            JsonArray result =(JsonArray)o;
+            JsonArray result = (JsonArray) o;
             JsonArray GetRecipesResult = result.getAsJsonArray();
             setData(GetRecipesResult);
         }
@@ -124,6 +98,7 @@ public class RecepieActivity extends AppCompatActivity
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
+
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
@@ -151,6 +126,7 @@ public class RecepieActivity extends AppCompatActivity
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
@@ -167,14 +143,13 @@ public class RecepieActivity extends AppCompatActivity
                         }
                     }
                     return FilterrecepieList;
-                }
-                else
-                {
+                } else {
                     return recepieList;
                 }
             }
         }
     }
+
     private void getData() {
         APIClient.startQuery().doGetRecipieList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
@@ -205,10 +180,10 @@ public class RecepieActivity extends AppCompatActivity
         }
         for (int i = 0; i < size; i++) {
             JsonObject jsonObject = GetGetRecipesResult.get(i).getAsJsonObject();
-            String RecipeName=jsonObject.get("title").getAsString();
-            String RecepieDescription=jsonObject.get("content").getAsString();
-            String RecepieImage=jsonObject.get("url").getAsString();
-            Integer RecepiePostId=Integer.parseInt(jsonObject.get("postId").getAsString());
+            String RecipeName = jsonObject.get("title").getAsString();
+            String RecepieDescription = jsonObject.get("content").getAsString();
+            String RecepieImage = jsonObject.get("url").getAsString();
+            Integer RecepiePostId = Integer.parseInt(jsonObject.get("postId").getAsString());
 
             RecepieItem recepieItem = new RecepieItem(RecipeName, RecepieDescription, RecepieImage, RecepiePostId);
             if (!recepieList.contains(recepieItem)) {
@@ -218,17 +193,19 @@ public class RecepieActivity extends AppCompatActivity
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
+
     private void showMessage(String s) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+        super.onBackPressed();
+//        }
     }
 
     @Override
@@ -247,37 +224,14 @@ public class RecepieActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            Toast.makeText(this,"Search",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.nav_DASHBOARD) {
-            Intent intent = new Intent(context, DashboardnewActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_RECIPES) {
-            Intent intent = new Intent(context, RecepieActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_WORKOUTS) {
-            Intent intent = new Intent(context, WorkoutActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_BLOG) {
-            Intent intent = new Intent(context, BlogActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_PROFILE) {
-        } else if (id == R.id.nav_SCIENCEBEHINDUS) {
-        } else if (id == R.id.nav_LOGOUT) {
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 }

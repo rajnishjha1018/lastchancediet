@@ -2,13 +2,13 @@ package com.httpfriccotech.lastchancediet.Workout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
 import com.httpfriccotech.lastchancediet.R;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by John on 8/29/2016.
  */
-public class MyAdapter extends BaseAdapter{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private Context mContext;
     private List<WorkoutItem> itemList;
     public MyAdapter(Context c, List<WorkoutItem> items ) {
@@ -27,61 +27,43 @@ public class MyAdapter extends BaseAdapter{
 
         this.itemList = items;
     }
-
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return this.itemList.size();
+    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(mContext).inflate(R.layout.row_recepie, null);
+        return new ViewHolder(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return null;
+    public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
+        holder.txtName.setText(itemList.get(position).getWorkoutName());
+        holder.textDesc.setText(itemList.get(position).getWorkoutDescription());
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BlogByIdActivity.class);
+                intent.putExtra("blogId", ""+ itemList.get(position).getWorkoutPostId());
+                intent.putExtra("postType", "post");
+                mContext.startActivity(intent);
+            }
+        });
+        new DownLoadImageTask(holder.imageView).execute(itemList.get(position).getWorkoutImage());
     }
 
     @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int getItemCount() {
+        return itemList.size();
     }
 
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        if (convertView == null) {
-
-            grid = new View(mContext);
-            grid = inflater.inflate(R.layout.row_recepie, null);
-            WorkoutItem myData= itemList.get(position);
-            TextView txtName = (TextView) grid.findViewById(R.id.textName);
-            TextView textDesc = (TextView) grid.findViewById(R.id.txtDescription);
-
-            txtName.setText(myData.getWorkoutName());
-            textDesc.setText(myData.getWorkoutDescription());
-            ImageView imageView = (ImageView)grid.findViewById(R.id.imgImage);
-            new DownLoadImageTask(imageView).execute(myData.getWorkoutImage());
-
-            grid.findViewById(R.id.read_more).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String msg = "read Mode button clicked";
-                    Toast.makeText(mContext,"see "+msg,Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mContext, BlogByIdActivity.class);
-                    intent.putExtra("blogId", ""+ itemList.get(position).getWorkoutPostId());
-                    intent.putExtra("postType", "cpt_workouts");
-
-                    mContext.startActivity(intent);
-                }
-            });
-        } else {
-            grid = (View) convertView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtName,textDesc;
+        ImageView imageView;
+        Button button;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            txtName = (TextView) itemView.findViewById(R.id.textName);
+            textDesc = (TextView) itemView.findViewById(R.id.txtDescription);
+            imageView = (ImageView) itemView.findViewById(R.id.imgImage);
+            button=(Button)itemView.findViewById(R.id.read_more);
         }
-
-        return grid;
     }
 }
