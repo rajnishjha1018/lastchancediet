@@ -39,7 +39,7 @@ public class BlogByIdActivity extends AppCompatActivity implements Observer<List
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         bundle = getIntent().getExtras();
-        id = getIntent().getExtras().getString("id");
+        id = getIntent().getExtras().getString("blogId");
         postType = getIntent().getExtras().getString("postType");
         UserId = SharedPref.getUserId(this);
         UserName = SharedPref.getUserName(this);

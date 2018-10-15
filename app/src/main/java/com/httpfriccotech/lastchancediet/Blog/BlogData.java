@@ -1,6 +1,5 @@
 package com.httpfriccotech.lastchancediet.Blog;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -10,10 +9,13 @@ import java.io.Serializable;
  */
 
 public class BlogData implements Serializable {
-
+        @SerializedName("title")
         private String title;
+        @SerializedName("blogThumbUrl")
         private String blogThumbUrl;
+        @SerializedName("content")
         private String content;
+        @SerializedName("blogId")
         private int postId;
 
 
