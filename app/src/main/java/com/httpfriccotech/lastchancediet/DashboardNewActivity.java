@@ -122,7 +122,7 @@ public class DashboardNewActivity extends AppCompatActivity
                 Intent intent = new Intent(context, ExerciseActivity.class);
                 startActivity(intent);
             }
-        }); findViewById(R.id.btnAssignment).setOnClickListener(new View.OnClickListener() {
+        }); findViewById(R.id.program).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, YourProgramActivity.class);
@@ -185,7 +185,8 @@ public class DashboardNewActivity extends AppCompatActivity
             Intent intent = new Intent(context, BlogActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_PROFILE) {
-
+            Intent intent = new Intent(context, YourProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
         } else if (id == R.id.nav_LOGOUT) {

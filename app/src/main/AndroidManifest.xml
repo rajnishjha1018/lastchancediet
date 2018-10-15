@@ -56,9 +56,15 @@
         <activity
             android:name=".ReadMore.BlogByIdActivity"
             android:label="@string/title_activity_blog_by_id"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Exercise.SelectExerciseActivity" />
-        <activity android:name=".program.YourProgramActivity" />
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Exercise.SelectExerciseActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".program.YourProgramActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".program.YourProgramDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".YourProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
