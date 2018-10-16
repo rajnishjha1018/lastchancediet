@@ -1,8 +1,7 @@
-package com.httpfriccotech.lastchancediet.program;
+package com.httpfriccotech.lastchancediet;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,29 +12,23 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class YourProgramActivity extends AppCompatActivity implements Observer<Object> ,View.OnClickListener {
+public class YourProfileActivity extends AppCompatActivity implements Observer<Object> ,View.OnClickListener {
 
     private RecyclerView recyclerView;
     private RelativeLayout progressLayout;
-    private List<ProgramData> itemList;
-    private ProgramListAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_your_program);
+        setContentView(R.layout.activity_your_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -43,8 +36,6 @@ public class YourProgramActivity extends AppCompatActivity implements Observer<O
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         progressLayout=(RelativeLayout)findViewById(R.id.progressLayout);
-        recyclerView=(RecyclerView)findViewById(R.id.recycler);
-        itemList=new ArrayList<ProgramData>();
         getData();
         showProgress();
     }
@@ -65,18 +56,9 @@ public class YourProgramActivity extends AppCompatActivity implements Observer<O
             if (jsonObject.get("success").getAsBoolean()) {
                 JsonArray jsonElements=jsonObject.getAsJsonArray("data");
                 for (int i=0;i<jsonElements.size();i++){
-                    ProgramData programData=new ProgramData();
-                    programData.setTitle(jsonElements.get(i).getAsJsonObject().get("title").getAsString());
-                    programData.setContent(jsonElements.get(i).getAsJsonObject().get("content").getAsString());
-                    programData.setPostId(jsonElements.get(i).getAsJsonObject().get("postId").getAsInt());
-                    programData.setParmlink(jsonElements.get(i).getAsJsonObject().get("parmlink").getAsString());
-                    programData.setActiveProgram(jsonElements.get(i).getAsJsonObject().get("isActiveProgram").getAsBoolean());
-                    itemList.add(programData);
+
                 }
-                myAdapter = new ProgramListAdapter(this, itemList);
-                RecyclerView recycle = ((RecyclerView) findViewById(R.id.recycleview));
-                recycle.setLayoutManager(new LinearLayoutManager(this));
-                recycle.setAdapter(myAdapter);
+
             }else{
                 Toast.makeText(getApplicationContext(),jsonObject.get("message").getAsString(),Toast.LENGTH_LONG).show();
             }
