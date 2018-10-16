@@ -204,32 +204,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     SharedPref.setDisplayName(context, displayName);
                 } else {
                     textViewInvalid.setVisibility(View.VISIBLE);
-                    textViewInvalid.setText("Authentication fail ...");
+                    textViewInvalid.setText("Invalid username or password");
                 }
                 goGetLoginCallBack();
             }
 
-        }else if (o instanceof JsonArray){
+        }else if (o instanceof JsonObject){
             hideProgress();
-            JsonArray jsonArray =(JsonArray)o;
-            if (jsonArray!=null && jsonArray.size()>0) {
-                JsonObject jsonObject=jsonArray.get(0).getAsJsonObject();
-                String userId=jsonObject.get("userId").getAsString();
-                boolean isAdmin=jsonObject.get("isAdmin").getAsBoolean();
-                if (TextUtils.isEmpty(userId)) {
+           // JsonArray jsonArray =(JsonArray)o;
+            JsonObject result=(JsonObject) o;
+            if(result.get("success").getAsBoolean()){
+                JsonArray UserArray = result.get("data").getAsJsonArray();
+                JsonObject jsonObject= UserArray.get(0).getAsJsonObject();
+
+                if (jsonObject!=null && jsonObject.size()>0) {
+                    String userId= jsonObject.get("userId").getAsString();
+                    boolean isAdmin=jsonObject.get("isAdmin").getAsBoolean();
+                    if (TextUtils.isEmpty(userId)) {
+                        textViewInvalid.setVisibility(View.VISIBLE);
+                        textViewInvalid.setText("Invalid username or password");
+                        return;
+                    }
+                    SharedPref.setUserId(this,userId);
+                    SharedPref.setIsAdmin(this,isAdmin);
+                    launchDashBoard();
+                }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
-                    textViewInvalid.setText("Authentication fail ...");
-                    return;
+                    textViewInvalid.setText("Invalid username or password");
                 }
-                SharedPref.setUserId(this,userId);
-                SharedPref.setIsAdmin(this,isAdmin);
-                launchDashBoard();
-            }else{
+              }
+            else {
                 textViewInvalid.setVisibility(View.VISIBLE);
-                textViewInvalid.setText("Authentication fail ...");
+                textViewInvalid.setText("Invalid username or password");
+            }
             }
         }
-    }
+
 
     private void goGetLoginCallBack() {
         LoginModel jsonObject = new LoginModel();
@@ -248,6 +258,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onError(Throwable e) {
         hideProgress();
+        textViewInvalid.setVisibility(View.VISIBLE);
+        textViewInvalid.setText("Invalid username or password");
     }
 
     @Override
