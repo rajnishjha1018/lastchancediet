@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context="com.httpfriccotech.lastchancediet.Blog.BlogActivity"
     android:background="@color/bg">
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.httpfriccotech.lastchancediet.Recepies.RecepieActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,13 +37,13 @@
             android:textColor="@color/white"
             android:text="@string/app_name" />
     </android.support.v7.widget.Toolbar>
-
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/bg"/>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,5 +54,5 @@
             android:layout_height="50dp"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-
+    </android.support.design.widget.CoordinatorLayout>
 </RelativeLayout>

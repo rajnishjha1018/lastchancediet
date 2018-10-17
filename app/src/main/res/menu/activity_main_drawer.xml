@@ -8,37 +8,37 @@
             android:title="DASHBOARD" />
         <item
             android:id="@+id/nav_SCIENCEBEHINDUS"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/science"
             android:title="SCIENCE BEHIND US"
             android:visible="false"/>
         <item
             android:id="@+id/nav_ABOUTUS"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_about_24dp"
             android:title="ABOUT US" />
         <item
         android:id="@+id/nav_RECIPES"
-        android:icon="@drawable/food"
+        android:icon="@drawable/recipes"
         android:title="RECIPES" />
         <item
             android:id="@+id/nav_WORKOUTS"
-            android:icon="@drawable/exercise"
+            android:icon="@drawable/ic_directions_walk_black_24dp"
             android:title="WORKOUTS" />
         <item
             android:id="@+id/nav_BLOG"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/blog"
             android:title="BLOG" />
 
         <item
             android:id="@+id/nav_CONTACTUS"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/contact"
             android:title="CONTACT US" />
         <item
             android:id="@+id/nav_PROFILE"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/profile_new"
             android:title="PROFILE" />
         <item
             android:id="@+id/nav_LOGOUT"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_logout"
             android:title="LOGOUT" />
     </group>
 
