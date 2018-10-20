@@ -211,7 +211,7 @@ private ExcerciseResponseModel excerciseResponseModel;
     }
 
     private void deleteExcercise(String exerciseID) {
-        APIClient.startQuery().doDeleteExercisItem(SharedPref.getUserName(getActivity()), SharedPref.getPassword(getActivity()),exerciseID,SharedPref.getUserId(getActivity()), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteExercisItem(exerciseID,SharedPref.getUserId(getActivity()), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
         showProgress();

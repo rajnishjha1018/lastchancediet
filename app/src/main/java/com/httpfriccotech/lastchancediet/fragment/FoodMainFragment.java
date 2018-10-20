@@ -172,7 +172,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserName(getActivity()), SharedPref.getPassword(getActivity()), "175000", "is_" + type.toLowerCase(), "1", foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), "1", foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodMainFragment.this);
@@ -189,6 +189,8 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
 
     @Override
     public void onNext(@NonNull Object data) {
+        if (!isVisible())
+            return;
         if (data != null) {
             if (data instanceof AddFoodDataResponse) {
                 Toast.makeText(getContext(), ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
@@ -217,6 +219,8 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
     }
 
     private void setUpDetailData(List<DailyLimitData> dailyLimit) {
+        if (!isVisible())
+            return;
         LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.conclusion_container);
         linearLayout.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -264,7 +268,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
     }
 
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem(SharedPref.getUserName(getActivity()), SharedPref.getPassword(getActivity()),myDatas.get(pos).PostId,SharedPref.getUserId(getActivity()),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId,SharedPref.getUserId(getActivity()),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(FoodMainFragment.this);
     }

@@ -7,14 +7,14 @@
         android:title="@string/title_dashboard" />
     <item
         android:id="@+id/navigation_food"
-        android:icon="@drawable/food"
+        android:icon="@drawable/recipes"
         android:title="Food" />
     <item
         android:id="@+id/navigation_Exercise"
-        android:icon="@drawable/exercise"
+        android:icon="@drawable/ic_directions_walk_black_24dp"
         android:title="Exercise" />
     <item android:id="@+id/navigation_yourProgram"
-        android:icon="@drawable/program"
+        android:icon="@drawable/ic_program_24dp"
         android:title="Your Program"/>
 
 </menu>
