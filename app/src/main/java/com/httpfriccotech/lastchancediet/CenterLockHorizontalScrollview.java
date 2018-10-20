@@ -9,6 +9,8 @@ package com.httpfriccotech.lastchancediet;
         import android.widget.HorizontalScrollView;
         import android.widget.LinearLayout;
 
+        import com.httpfriccotech.lastchancediet.adapters.CustomListAdapter;
+
 public class CenterLockHorizontalScrollview extends HorizontalScrollView {
     Context context;
     int prevIndex = 0;

@@ -1,22 +1,17 @@
-package com.httpfriccotech.lastchancediet.Food;
+package com.httpfriccotech.lastchancediet.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,11 +19,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
-import com.httpfriccotech.lastchancediet.activity.DashboardNewActivity;
+import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
+import com.httpfriccotech.lastchancediet.Food.DailyLimitData;
+import com.httpfriccotech.lastchancediet.Food.FoodAdapter;
+import com.httpfriccotech.lastchancediet.Food.FoodData;
+import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
+import com.httpfriccotech.lastchancediet.Food.SelectFoodActivity;
+import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
-import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.base.BaseFragment;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -42,13 +41,20 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FoodActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer<Object> ,View.OnClickListener{
+import static android.app.Activity.RESULT_OK;
+
+/**
+ * Created by manish on 27-06-2017.
+ */
+
+public class FoodMainFragment extends BaseFragment implements Observer<Object>,View.OnClickListener {
+
+    private View rootView;
     RecyclerView recyclerView;
     FoodAdapter myAdapter;
     Context context;
     TextView dDate;
-    ArrayList<FoodData> myDatas = new ArrayList<>();
+    ArrayList<FoodData> myDatas;
     ArrayList ClassNames = new ArrayList();
     String UserId, UserName;
     String profileId, role, currentDate, profileImage, ClassName;
@@ -57,22 +63,23 @@ public class FoodActivity extends AppCompatActivity
     FoodDetailResponseModel foodDetailResponseModel;
     private boolean isTraining;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = this;
-        UserId = SharedPref.getUserId(this);
-        UserName = SharedPref.getDisplayName(this);
-        setContentView(R.layout.activity_food);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        setupRecycler();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        rootView = (View) inflater.inflate(
+                R.layout.fragment_main_food, container, false);
 
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        context=getActivity();
+        UserId = SharedPref.getUserId(getActivity());
+        UserName = SharedPref.getDisplayName(getActivity());
+        myDatas = new ArrayList<>();
+        setupRecycler();
         final Calendar cd = Calendar.getInstance();
         mYear = cd.get(Calendar.YEAR);
         mMonth = cd.get(Calendar.MONTH);
@@ -80,19 +87,8 @@ public class FoodActivity extends AppCompatActivity
         mDay = cd.get(Calendar.DAY_OF_MONTH);
         currentDate = mYear + "-" + mMonth + "-" + mDay;
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        View header = navigationView.getHeaderView(0);
-        TextView name = (TextView) header.findViewById(R.id.currentuser);
-        TextView email = (TextView) header.findViewById(R.id.useremail);
-        name.setText(SharedPref.getDisplayName(this));
-        email.setText(SharedPref.getUserEmail(this));
-
-
-        getSupportActionBar().setTitle("");
-        ((TextView) findViewById(R.id.toolbar_title)).setText("Your Food Diary");
-        View content = this.findViewById(android.R.id.content);
+        NavigationView navigationView = (NavigationView) rootView.findViewById(R.id.nav_view);
+        View content = getActivity().findViewById(android.R.id.content);
         dDate = (TextView) content.findViewById(R.id.selectedDate);
         dDate.setText(currentDate);
 
@@ -105,7 +101,7 @@ public class FoodActivity extends AppCompatActivity
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
                 // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(FoodActivity.this,
+                DatePickerDialog dpd = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -125,19 +121,12 @@ public class FoodActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(FoodActivity.this, SelectFoodActivity.class);
+                Intent intent = new Intent(getActivity(), SelectFoodActivity.class);
                 //intent.putExtra("foodType", "Snacks");
                 startActivityForResult(intent, 1214);
             }
         });
-        header.findViewById(R.id.navClose).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        });
-        ((RadioGroup) findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        ((RadioGroup) rootView.findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radioButton) {
@@ -145,16 +134,16 @@ public class FoodActivity extends AppCompatActivity
                 } else
                     isTraining = false;
                 if (foodDetailResponseModel != null)
-                    setUpDetailData(foodDetailResponseModel.data.dailyLimit);
+                    setUpDetailData(foodDetailResponseModel.getData().getDailyLimit());
             }
         });
         getData();//oncreate
     }
 
     private void getData() {
-         APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(getActivity()), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(FoodActivity.this);
+                .subscribe(FoodMainFragment.this);
     }
 
     private void showMessage(String s) {
@@ -162,12 +151,12 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void setupRecycler() {
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         myAdapter = new FoodAdapter(context, myDatas, new FoodAdapter.AddFoodListener() {
             @Override
             public void addItem(String foodType) {
-                Intent intent = new Intent(FoodActivity.this, SelectFoodActivity.class);
+                Intent intent = new Intent(getActivity(), SelectFoodActivity.class);
                 intent.putExtra("foodType", foodType);
                 startActivityForResult(intent, 1214);
             }
@@ -175,85 +164,18 @@ public class FoodActivity extends AppCompatActivity
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapter);
     }
-
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.food, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_DASHBOARD) {
-            Intent intent = new Intent(context, DashboardNewActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_RECIPES) {
-            Intent intent = new Intent(context, RecepieActivity.class);
-            startActivity(intent);
-
-        } else if (id == R.id.nav_WORKOUTS) {
-            Intent intent = new Intent(context, WorkoutActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_BLOG) {
-            Intent intent = new Intent(context, BlogActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.nav_PROFILE) {
-
-        } else if (id == R.id.nav_SCIENCEBEHINDUS) {
-
-        } else if (id == R.id.nav_LOGOUT) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1214 && resultCode == RESULT_OK) {
             if (data != null) {
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserName(this), SharedPref.getPassword(this), "175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserName(getActivity()), SharedPref.getPassword(getActivity()), "175000", "is_" + type.toLowerCase(), "1", foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(FoodActivity.this);
+                        .subscribe(FoodMainFragment.this);
 
 
             }
@@ -269,7 +191,7 @@ public class FoodActivity extends AppCompatActivity
     public void onNext(@NonNull Object data) {
         if (data != null) {
             if (data instanceof AddFoodDataResponse) {
-                Toast.makeText(this, ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
 //                Intent intent = new Intent(context, FoodActivity.class);
 //                startActivity(intent);
                 getData();//After added data
@@ -284,20 +206,20 @@ public class FoodActivity extends AppCompatActivity
 
     private void setUpData(FoodDetailResponseModel data) {
         myDatas.clear();
-        myDatas.addAll(data.data.breakfast);
-        myDatas.addAll(data.data.lunch);
-        myDatas.addAll(data.data.dinner);
-        myDatas.addAll(data.data.snacks);
+        myDatas.addAll(data.getData().getBreakfast());
+        myDatas.addAll(data.getData().getLunch());
+        myDatas.addAll(data.getData().getDinner());
+        myDatas.addAll(data.getData().getSnacks());
         if (myDatas.size() == 0)
             showMessage("No data found");
         myAdapter.updateData(myDatas);
-        setUpDetailData(data.data.dailyLimit);
+        setUpDetailData(data.getData().getDailyLimit());
     }
 
     private void setUpDetailData(List<DailyLimitData> dailyLimit) {
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.conclusion_container);
+        LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.conclusion_container);
         linearLayout.removeAllViews();
-        LayoutInflater inflater = LayoutInflater.from(this);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (DailyLimitData myData : dailyLimit) {
             View view = inflater.inflate(R.layout.row_daily, linearLayout, false);
             View view_divider = view.findViewById(R.id.view_divider);
@@ -322,7 +244,7 @@ public class FoodActivity extends AppCompatActivity
 
     @Override
     public void onError(@NonNull Throwable e) {
-        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -342,8 +264,9 @@ public class FoodActivity extends AppCompatActivity
     }
 
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem(SharedPref.getUserName(this), SharedPref.getPassword(this),myDatas.get(pos).PostId,SharedPref.getUserId(this),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteFoodItem(SharedPref.getUserName(getActivity()), SharedPref.getPassword(getActivity()),myDatas.get(pos).PostId,SharedPref.getUserId(getActivity()),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(FoodActivity.this);
+                .subscribe(FoodMainFragment.this);
     }
+
 }

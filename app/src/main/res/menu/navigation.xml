@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_24dp"
+        android:title="@string/title_dashboard" />
+    <item
+        android:id="@+id/navigation_food"
+        android:icon="@drawable/food"
+        android:title="Food" />
+    <item
+        android:id="@+id/navigation_Exercise"
+        android:icon="@drawable/exercise"
+        android:title="Exercise" />
+    <item android:id="@+id/navigation_yourProgram"
+        android:icon="@drawable/program"
+        android:title="Your Program"/>
+
+</menu>

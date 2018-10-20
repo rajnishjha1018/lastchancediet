@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.RecepieFragment;
+import com.httpfriccotech.lastchancediet.fragment.RecepieFragment;
 import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 

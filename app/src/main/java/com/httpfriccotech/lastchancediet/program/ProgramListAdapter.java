@@ -13,7 +13,7 @@ import com.httpfriccotech.lastchancediet.R;
 
 import java.util.List;
 
-class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.ViewHolder> {
+public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.ViewHolder> {
     private Context context;
     private List<ProgramData> itemList;
     public ProgramListAdapter(Context context, List<ProgramData> itemList) {

@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
-import com.httpfriccotech.lastchancediet.DashboardNewActivity;
+import com.httpfriccotech.lastchancediet.activity.DashboardNewActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;

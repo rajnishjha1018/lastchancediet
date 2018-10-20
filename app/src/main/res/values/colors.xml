@@ -20,5 +20,9 @@
     <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>
     <color name="nav_color">#154983</color>
+    <color name="user_color">#4CB050</color>
+    <color name="partener_color">#FF9900</color>
+    <color name="new_user_color">#2196F5</color>
+    <color name="left_user_color">#F34334</color>
 
 </resources>

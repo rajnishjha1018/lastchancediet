@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-class ProgramData implements Serializable {
+public class ProgramData implements Serializable {
     @SerializedName("title")
     private String title;
     @SerializedName("content")

@@ -1,4 +1,4 @@
-package com.httpfriccotech.lastchancediet;
+package com.httpfriccotech.lastchancediet.activity;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.NetworkStattus;
+import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
@@ -61,7 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().hide();
         context = this;
         if ((SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) && !TextUtils.isEmpty(SharedPref.getUserId(this))) {
-            launchDashBoard();
+
+            if (SharedPref.getIsAdmin(this)){
+                launchAdminDashbord();
+            }else {
+                launchDashBoard();
+            }
             return;
         }
         initView();
@@ -72,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void launchAdminDashbord() {
+        Intent intent = new Intent(context, DashBordAdminActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -226,8 +239,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
-                    SharedPref.setIsAdmin(this,isAdmin);
+                    SharedPref.setIsAdmin(this,true);
+                    if (isAdmin)
                     launchDashBoard();
+                    else launchAdminDashbord();
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");

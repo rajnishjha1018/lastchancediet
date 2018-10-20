@@ -1,7 +1,6 @@
-package com.httpfriccotech.lastchancediet;
+package com.httpfriccotech.lastchancediet.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -13,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.base.BaseActivity;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -21,7 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class YourProfileActivity extends AppCompatActivity implements Observer<Object>, View.OnClickListener {
+public class YourProfileActivity extends BaseActivity implements Observer<Object>, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private RelativeLayout progressLayout;
