@@ -302,7 +302,7 @@ public class ExerciseActivity extends AppCompatActivity
     }
 
     private void deleteExcercise(String exerciseID) {
-        APIClient.startQuery().doDeleteExercisItem(SharedPref.getUserName(this), SharedPref.getPassword(this),exerciseID,SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
+        APIClient.startQuery().doDeleteExercisItem(exerciseID,SharedPref.getUserId(this), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
         showProgress();
