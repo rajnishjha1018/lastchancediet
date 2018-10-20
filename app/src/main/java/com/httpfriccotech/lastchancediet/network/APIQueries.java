@@ -43,10 +43,10 @@ public interface APIQueries {
     Observable<JsonArray> doGetWorkoutList();
 
     @POST("wp/v2/DeleteFoodItem")
-    Observable<JsonObject> doDeleteFoodItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
+    Observable<JsonObject> doDeleteFoodItem(@Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
     @POST("wp/v2/DeleteExercisItem")
-    Observable<JsonObject> doDeleteExercisItem(@Query("user") String username, @Query("pass") String pass, @Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
+    Observable<JsonObject> doDeleteExercisItem(@Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
     @POST("wp/v2/ExercisrList")
     Observable<ExcerciseMainResponseModel> doGetExercisrSearchList(@Query("postName") String postName,@Query("time") long time);
@@ -61,11 +61,10 @@ public interface APIQueries {
     Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date, @Query("time") long time);
 
     @POST("wp/v2/FoodDetailAdd")
-    Observable<AddFoodDataResponse> doAddFoodData(@Query("user") String uid, @Query("pass") String pass, @Query("post_id") String post_id, @Query("is_type") String is_type, @Query("is_type_value") String is_type_value, @Query("fat_points") String fat_points, @Query("protein_points") String protein_points, @Query("carb_points") String carb_points, @Query("food_id") String food_id, @Query("title") String title, @Query("fiber") String fiber, @Query("selectedDate") String selectedDate);
+    Observable<AddFoodDataResponse> doAddFoodData(@Query("userId") String uid, @Query("post_id") String post_id, @Query("is_type") String is_type, @Query("is_type_value") String is_type_value, @Query("fat_points") String fat_points, @Query("protein_points") String protein_points, @Query("carb_points") String carb_points, @Query("food_id") String food_id, @Query("title") String title, @Query("fiber") String fiber, @Query("selectedDate") String selectedDate);
 
     @POST("wp/v2/ExerciseAdd")
-    Observable<JsonObject> doAddExercise(@Query("user") String uid,
-                                        @Query("pass") String pass,
+    Observable<JsonObject> doAddExercise(@Query("userId") String uid,
                                         @Query("post_id") String post_id,
                                         @Query("food_id") String exr_id,
                                         @Query("title") String title,

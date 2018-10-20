@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
             android:layout_weight="0.90"
             android:drawableLeft="@android:drawable/ic_menu_my_calendar"
             android:gravity="center_vertical"
@@ -38,13 +38,13 @@
             android:textColor="#000"
             android:textSize="18dp" />
 
-        <ImageButton
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:background="@drawable/search"
-            android:visibility="gone" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/btnSearch"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="45dp"-->
+            <!--android:background="@drawable/search"-->
+            <!--android:visibility="gone" />-->
 
         <RadioGroup
             android:id="@+id/radio_cardio"
@@ -58,13 +58,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Cardio" />
+                android:text="Rest/Cardio" />
 
             <RadioButton
                 android:id="@+id/radioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Training" />
+                android:text="Weight/Training" />
         </RadioGroup>
     </LinearLayout>
 
