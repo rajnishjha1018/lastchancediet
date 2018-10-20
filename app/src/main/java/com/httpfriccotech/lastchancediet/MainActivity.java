@@ -277,7 +277,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             openSignup();
         }
     }
-
     private void openSignup() {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://laststaging.wpengine.com/signup/"));
         startActivity(browserIntent);
