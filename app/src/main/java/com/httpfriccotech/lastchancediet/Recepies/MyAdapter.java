@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.DownLoadImageTask;
-import com.httpfriccotech.lastchancediet.ForgotActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdActivity;
 

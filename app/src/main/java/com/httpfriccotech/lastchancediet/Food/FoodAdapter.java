@@ -23,7 +23,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int YOU = 0;
     private static final int THEM = 1;
-    private final LayoutInflater inflater;
+    private LayoutInflater inflater;
     private List<FoodData> itemList;
     private Context context;
     private AddFoodListener addFoodListener;
@@ -39,14 +39,13 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public FoodAdapter(Context context, List<FoodData> itemList, AddFoodListener addFoodListener, View.OnClickListener onClickListener) {
         this.itemList = itemList;
         this.context = context;
-        inflater = LayoutInflater.from(context);
         this.addFoodListener = addFoodListener;
         this.onClickListener=onClickListener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.row_food, parent, false);
         viewHolder = new FoodHolder(view);
         return viewHolder;

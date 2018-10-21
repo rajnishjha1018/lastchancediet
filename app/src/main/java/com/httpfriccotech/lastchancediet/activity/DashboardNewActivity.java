@@ -1,4 +1,4 @@
-package com.httpfriccotech.lastchancediet;
+package com.httpfriccotech.lastchancediet.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +31,10 @@ import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Blog.BlogActivity;
 import com.httpfriccotech.lastchancediet.Exercise.ExerciseActivity;
 import com.httpfriccotech.lastchancediet.Food.FoodActivity;
+import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieActivity;
 import com.httpfriccotech.lastchancediet.Workout.WorkoutActivity;
+import com.httpfriccotech.lastchancediet.base.BaseActivity;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.program.YourProgramActivity;
@@ -49,7 +50,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class DashboardNewActivity extends AppCompatActivity
+public class DashboardNewActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener ,Observer<Object> {
     private Intent intent;
     Context context;
@@ -68,7 +69,7 @@ public class DashboardNewActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboardnew);
-        context = this;
+        context =this;
         UserId = SharedPref.getUserId(context);
         UserName = SharedPref.getUserName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

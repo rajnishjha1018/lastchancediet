@@ -1,4 +1,4 @@
-package com.httpfriccotech.lastchancediet;
+package com.httpfriccotech.lastchancediet.fragment;
 
 /**
  * Created by RAJNISH on 08/18/2018.
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.Recepies.RecepieItem;
 import com.httpfriccotech.lastchancediet.adapters.RecepiesAdaper;
 
