@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (jsonObject!=null && jsonObject.size()>0) {
                     String userId= jsonObject.get("userId").getAsString();
-                    boolean isAdmin=jsonObject.get("isAdmin").getAsBoolean();
+                    String userType=jsonObject.get("userType").getAsString();
                     if (TextUtils.isEmpty(userId)) {
                         textViewInvalid.setVisibility(View.VISIBLE);
                         textViewInvalid.setText("Invalid username or password");
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     SharedPref.setUserId(this,userId);
                     SharedPref.setIsAdmin(this,true);
-                    if (isAdmin)
+                    if (userType == "user")
                     launchDashBoard();
                     else launchAdminDashbord();
                 }else{
