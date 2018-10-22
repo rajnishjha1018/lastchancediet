@@ -89,6 +89,10 @@ public interface APIQueries {
     Observable<JsonArray> getProgramDetail(@Query("postId") String userId);
     @POST("wp/v2/UserProfile")
     Observable<JsonObject> getUserProfileDetail(@Query("userId") String userId);
+    @POST("wp/v2/ContactUs")
+    Observable<JsonObject> getContactUs();
+    @POST("wp/v2/AdminDashboard")
+    Observable<JsonObject> getAdminDashBord(@Query("userId") String userId);
 
     @FormUrlEncoded
     @POST("init_session")

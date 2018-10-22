@@ -23,13 +23,16 @@ import com.httpfriccotech.lastchancediet.base.BaseActivity;
 import com.httpfriccotech.lastchancediet.fragment.AdminDashbordFragment;
 import com.httpfriccotech.lastchancediet.fragment.ExcerciseMainFragment;
 import com.httpfriccotech.lastchancediet.fragment.FoodMainFragment;
+import com.httpfriccotech.lastchancediet.fragment.PartnerDashBord;
 import com.httpfriccotech.lastchancediet.fragment.ProgramMainFragment;
+import com.httpfriccotech.lastchancediet.fragment.UserDashbordFragment;
+import com.httpfriccotech.lastchancediet.util.Constants;
 import com.httpfriccotech.lastchancediet.util.Global;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.Calendar;
 
-public class DashBordAdminActivity extends BaseActivity
+public class MainBaseActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -113,10 +116,22 @@ public class DashBordAdminActivity extends BaseActivity
     }
 
     private void adminDashbord() {
-        AdminDashbordFragment adminDashbordFragment = new AdminDashbordFragment();
-        getSupportFragmentManager();
-        replaceFragment(adminDashbordFragment);
-    }
+        if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.USER)){
+            UserDashbordFragment userDashbordFragment = new UserDashbordFragment();
+            getSupportFragmentManager();
+            replaceFragment(userDashbordFragment);
+
+        }else if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.ADMIN)){
+            AdminDashbordFragment adminDashbordFragment = new AdminDashbordFragment();
+            getSupportFragmentManager();
+            replaceFragment(adminDashbordFragment);
+
+        }else if(SharedPref.getUserType(this).equalsIgnoreCase(Constants.PARTNER)){
+            PartnerDashBord partnerDashBord = new PartnerDashBord();
+            getSupportFragmentManager();
+            replaceFragment(partnerDashBord);
+        }
+        }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -140,6 +155,9 @@ public class DashBordAdminActivity extends BaseActivity
             startActivity(intent);
         } else if (id == R.id.nav_PROFILE) {
             Intent intent = new Intent(context, YourProfileActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_CONTACTUS) {
+            Intent intent = new Intent(context, ContactUs.class);
             startActivity(intent);
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 

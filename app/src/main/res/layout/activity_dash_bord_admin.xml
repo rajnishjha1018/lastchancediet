@@ -14,7 +14,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DashBordAdminActivity">
+    tools:context=".activity.MainBaseActivity">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,12 +34,10 @@
                 android:id="@+id/toolbar.title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="16sp" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -78,6 +76,7 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@drawable/nav_text_selector"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        android:visibility="gone"/>
 
 </android.support.v4.widget.DrawerLayout>

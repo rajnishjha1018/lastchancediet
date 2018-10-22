@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginTop="60dp"
+            android:background="@color/customGray"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <FrameLayout
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_gravity="center_horizontal">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/texview_round" />
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_24sdp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/profile"
+                    android:textAlignment="center" />
+            </FrameLayout>
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/UserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                tools:text="Montserrat-ExtraLight"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp">
+
+            </com.httpfriccotech.lastchancediet.ui.DietTextView>
+
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/TodayDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:text="You haven’t missed anything today"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

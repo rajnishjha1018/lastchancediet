@@ -28,4 +28,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_activity_contact_us">ContactUs</string>
+    <string name="address">Kelley A. Fleming 196 \n Woodside Circle Mobile,
+FL 36602 \n\n hello@lastchancediet.com \n415-201-201</string>
 </resources>
