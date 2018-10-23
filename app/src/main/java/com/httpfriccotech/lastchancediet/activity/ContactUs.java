@@ -17,6 +17,8 @@ import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
+import java.util.Objects;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -41,6 +43,11 @@ public class ContactUs extends AppCompatActivity /*implements OnMapReadyCallback
         setContentView(R.layout.activity_contact_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 //        mapView = findViewById(R.id.map_view);
 //        Bundle mapViewBundle = null;
 //        if (savedInstanceState != null) {
@@ -55,7 +62,11 @@ public class ContactUs extends AppCompatActivity /*implements OnMapReadyCallback
         getData();
 
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
     private void getData() {
         APIClient.startQuery().getContactUs().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 

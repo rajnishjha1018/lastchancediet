@@ -245,12 +245,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        openSignup();
 //                        return;
 //                    }
-                    launchAdminDashbord();
-
-                    SharedPref.setIsAdmin(this,true);
-                    if (userType == "user")
-                    launchDashBoard();
-                    else launchAdminDashbord();
+                    if (!TextUtils.isEmpty(userType))
+                        launchAdminDashbord();
 
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);

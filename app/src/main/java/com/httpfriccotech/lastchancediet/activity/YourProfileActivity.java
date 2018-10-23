@@ -17,6 +17,8 @@ import com.httpfriccotech.lastchancediet.base.BaseActivity;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
+import java.util.Objects;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -27,6 +29,15 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
     private RecyclerView recyclerView;
     private RelativeLayout progressLayout;
     private EditText userNameET, emailEt, firstNameET, lastnameET, weightET, heightET, dobET, genderET, dailyactivitiesET, wheretodoET;
+    private String username;
+    private String firstname;
+    private String lastname;
+    private String weight;
+    private String height;
+    private String dob;
+    private String gender;
+    private String dailyactivities;
+    private String wheretodo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,7 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         userNameET = (EditText) findViewById(R.id.et_username);
         emailEt = (EditText) findViewById(R.id.et_email);
         firstNameET = (EditText) findViewById(R.id.et_first_name);
@@ -68,17 +80,28 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
         if (data != null && data instanceof JsonObject) {
             JsonObject jsonObject = (JsonObject) data;
             if (jsonObject.get("success").getAsBoolean()) {
-                JsonObject jsonElements = jsonObject.getAsJsonObject("data");
-                String username = jsonElements.get("username").getAsString();
-                String firstname = jsonElements.get("firstname").getAsString();
-                String lastname = jsonElements.get("lastname").getAsString();
-                String weight = jsonElements.get("weight").getAsString();
-                String height = jsonElements.get("height").getAsString();
-                String dob = jsonElements.get("dob").getAsString();
-                String gender = jsonElements.get("gender").getAsString();
-                String dailyactivities = jsonElements.get("dailyactivities").getAsString();
-                String wheretodo = jsonElements.get("wheretodo").getAsString();
-                setAllData(username, firstname, lastname, weight, height, dob, gender, dailyactivities, wheretodo);
+                if (jsonObject.has("data")) {
+                    JsonObject jsonElements = jsonObject.getAsJsonObject("data");
+                    if (jsonElements.get("username") != null)
+                        username = jsonElements.get("username").getAsString();
+                    if (jsonElements.get("firstname") != null)
+                        firstname = jsonElements.get("firstname").getAsString();
+                    if (jsonElements.get("lastname") != null)
+                        lastname = jsonElements.get("lastname").getAsString();
+                    if (jsonElements.get("weight") != null)
+                        weight = jsonElements.get("weight").getAsString();
+                    if (jsonElements.get("height") != null)
+                        height = jsonElements.get("height").getAsString();
+                    if (jsonElements.get("dob") != null)
+                        dob = jsonElements.get("dob").getAsString();
+                    if (jsonElements.get("gender") != null)
+                        gender = jsonElements.get("gender").getAsString();
+                    if (jsonElements.get("dailyactivities") != null)
+                        dailyactivities = jsonElements.get("dailyactivities").getAsString();
+                    if (jsonElements.get("wheretodo") != null)
+                        wheretodo = jsonElements.get("wheretodo").getAsString();
+                    setAllData(username, firstname, lastname, weight, height, dob, gender, dailyactivities, wheretodo);
+                }
             } else {
                 Toast.makeText(getApplicationContext(), jsonObject.get("message").getAsString(), Toast.LENGTH_LONG).show();
             }

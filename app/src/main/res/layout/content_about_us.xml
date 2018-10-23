@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_marginTop="?attr/actionBarSize">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/bg">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:src="@drawable/top_banner"
+            android:layout_marginBottom="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Why People Believe in Us"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:textSize="14sp"
+
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique arcu eu tortor venenatis, in posuere diam aliquet. Cras a urna eget metus pellentesque rhoncus. Morbi ac ante id leo dictum mattis. Vestibulum lectus eros, porta posuere metus id, lacinia dictum lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at enim condimentum, gravida purus nec, blandit urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ornare leo non velit lobortis, vel finibus quam luctus. Vestibulum vulputate sollicitudin feugiat. Pellentesque in enim non purus accumsan malesuada. Mauris at nunc pharetra, malesuada tortor et, mollis lorem."
+            android:layout_marginBottom="10dp"
+            android:textSize="12sp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="144dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="144dp"
+                android:src="@drawable/history"
+                android:scaleType="fitXY"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88676767"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="Our History"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_gravity="center" />
+        </FrameLayout>
+        <TextView
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique arcu eu tortor venenatis, in posuere diam aliquet. Cras a urna eget metus pellentesque rhoncus. Morbi ac ante id leo dictum mattis. Vestibulum lectus eros, porta posuere metus id, lacinia dictum lorem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at enim condimentum, gravida purus nec, blandit urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec ornare leo non velit lobortis, vel finibus quam luctus. Vestibulum vulputate sollicitudin feugiat. Pellentesque in enim non purus accumsan malesuada. Mauris at nunc pharetra, malesuada tortor et, mollis lorem."/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leadership Team"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="12dp"
+            android:textSize="14sp"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tristique arcu eu tortor venenatis,
+in posuere diam aliquet. Cras a urna eget metus pellentesque rhoncus."/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:src="@drawable/team_member"
+            android:layout_marginBottom="12dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."/>
+    </LinearLayout>
+
+</ScrollView>
