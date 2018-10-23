@@ -238,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
+
                     SharedPref.setUserType(this,userType);
                     SharedPref.setPayStatus(this,payStatus);
 //                    if (!payStatus.equalsIgnoreCase("Success")){
@@ -245,6 +246,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        return;
 //                    }
                     launchAdminDashbord();
+
+                    SharedPref.setIsAdmin(this,true);
+                    if (userType == "user")
+                    launchDashBoard();
+                    else launchAdminDashbord();
+
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");
