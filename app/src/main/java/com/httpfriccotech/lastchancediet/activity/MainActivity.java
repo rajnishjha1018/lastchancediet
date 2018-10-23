@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.httpfriccotech.lastchancediet.BuildConfig;
 import com.httpfriccotech.lastchancediet.NetworkStattus;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
@@ -63,12 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().hide();
         context = this;
         if ((SharedPref.getToken(context) != null && !SharedPref.getToken(context).equalsIgnoreCase("")) && !TextUtils.isEmpty(SharedPref.getUserId(this))) {
-
-            if (SharedPref.getIsAdmin(this)){
-                launchAdminDashbord();
-            }else {
-                launchDashBoard();
-            }
+            launchAdminDashbord();
             return;
         }
         initView();
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void launchAdminDashbord() {
-        Intent intent = new Intent(context, DashBordAdminActivity.class);
+        Intent intent = new Intent(context, MainBaseActivity.class);
         startActivity(intent);
         finish();
     }
@@ -212,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String token = result.getToken();
                 if (!(token.equalsIgnoreCase(""))) {
                     SharedPref.setToken(context, "Bearer " + token);
+                    if (BuildConfig.DEBUG) Log.d("token",token);
                     SharedPref.setUserEmail(context, email);
                     SharedPref.setUserName(context, nickName);
                     SharedPref.setDisplayName(context, displayName);
@@ -233,16 +231,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (jsonObject!=null && jsonObject.size()>0) {
                     String userId= jsonObject.get("userId").getAsString();
                     String userType=jsonObject.get("userType").getAsString();
+                    String payStatus=jsonObject.get("payStatus").getAsString();
                     if (TextUtils.isEmpty(userId)) {
                         textViewInvalid.setVisibility(View.VISIBLE);
                         textViewInvalid.setText("Invalid username or password");
                         return;
                     }
                     SharedPref.setUserId(this,userId);
+
+                    SharedPref.setUserType(this,userType);
+                    SharedPref.setPayStatus(this,payStatus);
+//                    if (!payStatus.equalsIgnoreCase("Success")){
+//                        openSignup();
+//                        return;
+//                    }
+                    launchAdminDashbord();
+
                     SharedPref.setIsAdmin(this,true);
                     if (userType == "user")
                     launchDashBoard();
                     else launchAdminDashbord();
+
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");

@@ -35,11 +35,11 @@
 
                 <ImageView
                     android:id="@+id/user_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="75dp"
+                    android:layout_width="75dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:padding="12dp"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/user_dash" />
 
                 <TextView
                     android:id="@+id/tv_total_user"
@@ -59,7 +59,7 @@
                     android:layout_toRightOf="@+id/user_icon"
                     android:layout_below="@+id/tv_total_user"
                     android:gravity="center"
-                    android:text="Total User"
+                    android:text="TOTAL USERS"
                     android:textColor="@color/white"
                     android:textSize="15sp"/>
 
@@ -83,11 +83,11 @@
 
                 <ImageView
                     android:id="@+id/icon_partener"
-                    android:layout_width="wrap_content"
-                    android:layout_height="75dp"
+                    android:layout_width="75dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:padding="12dp"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/partner" />
 
                 <TextView
                     android:id="@+id/tv_partner_count"
@@ -107,9 +107,9 @@
                     android:layout_toRightOf="@+id/icon_partener"
                     android:layout_below="@+id/tv_partner_count"
                     android:gravity="center"
-                    android:text="Total User"
+                    android:text="PARTNERS"
                     android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -140,11 +140,11 @@
 
                 <ImageView
                     android:id="@+id/user_icon_new"
-                    android:layout_width="wrap_content"
-                    android:layout_height="75dp"
+                    android:layout_width="75dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:padding="12dp"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/new_user" />
 
                 <TextView
                     android:id="@+id/tv_total_user_new"
@@ -164,9 +164,9 @@
                     android:layout_toRightOf="@+id/user_icon_new"
                     android:layout_below="@+id/tv_total_user_new"
                     android:gravity="center"
-                    android:text="Total User"
+                    android:text="NEW USERS"
                     android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
 
@@ -188,11 +188,11 @@
 
                 <ImageView
                     android:id="@+id/icon_user_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="75dp"
+                    android:layout_width="75dp"
+                    android:layout_height="100dp"
                     android:layout_gravity="center"
                     android:padding="12dp"
-                    android:src="@drawable/user" />
+                    android:src="@drawable/left_user" />
 
                 <TextView
                     android:id="@+id/tv_user_count_left"
@@ -212,9 +212,9 @@
                     android:layout_toRightOf="@+id/icon_user_left"
                     android:layout_below="@+id/tv_user_count_left"
                     android:gravity="center"
-                    android:text="Total User"
+                    android:text="USERS LEFT"
                     android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
         </LinearLayout>
