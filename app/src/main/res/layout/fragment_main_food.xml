@@ -85,7 +85,7 @@
             android:gravity="center"
             android:text="Food Type"
             android:textColor="@color/white"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
 
         <!--<com.httpfriccotech.lastchancediet.ui.DietTextView
