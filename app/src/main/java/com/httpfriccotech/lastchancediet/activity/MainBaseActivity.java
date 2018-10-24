@@ -49,13 +49,13 @@ public class MainBaseActivity extends BaseActivity
                     ExcerciseMainFragment excerciseMainFragment = new ExcerciseMainFragment();
                     getSupportFragmentManager();
                     replaceFragment(excerciseMainFragment);
-                    setTitle("Exercise");
+                    setTitle("Your Exercise Diary");
                     return true;
                 case R.id.navigation_food:
                     FoodMainFragment foodMainFragment = new FoodMainFragment();
                     getSupportFragmentManager();
                     replaceFragment(foodMainFragment);
-                    setTitle("Food");
+                    setTitle("Your Food Diary");
                     return true;
                 case R.id.navigation_yourProgram:
                     ProgramMainFragment programMainFragment = new ProgramMainFragment();
