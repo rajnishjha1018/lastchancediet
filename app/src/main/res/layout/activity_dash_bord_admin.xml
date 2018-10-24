@@ -31,7 +31,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
-                android:id="@+id/toolbar.title"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
