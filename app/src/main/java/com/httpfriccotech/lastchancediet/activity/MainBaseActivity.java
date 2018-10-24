@@ -34,7 +34,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class MainBaseActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,DrawerLayout.DrawerListener {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -69,6 +69,7 @@ public class MainBaseActivity extends BaseActivity
     private int mMonth;
     private int mDay;
     private String currentDate;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class MainBaseActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         assert drawer != null;
         drawer.addDrawerListener(toggle);
@@ -201,5 +202,29 @@ public class MainBaseActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View view, float v) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View view) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View view) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int i) {
+        if (drawer.isDrawerVisible(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 }

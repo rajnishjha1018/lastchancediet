@@ -129,8 +129,10 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         dataSets.add(barDataSet2);
 
         BarData data = new BarData(labels, dataSets);
+        data.setGroupSpace(0.1f);
         data.setValueFormatter(new UserDashbordFragment.MyValueFormatter());
         mChart.setData(data);
+
         mChart.animateXY(2000, 2000);
         //mChart.getAxisLeft().setInverted(true);
         mChart.setAutoScaleMinMaxEnabled(false);
@@ -140,7 +142,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         XAxis x = mChart.getXAxis();
         x.setEnabled(true);
         x.setTextColor(intColor);
-        x.setTextSize(12);
+        x.setTextSize(12f);
         x.setPosition(XAxis.XAxisPosition.BOTTOM);
         x.setDrawGridLines(false);
         Legend l = mChart.getLegend();
