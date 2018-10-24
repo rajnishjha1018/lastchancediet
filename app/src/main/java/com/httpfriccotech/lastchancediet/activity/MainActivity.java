@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }else if (o instanceof JsonObject){
             hideProgress();
-           // JsonArray jsonArray =(JsonArray)o;
+            // JsonArray jsonArray =(JsonArray)o;
             JsonObject result=(JsonObject) o;
             if(result.get("success").getAsBoolean()){
                 JsonArray UserArray = result.get("data").getAsJsonArray();
@@ -245,27 +245,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        openSignup();
 //                        return;
 //                    }
-                    launchAdminDashbord();
                     if (!TextUtils.isEmpty(userType))
                         launchAdminDashbord();
-
-                    SharedPref.setIsAdmin(this,true);
-                    if (userType == "user")
-                    launchDashBoard();
-                    else launchAdminDashbord();
-
 
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");
                 }
-              }
+            }
             else {
                 textViewInvalid.setVisibility(View.VISIBLE);
                 textViewInvalid.setText("Invalid username or password");
             }
-            }
         }
+    }
 
 
     private void goGetLoginCallBack() {
