@@ -9,6 +9,7 @@ import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
 import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
+import com.httpfriccotech.lastchancediet.model.AdminDashBordModel;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
@@ -92,7 +93,9 @@ public interface APIQueries {
     @POST("wp/v2/ContactUs")
     Observable<JsonObject> getContactUs();
     @POST("wp/v2/AdminDashboard")
-    Observable<JsonObject> getAdminDashBord(@Query("userId") String userId);
+    Observable<AdminDashBordModel> getAdminDashBord(@Query("userId") String userId);
+    @POST("wp/v2/PartnerDashboard")
+    Observable<AdminDashBordModel> getPartnerDashBord(@Query("userId") String userId);
 
     @FormUrlEncoded
     @POST("init_session")

@@ -16,6 +16,7 @@ import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,6 +39,7 @@ public class BlogByIdActivity extends AppCompatActivity implements Observer<List
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         bundle = getIntent().getExtras();
         id = getIntent().getExtras().getString("blogId");
         postType = getIntent().getExtras().getString("postType");
