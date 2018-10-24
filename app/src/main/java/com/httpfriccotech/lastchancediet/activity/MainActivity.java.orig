@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "input field", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                loginPrefsEditor.putBoolean("saveLogin", true);
+                loginPrefsEditor.putBoolean("saveLogin", false);
                 loginPrefsEditor.putString("username", editTextUser.getText().toString());
                 loginPrefsEditor.putString("password", editTextPassword.getText().toString());
                 loginPrefsEditor.commit();
@@ -238,16 +238,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
-
                     SharedPref.setUserType(this,userType);
                     SharedPref.setPayStatus(this,payStatus);
 //                    if (!payStatus.equalsIgnoreCase("Success")){
 //                        openSignup();
 //                        return;
 //                    }
+<<<<<<< HEAD
+                    launchAdminDashbord();
+=======
                     if (!TextUtils.isEmpty(userType))
                         launchAdminDashbord();
 
+>>>>>>> 0d00c8a3ac260a6f2a35be3d5c4c92a55c7b1570
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");

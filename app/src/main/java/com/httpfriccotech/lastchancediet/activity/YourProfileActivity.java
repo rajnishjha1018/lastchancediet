@@ -28,12 +28,14 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
 
     private RecyclerView recyclerView;
     private RelativeLayout progressLayout;
-    private EditText userNameET, emailEt, firstNameET, lastnameET, weightET, heightET, dobET, genderET, dailyactivitiesET, wheretodoET;
+    private EditText userNameET, emailET, firstNameET, lastnameET, weightET, heightET,inchesET, dobET, genderET, dailyactivitiesET, wheretodoET;
     private String username;
     private String firstname;
+    private String email;
     private String lastname;
     private String weight;
     private String height;
+    private String inches;
     private String dob;
     private String gender;
     private String dailyactivities;
@@ -51,11 +53,12 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
         }
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         userNameET = (EditText) findViewById(R.id.et_username);
-        emailEt = (EditText) findViewById(R.id.et_email);
+        emailET = (EditText) findViewById(R.id.et_email);
         firstNameET = (EditText) findViewById(R.id.et_first_name);
         lastnameET = (EditText) findViewById(R.id.et_last_name);
         weightET = (EditText) findViewById(R.id.et_weight);
         heightET = (EditText) findViewById(R.id.et_height_feet);
+        inchesET = (EditText) findViewById(R.id.et_height_inch);
         dobET = (EditText) findViewById(R.id.et_dob);
         genderET = (EditText) findViewById(R.id.et_gender);
         dailyactivitiesET = (EditText) findViewById(R.id.et_activity);
@@ -82,6 +85,8 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
             if (jsonObject.get("success").getAsBoolean()) {
                 if (jsonObject.has("data")) {
                     JsonObject jsonElements = jsonObject.getAsJsonObject("data");
+                    if (jsonElements.get("useremail") != null)
+                        email = jsonElements.get("useremail").getAsString();
                     if (jsonElements.get("username") != null)
                         username = jsonElements.get("username").getAsString();
                     if (jsonElements.get("firstname") != null)
@@ -92,6 +97,8 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
                         weight = jsonElements.get("weight").getAsString();
                     if (jsonElements.get("height") != null)
                         height = jsonElements.get("height").getAsString();
+                    if (jsonElements.get("inches") != null)
+                        inches = jsonElements.get("inches").getAsString();
                     if (jsonElements.get("dob") != null)
                         dob = jsonElements.get("dob").getAsString();
                     if (jsonElements.get("gender") != null)
@@ -100,7 +107,7 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
                         dailyactivities = jsonElements.get("dailyactivities").getAsString();
                     if (jsonElements.get("wheretodo") != null)
                         wheretodo = jsonElements.get("wheretodo").getAsString();
-                    setAllData(username, firstname, lastname, weight, height, dob, gender, dailyactivities, wheretodo);
+                    setAllData(email,username, firstname, lastname, weight, height,inches, dob, gender, dailyactivities, wheretodo);
                 }
             } else {
                 Toast.makeText(getApplicationContext(), jsonObject.get("message").getAsString(), Toast.LENGTH_LONG).show();
@@ -120,7 +127,10 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
      * @param dailyactivities
      * @param wheretodo
      */
-    private void setAllData(String username, String firstname, String lastname, String weight, String height, String dob, String gender, String dailyactivities, String wheretodo) {
+    private void setAllData(String email,String username, String firstname, String lastname, String weight, String height,String inches, String dob, String gender, String dailyactivities, String wheretodo) {
+        if (!TextUtils.isEmpty(email) && emailET != null) {
+            emailET.setText(email);
+        }
         if (!TextUtils.isEmpty(username) && userNameET != null) {
             userNameET.setText(username);
         }
@@ -135,6 +145,9 @@ public class YourProfileActivity extends BaseActivity implements Observer<Object
         }
         if (!TextUtils.isEmpty(height) && heightET != null) {
             heightET.setText(height);
+        }
+        if (!TextUtils.isEmpty(inches) && inchesET != null) {
+            inchesET.setText(inches);
         }
         if (!TextUtils.isEmpty(dob) && dobET != null) {
             dobET.setText(dob);
