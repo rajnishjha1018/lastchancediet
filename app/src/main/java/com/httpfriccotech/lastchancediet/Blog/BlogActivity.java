@@ -18,6 +18,7 @@ import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,6 +47,7 @@ public class BlogActivity extends AppCompatActivity
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         context = this;
         UserId = GlobalManage.getInstance().getUserId();
         UserName = GlobalManage.getInstance().getUserName();

@@ -31,6 +31,7 @@ import com.httpfriccotech.lastchancediet.util.Global;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MainBaseActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,9 +81,11 @@ public class MainBaseActivity extends BaseActivity
         userName = SharedPref.getUserName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        assert drawer != null;
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -104,6 +107,7 @@ public class MainBaseActivity extends BaseActivity
         getDate();
 
         adminDashbord();
+
     }
 
     private void getDate() {
@@ -139,9 +143,7 @@ public class MainBaseActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
-            Intent intent = new Intent(context, DashboardNewActivity.class);
-            startActivity(intent);
-
+           adminDashbord();
         } else if (id == R.id.nav_RECIPES) {
             Intent intent = new Intent(context, RecepieActivity.class);
             startActivity(intent);
@@ -158,6 +160,9 @@ public class MainBaseActivity extends BaseActivity
             startActivity(intent);
         } else if (id == R.id.nav_CONTACTUS) {
             Intent intent = new Intent(context, ContactUs.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_ABOUTUS) {
+            Intent intent = new Intent(context, AboutUsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_SCIENCEBEHINDUS) {
 
@@ -182,5 +187,19 @@ public class MainBaseActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

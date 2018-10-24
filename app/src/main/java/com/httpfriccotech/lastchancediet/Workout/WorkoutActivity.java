@@ -17,6 +17,7 @@ import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,6 +45,7 @@ public class WorkoutActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         context = this;
         UserId = GlobalManage.getInstance().getUserId();
         UserName = GlobalManage.getInstance().getUserName();

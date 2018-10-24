@@ -19,6 +19,7 @@ import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,6 +43,7 @@ public class YourProgramActivity extends AppCompatActivity implements Observer<O
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         progressLayout=(RelativeLayout)findViewById(R.id.progressLayout);
         recyclerView=(RecyclerView)findViewById(R.id.recycler);
         itemList=new ArrayList<ProgramData>();

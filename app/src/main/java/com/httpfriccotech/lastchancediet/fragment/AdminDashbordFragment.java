@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.adapters.PartnerListAdapterForAdmin;
 import com.httpfriccotech.lastchancediet.adapters.UserListAdapterForAdmin;
 import com.httpfriccotech.lastchancediet.base.BaseFragment;
-import com.httpfriccotech.lastchancediet.model.UserList;
+import com.httpfriccotech.lastchancediet.model.AdminDashBordModel;
+import com.httpfriccotech.lastchancediet.model.DataList;
+import com.httpfriccotech.lastchancediet.model.UserListModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -35,9 +37,11 @@ public class AdminDashbordFragment extends BaseFragment implements  View.OnClick
     private View rootView;
     private RecyclerView userListRecyclerView;
     private RecyclerView partnerListRecyclerView;
-    List<UserList> userLists;
-    List<UserList> partnerList;
+    List<UserListModel> userLists;
+    List<UserListModel> partnerList;
     TextView totalUserCountTv,partenerCountTV,newUserCountTv,userLeftCount;
+    private UserListAdapterForAdmin userListAdapterForAdmin;
+    private PartnerListAdapterForAdmin partnerListAdapterForAdmin;
 
     @Nullable
     @Override
@@ -51,8 +55,8 @@ public class AdminDashbordFragment extends BaseFragment implements  View.OnClick
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userLists=new ArrayList<UserList>();
-        partnerList=new ArrayList<UserList>();
+        userLists=new ArrayList<UserListModel>();
+        partnerList=new ArrayList<UserListModel>();
         userListRecyclerView=(RecyclerView) rootView.findViewById(R.id.recycler_user_list);
         partnerListRecyclerView=(RecyclerView) rootView.findViewById(R.id.recycler_partner_list);
         newUserCountTv=(TextView)rootView.findViewById(R.id.tv_total_user_new);
@@ -71,14 +75,14 @@ public class AdminDashbordFragment extends BaseFragment implements  View.OnClick
 
     private void setPartnerAdapter() {
         partnerListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
-        UserListAdapterForAdmin recepiesAdaper=new UserListAdapterForAdmin(getActivity(),partnerList);
-        partnerListRecyclerView.setAdapter(recepiesAdaper);
+        partnerListAdapterForAdmin=new PartnerListAdapterForAdmin(getActivity(),partnerList);
+        partnerListRecyclerView.setAdapter(partnerListAdapterForAdmin);
     }
 
     private void setUserAdapter() {
         userListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        UserListAdapterForAdmin recepiesAdaper=new UserListAdapterForAdmin(getActivity(),userLists);
-        userListRecyclerView.setAdapter(recepiesAdaper);
+        userListAdapterForAdmin=new UserListAdapterForAdmin(getActivity(),userLists);
+        userListRecyclerView.setAdapter(userListAdapterForAdmin);
     }
 
     /**
@@ -98,15 +102,24 @@ public class AdminDashbordFragment extends BaseFragment implements  View.OnClick
 
     @Override
     public void onNext(Object o) {
-        if (o instanceof JsonObject){
-            JsonObject jsonObject=(JsonObject)o;
-            if (jsonObject.get("success").getAsBoolean()){
-                JsonObject data=jsonObject.get("data").getAsJsonObject();
-                JsonObject count=data.get("CountList").getAsJsonObject();
-                totalUserCountTv.setText(count.get("TOTALUSERS").getAsString());
-                partenerCountTV.setText(count.get("PARTNER").getAsString());
-                newUserCountTv.setText(count.get("NEWUSERS").getAsString());
-                userLeftCount.setText(count.get("USERSLEFT").getAsString());
+        if (o instanceof AdminDashBordModel){
+            AdminDashBordModel adminDashBordModel=(AdminDashBordModel)o;
+            if (adminDashBordModel.isSuccess()){
+                DataList dataList=adminDashBordModel.getData();
+                totalUserCountTv.setText(dataList.getCountList().getTOTALUSERS());
+                partenerCountTV.setText(dataList.getCountList().getPARTNER());
+                newUserCountTv.setText(dataList.getCountList().getNEWUSERS());
+                userLeftCount.setText(dataList.getCountList().getUSERSLEFT());
+                if (dataList.getUserList().size()>0){
+                    if (userListAdapterForAdmin!=null){
+                        userListAdapterForAdmin.updateData(dataList.getUserList());
+                    }
+                }if (dataList.getPartnerList().size()>0){
+                    if (partnerListAdapterForAdmin!=null){
+                        partnerListAdapterForAdmin.updatePartnerList(dataList.getPartnerList());
+                    }
+                }
+
             }
         }
     }
