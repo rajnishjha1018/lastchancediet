@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -42,21 +43,25 @@ public class MainBaseActivity extends BaseActivity
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
                     adminDashbord();
+                    setTitle("Dashboard");
                     return true;
                 case R.id.navigation_Exercise:
                     ExcerciseMainFragment excerciseMainFragment = new ExcerciseMainFragment();
                     getSupportFragmentManager();
                     replaceFragment(excerciseMainFragment);
+                    setTitle("Exercise");
                     return true;
                 case R.id.navigation_food:
                     FoodMainFragment foodMainFragment = new FoodMainFragment();
                     getSupportFragmentManager();
                     replaceFragment(foodMainFragment);
+                    setTitle("Food");
                     return true;
                 case R.id.navigation_yourProgram:
                     ProgramMainFragment programMainFragment = new ProgramMainFragment();
                     getSupportFragmentManager();
                     replaceFragment(programMainFragment);
+                    setTitle("Your Program");
                     return true;
             }
             return false;
@@ -70,6 +75,7 @@ public class MainBaseActivity extends BaseActivity
     private int mDay;
     private String currentDate;
     private DrawerLayout drawer;
+    private TextView toolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,8 @@ public class MainBaseActivity extends BaseActivity
         userName = SharedPref.getUserName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("DashBoard");
+        toolbarTitle=(TextView)findViewById(R.id.title);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -119,12 +127,22 @@ public class MainBaseActivity extends BaseActivity
         mDay = cd.get(Calendar.DAY_OF_MONTH);
         currentDate = mYear + "-" + mMonth + "-" + mDay;
     }
-
+private void setTitle(String s){
+       if (TextUtils.isEmpty(s)){
+           if (toolbarTitle!=null)
+               toolbarTitle.setText(getString(R.string.app_name));
+       }else {
+           if (toolbarTitle!=null)
+               toolbarTitle.setText(s);
+       }
+}
     private void adminDashbord() {
+        setTitle("Dashboard");
         if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.USER)){
             UserDashbordFragment userDashbordFragment = new UserDashbordFragment();
             getSupportFragmentManager();
             replaceFragment(userDashbordFragment);
+
 
         }else if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.ADMIN)){
             AdminDashbordFragment adminDashbordFragment = new AdminDashbordFragment();
