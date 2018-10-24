@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this, "input field", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                loginPrefsEditor.putBoolean("saveLogin", true);
+                loginPrefsEditor.putBoolean("saveLogin", false);
                 loginPrefsEditor.putString("username", editTextUser.getText().toString());
                 loginPrefsEditor.putString("password", editTextPassword.getText().toString());
                 loginPrefsEditor.commit();
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }else if (o instanceof JsonObject){
             hideProgress();
-           // JsonArray jsonArray =(JsonArray)o;
+            // JsonArray jsonArray =(JsonArray)o;
             JsonObject result=(JsonObject) o;
             if(result.get("success").getAsBoolean()){
                 JsonArray UserArray = result.get("data").getAsJsonArray();
@@ -238,7 +238,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
-
                     SharedPref.setUserType(this,userType);
                     SharedPref.setPayStatus(this,payStatus);
 //                    if (!payStatus.equalsIgnoreCase("Success")){
@@ -246,23 +245,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        return;
 //                    }
                     launchAdminDashbord();
-
-                    SharedPref.setIsAdmin(this,true);
-                    if (userType == "user")
-                    launchDashBoard();
-                    else launchAdminDashbord();
-
                 }else{
                     textViewInvalid.setVisibility(View.VISIBLE);
                     textViewInvalid.setText("Invalid username or password");
                 }
-              }
+            }
             else {
                 textViewInvalid.setVisibility(View.VISIBLE);
                 textViewInvalid.setText("Invalid username or password");
             }
-            }
         }
+    }
 
 
     private void goGetLoginCallBack() {
