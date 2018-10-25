@@ -239,39 +239,39 @@ public class DashboardNewActivity extends BaseActivity
 //        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 2));
 //        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 1));
 //        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 0));
-        BarDataSet barDataSet2 = new BarDataSet(entries, "ACTUAL INTAKE");
+        /*BarDataSet barDataSet2 = new BarDataSet(entries, "ACTUAL INTAKE");
         barDataSet2.setColors(MY_COLORS);
         BarDataSet barDataSet1 = new BarDataSet(valueSet1, "DAILY GOAL");
         barDataSet1.setColor(Color.rgb(216, 216, 216));
+*/
 
+//        dataSets = new ArrayList<>();
+//        dataSets.add(barDataSet1);
+//        dataSets.add(barDataSet2);
+//
+//        BarData data = new BarData(labels, dataSets);
+//        data.setValueFormatter(new MyValueFormatter());
+//        mChart.setData(data);
+//        mChart.animateXY(2000, 2000);
+//        //mChart.getAxisLeft().setInverted(true);
+//        mChart.setAutoScaleMinMaxEnabled(false);
+//        mChart.getAxisLeft().setEnabled(false);
+//        mChart.getAxisRight().setEnabled(false);
 
-        dataSets = new ArrayList<>();
-        dataSets.add(barDataSet1);
-        dataSets.add(barDataSet2);
-
-        BarData data = new BarData(labels, dataSets);
-        data.setValueFormatter(new MyValueFormatter());
-        mChart.setData(data);
-        mChart.animateXY(2000, 2000);
-        //mChart.getAxisLeft().setInverted(true);
-        mChart.setAutoScaleMinMaxEnabled(false);
-        mChart.getAxisLeft().setEnabled(false);
-        mChart.getAxisRight().setEnabled(false);
-
-        XAxis x = mChart.getXAxis();
-        x.setEnabled(true);
-        x.setTextColor(intColor);
-        x.setTextSize(12);
-        x.setPosition(XAxis.XAxisPosition.BOTTOM);
-        x.setDrawGridLines(false);
-        Legend l = mChart.getLegend();
-        l.setFormSize(10f); // set the size of the legend forms/shapes
-        l.setForm(Legend.LegendForm.CIRCLE); // set what type of form/shape should be used
-        l.setPosition(Legend.LegendPosition.ABOVE_CHART_LEFT);
-        l.setTextSize(12f);
-        l.setTextColor(Color.BLACK);
-        l.setXEntrySpace(15f); // set the space between the legend entries on the x-axis
-        l.setYEntrySpace(15f); // set t
+      //  XAxis x = mChart.getXAxis();
+       // x.setEnabled(true);
+        //x.setTextColor(intColor);
+        //x.setTextSize(12f);
+        //x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //x.setDrawGridLines(false);
+        //Legend l = mChart.getLegend();
+       // l.setFormSize(10f); // set the size of the legend forms/shapes
+        //l.setForm(Legend.LegendForm.CIRCLE); // set what type of form/shape should be used
+        //l.setPosition(Legend.LegendPosition.ABOVE_CHART_LEFT);
+       // l.setTextSize(12f);
+       // l.setTextColor(Color.BLACK);
+       // l.setXEntrySpace(0f); // set the space between the legend entries on the x-axis
+        //l.setYEntrySpace(0f); // set t
         //.setAlign(LegendRenderer.LegendAlign.TOP);
         mChart.invalidate();
     }
