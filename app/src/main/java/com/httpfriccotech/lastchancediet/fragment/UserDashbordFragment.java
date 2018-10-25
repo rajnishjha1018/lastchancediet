@@ -179,10 +179,10 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
             } else {
 
                 entries = new ArrayList<BarEntry>();
-                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Protein").getAsString()), 3));
-                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Fiber").getAsString()), 2));
-                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Carb").getAsString()), 1));
-                entries.add(new BarEntry(Float.parseFloat(todayObject.get("Fat").getAsString()), 0));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Protein").getAsString()).floatValue(), 3));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fiber").getAsString()).floatValue(), 2));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Carb").getAsString()).floatValue(), 1));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fat").getAsString()).floatValue(), 0));
                 TextView TodayDesc = (TextView) rootView.findViewById(R.id.TodayDescription);
                 String str="You have missed";
                 if (Float.parseFloat(todayObject.get("Protein").getAsString())==0){
@@ -241,7 +241,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         private DecimalFormat mFormat;
 
         public MyValueFormatter() {
-            mFormat = new DecimalFormat("###,###,##0"); // use one decimal if needed
+            mFormat = new DecimalFormat("#.##"); // use one decimal if needed
         }
 
         @Override

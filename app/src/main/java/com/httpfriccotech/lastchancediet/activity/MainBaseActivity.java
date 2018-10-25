@@ -76,6 +76,7 @@ public class MainBaseActivity extends BaseActivity
     private String currentDate;
     private DrawerLayout drawer;
     private TextView toolbarTitle;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class MainBaseActivity extends BaseActivity
         toolbarTitle=(TextView)findViewById(R.id.title);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         assert drawer != null;
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -208,17 +209,30 @@ private void setTitle(String s){
         super.onActivityResult(requestCode, resultCode, data);
     }
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        if (toggle!=null)
+        toggle.syncState();
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawer.openDrawer(GravityCompat.START);  // OPEN DRAWER
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
