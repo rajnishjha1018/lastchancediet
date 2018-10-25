@@ -25,11 +25,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.activity.MainActivity;
 import com.httpfriccotech.lastchancediet.base.BaseFragment;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
-import com.httpfriccotech.lastchancediet.util.Global;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.text.DecimalFormat;
@@ -81,13 +79,6 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         FullName.setText("Good Job, " + this.UserName + "!");
         getData();
     }
-    private void reDirectToLogin() {
-        Toast.makeText(Global.getMyApplicationContext(),"Logout Successfully..",Toast.LENGTH_LONG).show();
-        Intent intent=new Intent(getActivity(),MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
     private void getData() {
 
         progressDialog = ProgressDialog.show(getActivity(), "Loading...", "please wait...", false, false);
