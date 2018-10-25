@@ -226,14 +226,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         textViewInvalid.setText("Invalid username or password");
                         return;
                     }
+
+                    SharedPref.setPayStatus(this,payStatus);
+                    if (!payStatus.equalsIgnoreCase("Success")){
+                        openSignup();
+                        return;
+                    }
                     SharedPref.setUserId(this,userId);
 
                     SharedPref.setUserType(this,userType);
-                    SharedPref.setPayStatus(this,payStatus);
-//                    if (!payStatus.equalsIgnoreCase("Success")){
-//                        openSignup();
-//                        return;
-//                    }
                     if (!TextUtils.isEmpty(userType))
                         launchAdminDashbord();
 
