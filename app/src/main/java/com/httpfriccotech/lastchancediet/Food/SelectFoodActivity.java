@@ -82,7 +82,7 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
 
     private void getData(String query) {
 
-        APIClient.startQuery().doGetRecipies().subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetRecipies(query).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SelectFoodActivity.this);
 
