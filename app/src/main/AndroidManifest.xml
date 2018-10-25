@@ -48,7 +48,8 @@
             android:name=".Exercise.ExerciseActivity"
             android:label="@string/title_activity_food"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Food.SelectFoodActivity" />
+        <activity android:name=".Food.SelectFoodActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Blog.BlogActivity"
             android:label="@string/title_activity_blog"
