@@ -43,7 +43,7 @@ public class MainBaseActivity extends BaseActivity
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
                     adminDashbord();
-                    setTitle("Dashboard");
+                    //setTitle("Dashboard");
                     return true;
                 case R.id.navigation_Exercise:
                     ExcerciseMainFragment excerciseMainFragment = new ExcerciseMainFragment();
@@ -89,7 +89,6 @@ public class MainBaseActivity extends BaseActivity
         userName = SharedPref.getUserName(context);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("DashBoard");
         toolbarTitle=(TextView)findViewById(R.id.title);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
          drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,22 +137,24 @@ private void setTitle(String s){
        }
 }
     private void adminDashbord() {
-        setTitle("Dashboard");
+
         if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.USER)){
             UserDashbordFragment userDashbordFragment = new UserDashbordFragment();
             getSupportFragmentManager();
             replaceFragment(userDashbordFragment);
-
+            setTitle("Dashboard");
 
         }else if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.ADMIN)){
             AdminDashbordFragment adminDashbordFragment = new AdminDashbordFragment();
             getSupportFragmentManager();
             replaceFragment(adminDashbordFragment);
+            setTitle("Admin Dashboard");
 
         }else if(SharedPref.getUserType(this).equalsIgnoreCase(Constants.PARTNER)){
             PartnerDashBord partnerDashBord = new PartnerDashBord();
             getSupportFragmentManager();
             replaceFragment(partnerDashBord);
+            setTitle("Partner Dashboard");
         }
         }
 
