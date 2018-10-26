@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:text="@string/app_name"
+            android:text="Program Details"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_gravity="center" />
     </android.support.v7.widget.Toolbar>

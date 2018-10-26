@@ -1,38 +1,26 @@
 package com.httpfriccotech.lastchancediet.Food;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
-import com.httpfriccotech.lastchancediet.Recepies.MyAdapter;
 import com.httpfriccotech.lastchancediet.network.APIClient;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,13 +28,14 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.R.attr.type;
-import static android.support.v7.widget.LinearLayoutManager.*;
+import static android.support.v7.widget.LinearLayoutManager.VERTICAL;
 
 public class SelectFoodActivity extends AppCompatActivity implements Observer<List<SelectFoodData>> {
 
     private PopupFoodAdapter adapter;
     private PopupWindow popupWindow;
+    private Toolbar toolbar;
+    private TextView toolbarTitle;
 
 
     @Override
@@ -54,17 +43,18 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_food);
         findViewById(R.id.search_recycle);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Add Food");// + getIntent().getStringExtra("foodType"));
-        }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbarTitle=(TextView)findViewById(R.id.title);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         SearchView simpleSearchView = (SearchView) findViewById(R.id.search_view); // inititate a search view
         simpleSearchView.setIconifiedByDefault(false);
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-// do something on text submit
-                getData();
-                return false;
+                if (!TextUtils.isEmpty(query))
+                    getData(query);
+                return true;
             }
 
             @Override
@@ -73,7 +63,7 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
                 return false;
             }
         });
-        getData();
+        getData("");
         findViewById(R.id.addFood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,9 +80,9 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
         });
     }
 
-    private void getData() {
+    private void getData(String query) {
 
-        APIClient.startQuery().doGetRecipies().subscribeOn(Schedulers.io())
+        APIClient.startQuery().doGetRecipies(query).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(SelectFoodActivity.this);
 

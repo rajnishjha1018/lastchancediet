@@ -16,6 +16,8 @@ import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
+import java.util.Objects;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -42,6 +44,8 @@ public class YourProgramDetailActivity extends AppCompatActivity implements Obse
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
         titleTv=(TextView)findViewById(R.id.tv_title_detail);
         contentTv=(TextView)findViewById(R.id.tv_content_detail);
         progressLayout=(RelativeLayout)findViewById(R.id.progressLayout);

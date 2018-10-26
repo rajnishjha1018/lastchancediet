@@ -83,7 +83,7 @@
             android:layout_gravity="center"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="Food Type"
+            android:text="Food Name"
             android:textColor="@color/white"
             android:textSize="12sp" />
 

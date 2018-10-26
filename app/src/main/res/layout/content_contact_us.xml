@@ -86,7 +86,7 @@
                                 android:id="@+id/et_username"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="User Name"
+                                android:hint="Name"
                                 android:background="@drawable/til_bg"
                                 android:paddingLeft="7dp"
                                 android:paddingBottom="7dp"
