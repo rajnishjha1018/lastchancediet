@@ -69,20 +69,22 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_10sdp"></com.httpfriccotech.lastchancediet.ui.DietTextView>
+                android:textSize="@dimen/_10sdp"/>
 
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="200dp"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:minHeight="200dp"/>
 
 
         </LinearLayout>
