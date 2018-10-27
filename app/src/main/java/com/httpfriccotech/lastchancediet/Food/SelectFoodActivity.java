@@ -15,6 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
@@ -36,7 +37,8 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
     private PopupWindow popupWindow;
     private Toolbar toolbar;
     private TextView toolbarTitle;
-
+    private RadioButton radioButton;
+    private  String selectedRadio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +74,29 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
                 if (frag != null) {
                     manager.beginTransaction().remove(frag).commit();
                 }
+                Bundle bundle = new Bundle();
+                String fType = selectedRadio;
+                bundle.putString("fType", fType );
                 AddFoodPopupFragment editNameDialog = new AddFoodPopupFragment();
+                editNameDialog.setArguments(bundle);
                 editNameDialog.show(manager, "fragment_edit_name");
                 //close the popup window on button click
 
             }
         });
+
+        RadioGroup rg = (RadioGroup) findViewById(R.id.rFoodType);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                                                  @Override
+                                                  public void onCheckedChanged(RadioGroup group, int checkedId)
+                                                  {
+                                                      radioButton = (RadioButton) findViewById(checkedId);
+                                                      selectedRadio = radioButton.getText().toString();
+                                                     // Toast.makeText(getBaseContext(),radioButton.getText(), Toast.LENGTH_SHORT).show();
+                                                      //Toast.makeText(getBaseContext(), radioButton.getText(), Toast.LENGTH_SHORT).show();
+                                                  }
+                                              }
+        );
     }
 
     private void getData(String query) {
@@ -109,10 +128,7 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
                     public void onItemClick(SelectFoodData data) {
 
                         RadioGroup rg = (RadioGroup) findViewById(R.id.rFoodType);
-                        final String value =
-                                ((RadioButton)findViewById(rg.getCheckedRadioButtonId()))
-                                        .getText().toString();
-
+                        String value = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                         Intent intent = new Intent();
                         intent.putExtra("data", data);
                         intent.putExtra("foodType", value);

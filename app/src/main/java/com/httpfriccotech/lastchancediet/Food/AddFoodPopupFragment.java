@@ -23,23 +23,23 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddFoodPopupFragment extends DialogFragment {
     private View rootView, parentView;
-
+    private String fTypeValue;
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.food_popup, container, false);
         parentView = inflater.inflate(R.layout.activity_select_food, container, false);
+        Bundle bundle = this.getArguments();
+         fTypeValue = bundle.getString("fType");
         rootView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                RadioGroup rg = (RadioGroup) parentView.findViewById(R.id.rFoodType);
-                final String value = ((RadioButton) parentView.findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                 String protin = ((EditText) rootView.findViewById(R.id.textProtein)).getText().toString();
                 String carbs = ((EditText) rootView.findViewById(R.id.textCarbs)).getText().toString();
                 String fat = ((EditText) rootView.findViewById(R.id.textFat)).getText().toString();
                 String fiber = ((EditText) rootView.findViewById(R.id.textFiber)).getText().toString();
+
                 if (TextUtils.isEmpty(protin) || TextUtils.isEmpty(carbs) || TextUtils.isEmpty(fat) || TextUtils.isEmpty(fiber)) {
                     Toast.makeText(getActivity(), "All fields are mandatory", Toast.LENGTH_LONG).show();
                     return;
@@ -57,7 +57,7 @@ public class AddFoodPopupFragment extends DialogFragment {
                 foodData.setFiber(fbr + "");
                 Intent intent = new Intent();
                 intent.putExtra("data", foodData);
-                intent.putExtra("foodType", value);
+                intent.putExtra("foodType", fTypeValue);
                 getActivity().setResult(RESULT_OK, intent);
                 dismiss();
                 getActivity().finish();

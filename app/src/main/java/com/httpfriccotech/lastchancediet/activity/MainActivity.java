@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
-
+                    SharedPref.setfoodType(this,"cardio");
                     SharedPref.setUserType(this,userType);
                     if (!TextUtils.isEmpty(userType))
                         launchAdminDashbord();

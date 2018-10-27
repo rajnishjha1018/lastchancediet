@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,17 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (View) inflater.inflate(
                 R.layout.fragment_main_food, container, false);
+
+        RadioButton rb1= (RadioButton) rootView.findViewById(R.id.rbCardio);
+        RadioButton rb2= (RadioButton) rootView.findViewById(R.id.rbTraining);
+        RadioGroup rrg = (RadioGroup) rootView.findViewById(R.id.radio_cardio);
+
+        if(SharedPref.getfoodType(getActivity()).equals("cardio")) {
+            rb1.setChecked(true);
+        }
+        else{
+            rb2.setChecked(true);
+          }
 
         return rootView;
     }
@@ -129,10 +141,13 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
         ((RadioGroup) rootView.findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radioButton) {
+                if (checkedId == R.id.rbTraining) {
                     isTraining = true;
-                } else
+                    SharedPref.setfoodType(context,"training");
+                } else {
                     isTraining = false;
+                    SharedPref.setfoodType(context,"cardio");
+                }
                 if (foodDetailResponseModel != null)
                     setUpDetailData(foodDetailResponseModel.getData().getDailyLimit());
             }
@@ -171,13 +186,15 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
             if (data != null) {
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
-
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), "1", foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
+                String trning = "1";
+                if(isTraining)
+                {
+                    trning ="2";
+                }
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), trning, foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodMainFragment.this);
-
-
             }
         }
     }

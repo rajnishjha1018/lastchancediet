@@ -23,9 +23,20 @@ public class SharedPref {
         String password = "password";
         String userType = "setUserType";
         String payStatus = "payStatus";
+        String foodType ="foodType";
 
     }
-
+    public static String getfoodType(Context context) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        String referral = preferences.getString(PREF_KEYS.foodType, "");
+        return referral;
+    }
+    public static void setfoodType(Context context, String str){
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_KEYS.foodType, str);
+        editor.commit();
+    }
     public static String getPayStatus(Context context) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         String referral = preferences.getString(PREF_KEYS.payStatus, "");

@@ -54,14 +54,14 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/rbCardio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Rest/Cardio" />
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/rbTraining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight/Training" />

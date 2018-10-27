@@ -140,10 +140,17 @@ public class FoodActivity extends AppCompatActivity
         ((RadioGroup) findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.radioButton) {
+                if (checkedId == R.id.rbTraining) {
                     isTraining = true;
-                } else
+                    Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
+                    SharedPref.setfoodType(context,"training");
+                    Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
+                } else {
                     isTraining = false;
+                    Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
+                    SharedPref.setfoodType(context,"cardio");
+                    Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
+                }
                 if (foodDetailResponseModel != null)
                     setUpDetailData(foodDetailResponseModel.data.dailyLimit);
             }

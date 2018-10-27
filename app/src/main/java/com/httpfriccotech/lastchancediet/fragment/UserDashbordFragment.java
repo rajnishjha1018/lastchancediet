@@ -50,7 +50,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
     private int mYear, mMonth, mDay, mHour, mMinute;
     ArrayList dataSets = new ArrayList<>();
     ArrayList<BarEntry> entries;
-    private String[] labels = {"Fat", "Carb", "Fiber", "Protein"};
+    private String[] labels = {"Fiber", "Fat", "Carb", "Protein"};
     // colors for different sections in pieChart
     public static final int[] MY_COLORS = {Color.rgb(214, 68, 11), Color.rgb(255, 178, 88), Color.rgb(31, 212, 148), Color.rgb(38, 40, 53), Color.rgb(215, 60, 55)};
 
@@ -97,13 +97,26 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         int intColor = Color.BLACK;
 //        ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
-        BarEntry v1e1 = new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 0); // Jan
+        BarEntry v1e1 = new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 3);
         valueSet1.add(v1e1);
-        BarEntry v1e2 = new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 1); // Feb
+        BarEntry v1e2;
+        String ff =SharedPref.getfoodType(context).toString();
+        if (ff.equals("cardio")){
+            v1e2 = new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 2);
+        }
+        else {
+            v1e2 = new BarEntry(Float.parseFloat(dailyObject.get("Carb2").getAsString()), 2);
+        }
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 2); // Mar
+        BarEntry v1e3 = new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 1);
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 3); // Apr
+        BarEntry v1e4;
+        if (ff.equals("cardio")){
+            v1e4 = new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 0);
+        }
+        else {
+            v1e4 = new BarEntry(Float.parseFloat(dailyObject.get("Fiber2").getAsString()), 0);
+        }
         valueSet1.add(v1e4);
 //        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 3));
 //        valueSet1.add(new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 2));
@@ -142,7 +155,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         l.setPosition(Legend.LegendPosition.ABOVE_CHART_LEFT);
         l.setTextSize(12f);
         l.setTextColor(Color.BLACK);
-        l.setXEntrySpace(15f); // set the space between the legend entries on the x-axis
+        l.setXEntrySpace(55f); // set the space between the legend entries on the x-axis
         l.setYEntrySpace(15f); // set t
         //.setAlign(LegendRenderer.LegendAlign.TOP);
         mChart.invalidate();
@@ -171,19 +184,19 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
 
                 entries = new ArrayList<BarEntry>();
                 entries.add(new BarEntry(Float.valueOf(todayObject.get("Protein").getAsString()).floatValue(), 3));
-                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fiber").getAsString()).floatValue(), 2));
-                entries.add(new BarEntry(Float.valueOf(todayObject.get("Carb").getAsString()).floatValue(), 1));
-                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fat").getAsString()).floatValue(), 0));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Carb").getAsString()).floatValue(), 2));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fat").getAsString()).floatValue(), 1));
+                entries.add(new BarEntry(Float.valueOf(todayObject.get("Fiber").getAsString()).floatValue(), 0));
                 TextView TodayDesc = (TextView) rootView.findViewById(R.id.TodayDescription);
                 String str="You have missed";
                 if (Float.parseFloat(todayObject.get("Protein").getAsString())==0){
                     str=str+" Protein,";
-                }if (Float.parseFloat(todayObject.get("Fiber").getAsString())==0){
-                    str=str+" Fiber,";
                 }if (Float.parseFloat(todayObject.get("Carb").getAsString())==0){
                     str=str+" Carb,";
                 }if (Float.parseFloat(todayObject.get("Fat").getAsString())==0){
-                    str=str+" Fat";
+                    str=str+" Fat,";
+                }if (Float.parseFloat(todayObject.get("Fiber").getAsString())==0){
+                    str=str+" Fiber";
                 }
                 if (str.equalsIgnoreCase("You have missed")) {
                     TodayDesc.setText("You haven’t missed anything today");
