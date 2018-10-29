@@ -38,7 +38,7 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
     private Toolbar toolbar;
     private TextView toolbarTitle;
     private RadioButton radioButton;
-    private  String selectedRadio;
+    private  String selectedRadio="Breakfast";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
