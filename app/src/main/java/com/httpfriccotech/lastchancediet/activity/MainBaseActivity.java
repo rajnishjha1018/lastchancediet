@@ -77,13 +77,14 @@ public class MainBaseActivity extends BaseActivity
     private DrawerLayout drawer;
     private TextView toolbarTitle;
     private ActionBarDrawerToggle toggle;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_bord_admin);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         context =this;
         userId = SharedPref.getUserId(context);
         userName = SharedPref.getUserName(context);
@@ -143,24 +144,33 @@ private void setTitle(String s){
             getSupportFragmentManager();
             replaceFragment(userDashbordFragment);
             setTitle("Dashboard");
+            if (bottomNavigationView!=null){
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
 
         }else if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.ADMIN)){
             AdminDashbordFragment adminDashbordFragment = new AdminDashbordFragment();
             getSupportFragmentManager();
             replaceFragment(adminDashbordFragment);
             setTitle("Admin Dashboard");
+            if (bottomNavigationView!=null){
+                bottomNavigationView.setVisibility(View.GONE);
+            }
 
         }else if(SharedPref.getUserType(this).equalsIgnoreCase(Constants.PARTNER)){
             PartnerDashBord partnerDashBord = new PartnerDashBord();
             getSupportFragmentManager();
             replaceFragment(partnerDashBord);
             setTitle("Partner Dashboard");
+            if (bottomNavigationView!=null){
+                bottomNavigationView.setVisibility(View.GONE);
+            }
         }
         }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle bottomNavigationView view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_DASHBOARD) {
