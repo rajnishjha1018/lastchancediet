@@ -24,5 +24,7 @@
     <color name="partener_color">#FF9900</color>
     <color name="new_user_color">#2196F5</color>
     <color name="left_user_color">#F34334</color>
+    <color name="fade_title">#B8B8BA</color>
+    <color name="fade_button">#8AA4C1</color>
 
 </resources>

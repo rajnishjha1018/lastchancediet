@@ -76,11 +76,12 @@
                     android:layout_height="match_parent"
                     android:text="Loading ..."
                     android:id="@+id/tv_title_detail"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:padding="7dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
