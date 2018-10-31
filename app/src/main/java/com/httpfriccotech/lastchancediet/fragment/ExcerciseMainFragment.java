@@ -1,10 +1,13 @@
 package com.httpfriccotech.lastchancediet.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -188,11 +191,13 @@ private ExcerciseResponseModel excerciseResponseModel;
         switch (v.getId()){
             case R.id.ib_delete_cal:{
                 int pos=(int)v.getTag();
-                deleteExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
+                showDialogC(getActivity(),null,"Are you sure, you want to delete!",pos);
                 break;
             } case R.id.ib_delete_str:{
                 int pos=(int)v.getTag();
-                deleteExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
+                showDialogS(getActivity(),null,"Are you sure, you want to delete!",pos);
+
+
                 break;
             }
             case R.id.ib_add_ex1:{
@@ -242,6 +247,46 @@ private ExcerciseResponseModel excerciseResponseModel;
         if (recyclerView!=null)recyclerView.setVisibility(View.VISIBLE);
         if (recyclerView1!=null)recyclerView1.setVisibility(View.VISIBLE);
 
+    }
+    public void showDialogS(Activity activity, String title, CharSequence message, final int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        if (title != null) builder.setTitle(title);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteExcercise(excerciseResponseModel.getStrength().get(pos).getExerciseID());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dismiss();
+            }
+        });
+        builder.show();
+    }
+    public void showDialogC(Activity activity, String title, CharSequence message, final int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        if (title != null) builder.setTitle(title);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteExcercise(excerciseResponseModel.getCardio().get(pos).getExerciseID());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dismiss();
+            }
+        });
+        builder.show();
     }
 
 }

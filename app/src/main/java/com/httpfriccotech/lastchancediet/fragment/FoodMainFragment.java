@@ -1,11 +1,14 @@
 package com.httpfriccotech.lastchancediet.fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -278,12 +281,32 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
         switch (v.getId()){
             case R.id.textAddFood:{
                 int pos=(int)v.getTag();
-                deleteFoodData(pos);
+
+                showDialogC(getActivity(),null,"Are you sure, you want to delete!",pos);
                 break;
             }
         }
     }
+    public void showDialogC(Activity activity, String title, CharSequence message, final int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
+        if (title != null) builder.setTitle(title);
+
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteFoodData(pos);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dismiss();
+            }
+        });
+        builder.show();
+    }
     private void deleteFoodData(int pos) {
         APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId,SharedPref.getUserId(getActivity()),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
