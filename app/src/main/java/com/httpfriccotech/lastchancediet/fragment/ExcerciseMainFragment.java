@@ -171,6 +171,10 @@ private ExcerciseResponseModel excerciseResponseModel;
             setupRecycler(this.excerciseResponseModel);
             hideProgress();
         }else if (response instanceof JsonObject){
+            if (response instanceof JsonObject){
+                JsonObject jsonObject=(JsonObject)response;
+                Toast.makeText(getContext(),jsonObject.get("success").getAsString(),Toast.LENGTH_LONG).show();
+            }
             getData();
             showProgress();
         }

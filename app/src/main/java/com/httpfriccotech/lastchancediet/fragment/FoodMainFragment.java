@@ -23,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.Food.AddFoodDataResponse;
 import com.httpfriccotech.lastchancediet.Food.DailyLimitData;
 import com.httpfriccotech.lastchancediet.Food.FoodAdapter;
@@ -221,7 +222,13 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 foodDetailResponseModel = (FoodDetailResponseModel) data;
                 setUpData((FoodDetailResponseModel) data);
             }else {
+
                 getData();
+                if (data instanceof JsonObject){
+                    JsonObject jsonObject=(JsonObject)data;
+                    Toast.makeText(getContext(),jsonObject.get("success").getAsString(),Toast.LENGTH_LONG).show();
+                }
+
             }
         }
     }
