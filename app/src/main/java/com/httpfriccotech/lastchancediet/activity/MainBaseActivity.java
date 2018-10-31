@@ -82,7 +82,18 @@ public class MainBaseActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_bord_admin);
+        if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.USER)){
+            setContentView(R.layout.activity_dash_bord_user);
+
+        }else if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.ADMIN)){
+
+            setContentView(R.layout.activity_dash_bord_admin);
+        }else if(SharedPref.getUserType(this).equalsIgnoreCase(Constants.PARTNER)){
+            setContentView(R.layout.activity_dash_bord_admin);
+        }else{
+            setContentView(R.layout.activity_dash_bord_user);
+        }
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         context =this;
