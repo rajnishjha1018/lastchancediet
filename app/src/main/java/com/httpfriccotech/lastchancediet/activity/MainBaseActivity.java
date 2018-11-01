@@ -151,6 +151,7 @@ private void setTitle(String s){
     private void adminDashbord() {
 
         if (SharedPref.getUserType(this).equalsIgnoreCase(Constants.USER)){
+
             UserDashbordFragment userDashbordFragment = new UserDashbordFragment();
             getSupportFragmentManager();
             replaceFragment(userDashbordFragment);

@@ -100,8 +100,8 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         BarEntry v1e1 = new BarEntry(Float.parseFloat(dailyObject.get("Protein").getAsString()), 3);
         valueSet1.add(v1e1);
         BarEntry v1e2;
-        String ff =SharedPref.getfoodType(context).toString();
-        if (ff.equals("cardio")){
+        String foodType =SharedPref.getfoodType(context);
+        if (foodType.equals("1")){
             v1e2 = new BarEntry(Float.parseFloat(dailyObject.get("Carb").getAsString()), 2);
         }
         else {
@@ -111,7 +111,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         BarEntry v1e3 = new BarEntry(Float.parseFloat(dailyObject.get("Fat").getAsString()), 1);
         valueSet1.add(v1e3);
         BarEntry v1e4;
-        if (ff.equals("cardio")){
+        if (foodType.equals("1")){
             v1e4 = new BarEntry(Float.parseFloat(dailyObject.get("Fiber").getAsString()), 0);
         }
         else {
