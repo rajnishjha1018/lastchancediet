@@ -8,6 +8,8 @@ import java.util.List;
 
 public class FoodDetailsDataModel implements Serializable {
 
+    @SerializedName("FoodTypeVal")
+    String FoodTypeVal;
     @SerializedName("DailyLimit")
     @Expose
     List<DailyLimitData> dailyLimit;
@@ -23,6 +25,14 @@ public class FoodDetailsDataModel implements Serializable {
     @SerializedName("Snacks")
     @Expose
     List<FoodData> snacks;
+
+    public String getFoodTypeVal() {
+        return FoodTypeVal;
+    }
+
+    public void setFoodTypeVal(String foodTypeVal) {
+        FoodTypeVal = foodTypeVal;
+    }
 
     public List<DailyLimitData> getDailyLimit() {
         return dailyLimit;

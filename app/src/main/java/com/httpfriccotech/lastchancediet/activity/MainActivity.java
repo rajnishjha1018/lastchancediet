@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     String userId= jsonObject.get("userId").getAsString();
                     String userType=jsonObject.get("userType").getAsString();
                     String payStatus=jsonObject.get("payStatus").getAsString();
+                    String foodType=jsonObject.get("foodTypeVal").getAsString();
                     if (TextUtils.isEmpty(userId)) {
                         textViewInvalid.setVisibility(View.VISIBLE);
                         textViewInvalid.setText("Invalid username or password");
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return;
                     }
                     SharedPref.setUserId(this,userId);
-                    SharedPref.setfoodType(this,"cardio");
+                    SharedPref.setfoodType(this,foodType);
                     SharedPref.setUserType(this,userType);
                     if (!TextUtils.isEmpty(userType))
                         launchAdminDashbord();

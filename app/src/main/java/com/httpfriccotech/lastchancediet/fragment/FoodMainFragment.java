@@ -52,7 +52,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by manish on 27-06-2017.
  */
 
-public class FoodMainFragment extends BaseFragment implements Observer<Object>,View.OnClickListener {
+public class FoodMainFragment extends BaseFragment implements Observer<Object>, View.OnClickListener {
 
     private View rootView;
     RecyclerView recyclerView;
@@ -67,23 +67,17 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
     private int mYear, mMonth, mDay, mHour, mMinute;
     FoodDetailResponseModel foodDetailResponseModel;
     private boolean isTraining;
+    private RadioButton cardioRB;
+    private RadioButton trainingRB;
+    private RadioGroup rrg;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = (View) inflater.inflate(
-                R.layout.fragment_main_food, container, false);
+        rootView = (View) inflater.inflate(R.layout.fragment_main_food, container, false);
 
-        RadioButton rb1= (RadioButton) rootView.findViewById(R.id.rbCardio);
-        RadioButton rb2= (RadioButton) rootView.findViewById(R.id.rbTraining);
-        RadioGroup rrg = (RadioGroup) rootView.findViewById(R.id.radio_cardio);
 
-        if(SharedPref.getfoodType(getActivity()).equals("cardio")) {
-            rb1.setChecked(true);
-        }
-        else{
-            rb2.setChecked(true);
-          }
+
 
         return rootView;
     }
@@ -91,7 +85,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        context=getActivity();
+        context = getActivity();
         UserId = SharedPref.getUserId(getActivity());
         UserName = SharedPref.getDisplayName(getActivity());
         myDatas = new ArrayList<>();
@@ -117,22 +111,23 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
                 // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dpd = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                int nmonth = monthOfYear + 1;
-                                currentDate = year + "-" + nmonth + "-" + dayOfMonth;
-                                getData();//date select
-                                dDate.setText(nmonth + "-" + dayOfMonth + "-" + year);
-                            }
-                        }, mYear, mMonth, mDay);
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        int nmonth = monthOfYear + 1;
+                        currentDate = year + "-" + nmonth + "-" + dayOfMonth;
+                        getData();//date select
+                        dDate.setText(nmonth + "-" + dayOfMonth + "-" + year);
+                    }
+                }, mYear, mMonth, mDay);
                 dpd.show();
 
             }
         });
+        cardioRB = (RadioButton) rootView.findViewById(R.id.rbCardio);
+        trainingRB = (RadioButton) rootView.findViewById(R.id.rbTraining);
+      rrg = (RadioGroup) rootView.findViewById(R.id.radio_cardio);
         content.findViewById(R.id.btnAddFood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,27 +137,36 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 startActivityForResult(intent, 1214);
             }
         });
-        ((RadioGroup) rootView.findViewById(R.id.radio_cardio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        rrg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbTraining) {
                     isTraining = true;
-                    SharedPref.setfoodType(context,"training");
+                    SharedPref.setfoodType(context, "1");
                 } else {
                     isTraining = false;
-                    SharedPref.setfoodType(context,"cardio");
+                    SharedPref.setfoodType(context, "2");
                 }
                 if (foodDetailResponseModel != null)
                     setUpDetailData(foodDetailResponseModel.getData().getDailyLimit());
             }
         });
+        setRadioButton();//oncreate
         getData();//oncreate
     }
 
+    private void setRadioButton() {
+        if (SharedPref.getfoodType(getActivity()).equals("1")) {
+            cardioRB.setChecked(true);
+        } else if (SharedPref.getfoodType(getActivity()).equals("2")){
+            trainingRB.setChecked(true);
+        }else{
+            cardioRB.setChecked(true);
+        }
+    }
+
     private void getData() {
-        APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(getActivity()), currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(FoodMainFragment.this);
+        APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
     }
 
     private void showMessage(String s) {
@@ -179,10 +183,11 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 intent.putExtra("foodType", foodType);
                 startActivityForResult(intent, 1214);
             }
-        },this);
+        }, this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapter);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -191,14 +196,10 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
                 String trning = "1";
-                if(isTraining)
-                {
-                    trning ="2";
+                if (isTraining) {
+                    trning = "2";
                 }
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), trning, foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(FoodMainFragment.this);
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), trning, foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
             }
         }
     }
@@ -210,8 +211,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
 
     @Override
     public void onNext(@NonNull Object data) {
-        if (!isVisible())
-            return;
+        if (!isVisible()) return;
         if (data != null) {
             if (data instanceof AddFoodDataResponse) {
                 Toast.makeText(getContext(), ((AddFoodDataResponse) data).getSuccess(), Toast.LENGTH_LONG).show();
@@ -221,12 +221,11 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
             } else if (data instanceof FoodDetailResponseModel) {
                 foodDetailResponseModel = (FoodDetailResponseModel) data;
                 setUpData((FoodDetailResponseModel) data);
-            }else {
-
+            } else {
                 getData();
-                if (data instanceof JsonObject){
-                    JsonObject jsonObject=(JsonObject)data;
-                    Toast.makeText(getContext(),jsonObject.get("success").getAsString(),Toast.LENGTH_LONG).show();
+                if (data instanceof JsonObject) {
+                    JsonObject jsonObject = (JsonObject) data;
+                    Toast.makeText(getContext(), jsonObject.get("success").getAsString(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -239,15 +238,15 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
         myDatas.addAll(data.getData().getLunch());
         myDatas.addAll(data.getData().getDinner());
         myDatas.addAll(data.getData().getSnacks());
-        if (myDatas.size() == 0)
-            showMessage("No data found");
+        if (myDatas.size() == 0) showMessage("No data found");
+        SharedPref.setfoodType(getContext(),data.getData().getFoodTypeVal());
+        setRadioButton();//onresponse
         myAdapter.updateData(myDatas);
         setUpDetailData(data.getData().getDailyLimit());
     }
 
     private void setUpDetailData(List<DailyLimitData> dailyLimit) {
-        if (!isVisible())
-            return;
+        if (!isVisible()) return;
         LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.conclusion_container);
         linearLayout.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -285,15 +284,15 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.textAddFood:{
-                int pos=(int)v.getTag();
-
-                showDialogC(getActivity(),null,"Are you sure, you want to delete!",pos);
+        switch (v.getId()) {
+            case R.id.textAddFood: {
+                int pos = (int) v.getTag();
+                showDialogC(getActivity(), null, "Are you sure, you want to delete!", pos);
                 break;
             }
         }
     }
+
     public void showDialogC(Activity activity, String title, CharSequence message, final int pos) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -314,10 +313,9 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>,V
         });
         builder.show();
     }
+
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId,SharedPref.getUserId(getActivity()),currentDate,System.currentTimeMillis()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(FoodMainFragment.this);
+        APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId, SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
     }
 
 }
