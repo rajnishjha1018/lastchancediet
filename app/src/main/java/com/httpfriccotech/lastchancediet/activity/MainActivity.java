@@ -34,6 +34,8 @@ import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
+import java.util.Calendar;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -252,10 +254,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void goGetLoginCallBack() {
+        final Calendar cd = Calendar.getInstance();
+        int mYear = cd.get(Calendar.YEAR);
+        int mMonth = cd.get(Calendar.MONTH);
+        mMonth = mMonth + 1;
+        int mDay = cd.get(Calendar.DAY_OF_MONTH);
+        String currentDate = mYear + "-" + mMonth + "-" + mDay;
         LoginModel jsonObject = new LoginModel();
         jsonObject.setPassword(SharedPref.getPassword(this));
         jsonObject.setUsername(SharedPref.getUserName(this));
-        APIClient.startQuery().doLoginCallBack(SharedPref.getUserName(this),SharedPref.getPassword(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().doLoginCallBack(SharedPref.getUserName(this),SharedPref.getPassword(this),currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
     }
 
