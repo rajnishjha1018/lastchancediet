@@ -143,10 +143,10 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbTraining) {
                     isTraining = true;
-                    SharedPref.setfoodType(context, "1");
+                    SharedPref.setfoodType(context, "2");
                 } else {
                     isTraining = false;
-                    SharedPref.setfoodType(context, "2");
+                    SharedPref.setfoodType(context, "1");
                 }
                 if (foodDetailResponseModel != null)
                     setUpDetailData(foodDetailResponseModel.getData().getDailyLimit());
