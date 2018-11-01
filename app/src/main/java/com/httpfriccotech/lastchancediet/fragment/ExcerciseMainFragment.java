@@ -63,6 +63,8 @@ private LinearLayout strengthLayout;
 private RecyclerView recyclerView1;
 private ExcerciseResponseModel excerciseResponseModel;
     private View rootView;
+    private AlertDialog dlg;
+    private AlertDialog alertDialog;
 
     @Nullable
     @Override
@@ -267,13 +269,14 @@ private ExcerciseResponseModel excerciseResponseModel;
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dismiss();
+                if (alertDialog!=null)
+                alertDialog.dismiss();
             }
         });
-        builder.show();
+        alertDialog=builder.show();
     }
     public void showDialogC(Activity activity, String title, CharSequence message, final int pos) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         if (title != null) builder.setTitle(title);
 
@@ -287,10 +290,11 @@ private ExcerciseResponseModel excerciseResponseModel;
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dismiss();
+                if (dlg!=null)
+                    dlg.dismiss();
             }
         });
-        builder.show();
+       dlg=builder.show();
     }
 
 }

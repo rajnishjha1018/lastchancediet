@@ -70,6 +70,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     private RadioButton cardioRB;
     private RadioButton trainingRB;
     private RadioGroup rrg;
+    private AlertDialog alertDialog;
 
     @Nullable
     @Override
@@ -308,10 +309,11 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dismiss();
+                if (alertDialog!=null)
+                alertDialog.dismiss();
             }
         });
-        builder.show();
+        alertDialog=builder.show();
     }
 
     private void deleteFoodData(int pos) {
