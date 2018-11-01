@@ -16,14 +16,15 @@ import java.util.List;
 public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.ViewHolder> {
     private Context context;
     private List<ProgramData> itemList;
+
     public ProgramListAdapter(Context context, List<ProgramData> itemList) {
-        this.context=context;
-        this.itemList=itemList;
+        this.context = context;
+        this.itemList = itemList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.row_program_row, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_program_row, null);
         return new ProgramListAdapter.ViewHolder(view);
     }
 
@@ -34,16 +35,23 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
         if (itemList.get(position).isActiveProgram()) {
             holder.relativeLayout.setVisibility(View.GONE);
             holder.viewMore.setEnabled(true);
-        }
-        else {
+
+            holder.title.setTextColor(context.getResources().getColor(R.color.black));
+            holder.content.setTextColor(context.getResources().getColor(R.color.album_title));
+            holder.viewMore.setBackground(context.getResources().getDrawable(R.color.colorAccent));
+        } else {
+            holder.title.setTextColor(context.getResources().getColor(R.color.fade_title));
+            holder.content.setTextColor(context.getResources().getColor(R.color.fade_title));
+            holder.viewMore.setBackground(context.getResources().getDrawable(R.color.fade_button));
             holder.relativeLayout.setVisibility(View.VISIBLE);
             holder.viewMore.setEnabled(false);
+
         }
         holder.viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,YourProgramDetailActivity.class);
-                intent.putExtra("postId",itemList.get(position).getPostId());
+                Intent intent = new Intent(context, YourProgramDetailActivity.class);
+                intent.putExtra("postId", itemList.get(position).getPostId());
                 context.startActivity(intent);
             }
         });
@@ -56,14 +64,15 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView content;
-        TextView title,viewMore;
+        TextView title, viewMore;
         RelativeLayout relativeLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            content=(TextView)itemView.findViewById(R.id.tv_content);
-            title=(TextView)itemView.findViewById(R.id.tv_title);
-            viewMore=(TextView)itemView.findViewById(R.id.tv_view_more);
-            relativeLayout=(RelativeLayout)itemView.findViewById(R.id.rl_disable_enable);
+            content = (TextView) itemView.findViewById(R.id.tv_content);
+            title = (TextView) itemView.findViewById(R.id.tv_title);
+            viewMore = (TextView) itemView.findViewById(R.id.tv_view_more);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rl_disable_enable);
         }
     }
 }

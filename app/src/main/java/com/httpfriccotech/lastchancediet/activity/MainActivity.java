@@ -112,10 +112,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        if (saveLogin == true) {
-            editTextUser.setText(loginPreferences.getString("username", ""));
-            editTextPassword.setText(loginPreferences.getString("password", ""));
-        }
+//        if (saveLogin == true) {
+//            editTextUser.setText(loginPreferences.getString("username", ""));
+//            editTextPassword.setText(loginPreferences.getString("password", ""));
+//        }
 
         findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
