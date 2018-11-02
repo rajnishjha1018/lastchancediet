@@ -18,6 +18,17 @@ public class ExcerciseResponseModel {
     @Expose
     List<ExerciseDataModel> strength;
 
+    @SerializedName("FoodTypeVal")
+    String FoodTypeVal;
+
+    public String getFoodTypeVal() {
+        return FoodTypeVal;
+    }
+
+    public void setFoodTypeVal(String foodTypeVal) {
+        FoodTypeVal = foodTypeVal;
+    }
+
     public List<ExerciseDataModel> getCardio() {
         return cardio;
     }

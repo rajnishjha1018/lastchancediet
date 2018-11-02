@@ -32,6 +32,7 @@ import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.network.CommunicationConstants;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.Calendar;
@@ -296,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
     private void openSignup() {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://laststaging.wpengine.com/signup/"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(CommunicationConstants.SIGNUP_RL));
         startActivity(browserIntent);
     }
 }
