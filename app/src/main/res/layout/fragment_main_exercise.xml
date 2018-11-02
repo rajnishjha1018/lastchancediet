@@ -25,56 +25,67 @@
         android:background="@color/bg"
         android:orientation="vertical"
         android:paddingBottom="7dp">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:padding="7dp">
 
-
-            <!--<com.httpfriccotech.lastchancediet.ui.DietTextView-->
-            <!--android:id="@+id/vd1"-->
-            <!--android:layout_width="120dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:text="Filter By Date :"-->
-            <!--android:textColor="#000"-->
-            <!--android:textSize="15dp"-->
-            <!--android:visibility="visible" />-->
+            <com.httpfriccotech.lastchancediet.ui.DietTextView
+                android:id="@+id/vd1"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="Filter By Date :"
+                android:textColor="#000"
+                android:textSize="15dp"
+                android:visibility="gone" />
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:id="@+id/selectedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|center"
-                android:padding="7dp"
+                android:layout_gravity="center"
                 android:drawableLeft="@android:drawable/ic_menu_my_calendar"
                 android:gravity="center_vertical"
                 android:text="Date :"
                 android:textColor="#000"
                 android:textSize="14sp" />
 
+            <ImageButton
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:background="@drawable/search"
+                android:visibility="gone" />
 
-            <!--<RadioGroup-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:orientation="horizontal">-->
-            <!--<RadioButton-->
-            <!--android:id="@+id/radioButton2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:checked="true"-->
-            <!--android:text="Cardio" />-->
-            <!--<RadioButton-->
-            <!--android:id="@+id/radioButton"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Training" />-->
-            <!--</RadioGroup>-->
+            <RadioGroup
+                android:id="@+id/radio_cardio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true">
 
-        </LinearLayout>
+                <RadioButton
+                    android:id="@+id/rbCardio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Rest/Cardio"
+                    android:textSize="12sp"/>
+
+                <RadioButton
+                    android:id="@+id/rbTraining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight Training"
+                    android:textSize="12sp"/>
+            </RadioGroup>
+        </RelativeLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
