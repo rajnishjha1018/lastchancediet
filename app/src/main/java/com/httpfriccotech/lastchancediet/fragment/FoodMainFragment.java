@@ -66,7 +66,6 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     Bundle bundle;
     private int mYear, mMonth, mDay, mHour, mMinute;
     FoodDetailResponseModel foodDetailResponseModel;
-    private boolean isTraining;
     private RadioButton cardioRB;
     private RadioButton trainingRB;
     private RadioGroup rrg;
@@ -76,8 +75,6 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = (View) inflater.inflate(R.layout.fragment_main_food, container, false);
-
-
 
 
         return rootView;
@@ -128,7 +125,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         });
         cardioRB = (RadioButton) rootView.findViewById(R.id.rbCardio);
         trainingRB = (RadioButton) rootView.findViewById(R.id.rbTraining);
-      rrg = (RadioGroup) rootView.findViewById(R.id.radio_cardio);
+        rrg = (RadioGroup) rootView.findViewById(R.id.radio_cardio);
         content.findViewById(R.id.btnAddFood).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,10 +139,8 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbTraining) {
-                    isTraining = true;
                     SharedPref.setfoodType(context, "2");
                 } else {
-                    isTraining = false;
                     SharedPref.setfoodType(context, "1");
                 }
                 if (foodDetailResponseModel != null)
@@ -159,9 +154,9 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     private void setRadioButton() {
         if (SharedPref.getfoodType(getActivity()).equals("1")) {
             cardioRB.setChecked(true);
-        } else if (SharedPref.getfoodType(getActivity()).equals("2")){
+        } else if (SharedPref.getfoodType(getActivity()).equals("2")) {
             trainingRB.setChecked(true);
-        }else{
+        } else {
             cardioRB.setChecked(true);
         }
     }
@@ -196,11 +191,8 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             if (data != null) {
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
-                String trning = "1";
-                if (isTraining) {
-                    trning = "2";
-                }
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), trning, foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
+
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), SharedPref.getfoodType(getActivity()), foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
             }
         }
     }
@@ -240,7 +232,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         myDatas.addAll(data.getData().getDinner());
         myDatas.addAll(data.getData().getSnacks());
         if (myDatas.size() == 0) showMessage("No data found");
-        SharedPref.setfoodType(getContext(),data.getData().getFoodTypeVal());
+        SharedPref.setfoodType(getContext(), data.getData().getFoodTypeVal());
         setRadioButton();//onresponse
         myAdapter.updateData(myDatas);
         setUpDetailData(data.getData().getDailyLimit());
@@ -264,9 +256,16 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             txtFoodType.setText(myData.FoodType);
             view_divider.setVisibility(View.GONE);
             txtProtein.setText("" + myData.Protein);
-            txtCarbs.setText("" + (isTraining ? myData.Carb2 : myData.Carb));
+            if (SharedPref.getfoodType(getActivity()).equalsIgnoreCase("2")) {
+                txtCarbs.setText(myData.Carb2);
+                txtFiber.setText(myData.Fiber2);
+            } else {
+                txtCarbs.setText(myData.Carb);
+                txtFiber.setText(myData.Fiber);
+            }
+
             txtFat.setText("" + myData.Fat);
-            txtFiber.setText("" + (isTraining ? myData.Fiber2 : myData.Fiber));
+
             textAddFood.setTag("" + myData.FoodType);
             linearLayout.addView(view);
             //linearLayout.setBackgroundColor(Color.parseColor("#64CBD8"));
@@ -309,11 +308,10 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (alertDialog!=null)
-                alertDialog.dismiss();
+                if (alertDialog != null) alertDialog.dismiss();
             }
         });
-        alertDialog=builder.show();
+        alertDialog = builder.show();
     }
 
     private void deleteFoodData(int pos) {
