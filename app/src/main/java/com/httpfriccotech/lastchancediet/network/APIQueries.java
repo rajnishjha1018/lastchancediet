@@ -66,16 +66,16 @@ public interface APIQueries {
 
     @POST("wp/v2/ExerciseAdd")
     Observable<JsonObject> doAddExercise(@Query("userId") String uid,
-                                        @Query("post_id") String post_id,
-                                        @Query("food_id") String exr_id,
-                                        @Query("title") String title,
-                                        @Query("is_etype") String is_type,
-                                        @Query("how_long") String howLong,
-                                        @Query("fat_points") String fatPoint,
-                                        @Query("user_how_many_set") String sets,
-                                        @Query("user_how_many_reps_set") String reps_sets,
-                                        @Query("user_how_many_weight_set") String weight_sets,
-                                        @Query("selectedDate") String selectedDate);
+                                         @Query("post_id") String post_id,
+                                         @Query("food_id") String exr_id,
+                                         @Query("title") String title,
+                                         @Query("is_etype") String is_type,
+                                         @Query("how_long") String howLong,
+                                         @Query("fat_points") String fatPoint,
+                                         @Query("user_how_many_set") String sets,
+                                         @Query("user_how_many_reps_set") String reps_sets,
+                                         @Query("user_how_many_weight_set") String weight_sets,
+                                         @Query("selectedDate") String selectedDate);
 
 
     @POST("wp/v2/getBlog")
