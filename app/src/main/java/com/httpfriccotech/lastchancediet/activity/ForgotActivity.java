@@ -1,8 +1,6 @@
 package com.httpfriccotech.lastchancediet.activity;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +8,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
-public class ForgotActivity extends AppCompatActivity {
+import java.util.regex.Pattern;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+public class ForgotActivity extends AppCompatActivity implements Observer<Object>{
     Context context;
     TextView textViewEmailid;
     @Override
@@ -33,35 +41,60 @@ public class ForgotActivity extends AppCompatActivity {
         findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (textViewEmailid.length() <= 0 ) {
+                if (!isValidEmailId(textViewEmailid.getText().toString())) {
                     Toast.makeText(ForgotActivity.this, "Enter a valid email address", Toast.LENGTH_SHORT).show();
                     return;
+                }if (textViewEmailid.getText().toString().isEmpty()){
+                    Toast.makeText(ForgotActivity.this, "Email address can't be Empty", Toast.LENGTH_SHORT).show();
+
                 }
                 sendEmail(textViewEmailid.getText().toString());
             }
         });
 
     }
+    private boolean isValidEmailId(String email){
+
+        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
+    }
+
     protected void sendEmail(String emailid) {
-       // Log.i("Send email", "");
-        String[] TO = {"rajnish1018@gmail.com"};
-        String[] CC = {""};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        APIClient.startQuery().resetPass(emailid, SharedPref.getUserId(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        //emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Forgot Password");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Your Password is: HelloPass");
+    }
 
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-           // Log.i("Finished sending email...", "");
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(ForgotActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onNext(Object o) {
+        if (o instanceof JsonObject){
+            JsonObject jsonObject=(JsonObject)o;
+            if(jsonObject.has("success")){
+                if (jsonObject.get("success").getAsBoolean()){
+                    if (jsonObject.has("message")){
+                        Toast.makeText(getBaseContext(),jsonObject.get("message").getAsString(),Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            }
         }
+    }
 
-}
+    @Override
+    public void onError(Throwable e) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

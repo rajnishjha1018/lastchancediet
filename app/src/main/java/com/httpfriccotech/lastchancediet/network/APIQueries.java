@@ -10,6 +10,7 @@ import com.httpfriccotech.lastchancediet.Food.FoodDetailResponseModel;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.ReadMore.BlogByIdResponseData;
 import com.httpfriccotech.lastchancediet.model.AdminDashBordModel;
+import com.httpfriccotech.lastchancediet.model.ContactusRes;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
@@ -100,4 +101,9 @@ public interface APIQueries {
     @FormUrlEncoded
     @POST("init_session")
     Observable<List<SelectFoodData>> doAddFood(@Field("food_type") String foodTYpe, @Field("protien") String protien, @HeaderMap Map<String, String> headerData);
+    @POST("wp/v2/SendContactUsEmail")
+    Observable<ContactusRes> setContactUs(@Query("email") String email, @Query("name") String name,
+                                          @Query("subject") String subject, @Query("message") String message);
+    @POST("wp/v2/resetPassword")
+    Observable<JsonObject> resetPass(@Query("email") String email, @Query("userId") String userId);
 }
