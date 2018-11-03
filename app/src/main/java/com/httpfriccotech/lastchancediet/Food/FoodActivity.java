@@ -143,12 +143,12 @@ public class FoodActivity extends AppCompatActivity
                 if (checkedId == R.id.rbTraining) {
                     isTraining = true;
                     Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
-                    SharedPref.setfoodType(context,"training");
+                    SharedPref.setfoodType(context,"2");
                     Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
                 } else {
                     isTraining = false;
                     Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
-                    SharedPref.setfoodType(context,"cardio");
+                    SharedPref.setfoodType(context,"1");
                     Toast.makeText(context, SharedPref.getfoodType(context), Toast.LENGTH_SHORT).show();
                 }
                 if (foodDetailResponseModel != null)
@@ -257,7 +257,7 @@ public class FoodActivity extends AppCompatActivity
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(this),"175000", "is_" + type.toLowerCase(), "1", foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(this),"175000", "is_" + type.toLowerCase(), SharedPref.getfoodType(this), foodData.fat, foodData.protein, foodData.carb, "FOOD-006", foodData.title, foodData.fiber, currentDate)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(FoodActivity.this);
