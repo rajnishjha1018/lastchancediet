@@ -68,6 +68,7 @@ public interface APIQueries {
     Observable<JsonObject> doAddExercise(@Query("userId") String uid,
                                          @Query("post_id") String post_id,
                                          @Query("food_id") String exr_id,
+                                         @Query("is_type_value") String is_type_value,
                                          @Query("title") String title,
                                          @Query("is_etype") String is_type,
                                          @Query("how_long") String howLong,
