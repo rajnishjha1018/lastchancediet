@@ -123,8 +123,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (editTextPassword.length() <= 0 || editTextUser.length() <= 0) {
-                    Toast.makeText(MainActivity.this, "input field", Toast.LENGTH_SHORT).show();
+                if (editTextUser.length() <= 0 ) {
+                    Toast.makeText(MainActivity.this, "User name should not blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (editTextPassword.length() <= 0 ) {
+                    Toast.makeText(MainActivity.this, "Password should not blank", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 loginPrefsEditor.putBoolean("saveLogin", true);
