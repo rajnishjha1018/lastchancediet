@@ -1,7 +1,5 @@
 package com.httpfriccotech.lastchancediet.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
+import com.httpfriccotech.lastchancediet.model.ContactusRes;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 
 import java.util.Objects;
@@ -174,6 +173,13 @@ public class ContactUs extends AppCompatActivity /*implements OnMapReadyCallback
             } else {
                 Toast.makeText(getBaseContext(), jsonObject.get("message").getAsString(), Toast.LENGTH_SHORT).show();
             }
+        }if (o instanceof ContactusRes){
+            ContactusRes contactusRes=(ContactusRes)o;
+            if (contactusRes.isSuccess()){
+                Toast.makeText(getBaseContext(),contactusRes.getMessage(),Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
         }
     }
 
@@ -233,13 +239,15 @@ public class ContactUs extends AppCompatActivity /*implements OnMapReadyCallback
                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
     }
     private void sendEmail(String email, String name, String subject, String message) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setType("text/plain");
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{this.email});
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, name + "\n" + message);
-        startActivity(Intent.createChooser(intent, "Send Email"));
+//        Intent intent = new Intent(Intent.ACTION_SENDTO);
+//        intent.setType("text/plain");
+//        intent.setData(Uri.parse("mailto:"));
+//        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{this.email});
+//        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+//        intent.putExtra(Intent.EXTRA_TEXT, name + "\n" + message);
+//        startActivity(Intent.createChooser(intent, "Send Email"));
+        APIClient.startQuery().setContactUs(email,name,subject,message).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+
     }
 //    @Override
 //    public void onSaveInstanceState(Bundle outState) {
