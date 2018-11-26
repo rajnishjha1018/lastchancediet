@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                     SharedPref.setPayStatus(this,payStatus);
-                    if (!payStatus.equalsIgnoreCase("Success")){
+                    if (!payStatus.equalsIgnoreCase("true")){
                         openSignup();
                         return;
                     }

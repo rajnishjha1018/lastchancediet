@@ -103,8 +103,8 @@ public interface APIQueries {
     @POST("init_session")
     Observable<List<SelectFoodData>> doAddFood(@Field("food_type") String foodTYpe, @Field("protien") String protien, @HeaderMap Map<String, String> headerData);
     @POST("wp/v2/SendContactUsEmail")
-    Observable<ContactusRes> setContactUs(@Query("email") String email, @Query("name") String name,
+    Observable<ContactusRes> setContactUs(@Query("userId") String userId,@Query("email") String email, @Query("name") String name,
                                           @Query("subject") String subject, @Query("message") String message);
     @POST("wp/v2/resetPassword")
-    Observable<JsonObject> resetPass(@Query("email") String email, @Query("userId") String userId);
+    Observable<JsonObject> resetPass(@Query("emailId") String email);
 }

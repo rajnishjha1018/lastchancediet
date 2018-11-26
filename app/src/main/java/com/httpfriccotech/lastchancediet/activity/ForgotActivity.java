@@ -64,7 +64,7 @@ public class ForgotActivity extends AppCompatActivity implements Observer<Object
     }
 
     protected void sendEmail(String emailid) {
-        APIClient.startQuery().resetPass(emailid, SharedPref.getUserId(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().resetPass(emailid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
     }
 

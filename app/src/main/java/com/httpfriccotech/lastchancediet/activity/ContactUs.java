@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.model.ContactusRes;
 import com.httpfriccotech.lastchancediet.network.APIClient;
+import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -246,7 +247,7 @@ public class ContactUs extends AppCompatActivity /*implements OnMapReadyCallback
 //        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 //        intent.putExtra(Intent.EXTRA_TEXT, name + "\n" + message);
 //        startActivity(Intent.createChooser(intent, "Send Email"));
-        APIClient.startQuery().setContactUs(email,name,subject,message).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().setContactUs(SharedPref.getUserId(this),email,name,subject,message).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
     }
 //    @Override
