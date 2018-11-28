@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/lcdbg"
-    android:scaleType="centerCrop">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
+    android:scaleType="centerCrop"
+    android:fillViewport="true">
+    <RelativeLayout android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:weightSum="1"
-        tools:context="com.example.rajnish.test444.MainActivity"
-        tools:ignore="HardcodedText">
-
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:id="@+id/header_container"
+            android:layout_alignParentTop="true">
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:layout_width="wrap_content"
@@ -34,14 +30,14 @@
                 android:textSize="24sp"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:minWidth="320dp"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
 
 
             <EditText
@@ -90,19 +86,5 @@
                 android:visibility="gone"/>
 
         </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/white"
-            android:minWidth="320dp"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
+    </RelativeLayout>
 </ScrollView>

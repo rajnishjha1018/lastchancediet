@@ -2,6 +2,7 @@ package com.httpfriccotech.lastchancediet.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -51,6 +52,15 @@ public class ForgotActivity extends AppCompatActivity implements Observer<Object
                 sendEmail(textViewEmailid.getText().toString());
                 message.setVisibility(View.VISIBLE);
                 message.setText("Password send to "+textViewEmailid.getText().toString()+".\n Please check your email.");
+                Runnable runnable=new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isFinishing()){
+                            finish();
+                        }
+                    }
+                };
+                new Handler().postDelayed(runnable,3000);
             }
         });
 
