@@ -102,6 +102,8 @@ public class AdminDashbordFragment extends BaseFragment implements  View.OnClick
 
     @Override
     public void onNext(Object o) {
+        if (!isVisible())
+            return;
         if (o instanceof AdminDashBordModel){
             AdminDashBordModel adminDashBordModel=(AdminDashBordModel)o;
             if (adminDashBordModel.isSuccess()){

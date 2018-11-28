@@ -73,6 +73,7 @@ public class YourProgramActivity extends AppCompatActivity implements Observer<O
                     programData.setPostId(jsonElements.get(i).getAsJsonObject().get("postId").getAsInt());
                     programData.setParmlink(jsonElements.get(i).getAsJsonObject().get("parmlink").getAsString());
                     programData.setActiveProgram(jsonElements.get(i).getAsJsonObject().get("isActiveProgram").getAsBoolean());
+                    programData.setIsAllowedProgram(jsonElements.get(i).getAsJsonObject().get("isAllowedProgram").getAsInt());
                     itemList.add(programData);
                 }
                 myAdapter = new ProgramListAdapter(this, itemList);

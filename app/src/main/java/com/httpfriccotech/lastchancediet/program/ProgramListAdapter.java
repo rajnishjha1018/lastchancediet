@@ -32,7 +32,7 @@ public class ProgramListAdapter extends RecyclerView.Adapter<ProgramListAdapter.
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(itemList.get(position).getTitle());
         holder.content.setText(itemList.get(position).getContent());
-        if (itemList.get(position).isActiveProgram()) {
+        if (itemList.get(position).getIsAllowedProgram()==1) {
             holder.relativeLayout.setVisibility(View.GONE);
             holder.viewMore.setEnabled(true);
 

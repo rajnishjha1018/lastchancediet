@@ -211,7 +211,7 @@ private void setTitle(String s){
 
         } else if (id == R.id.nav_LOGOUT) {
             SharedPref.setUserId(this,"");
-//            SharedPref.setToken(this,"");
+            SharedPref.setToken(this,"");
             SharedPref.setPassword(this,"");
             SharedPref.setUserName(this,"");
             reDirectToLogin();

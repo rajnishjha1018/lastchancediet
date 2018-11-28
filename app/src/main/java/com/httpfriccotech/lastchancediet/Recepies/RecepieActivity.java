@@ -177,7 +177,8 @@ public class RecepieActivity extends AppCompatActivity implements Observer<Objec
         if (size <= 0) {
             showMessage("No data found");
             recepieList.clear();
-            myAdapter.notifyDataSetChanged();
+            if (myAdapter!=null)
+                myAdapter.notifyDataSetChanged();
             return;
         }
         for (int i = 0; i < size; i++) {

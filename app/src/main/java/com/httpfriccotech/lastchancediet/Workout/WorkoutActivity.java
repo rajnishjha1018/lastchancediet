@@ -79,6 +79,7 @@ public class WorkoutActivity extends AppCompatActivity
         if (size <= 0) {
             showMessage("No data found");
             workoutList.clear();
+            if (myAdapter!=null)
             myAdapter.notifyDataSetChanged();
             return;
         }

@@ -82,6 +82,8 @@ public class PartnerDashBord extends BaseFragment implements  View.OnClickListen
 
     @Override
     public void onNext(Object o) {
+        if (!isVisible())
+            return;
         if (o instanceof AdminDashBordModel){
             AdminDashBordModel adminDashBordModel=(AdminDashBordModel)o;
             if (adminDashBordModel.isSuccess()){

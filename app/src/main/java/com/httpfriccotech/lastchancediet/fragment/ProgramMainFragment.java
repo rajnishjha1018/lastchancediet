@@ -77,6 +77,8 @@ public class ProgramMainFragment extends BaseFragment implements Observer<Object
 
     @Override
     public void onNext(Object data) {
+        if (!isVisible())
+            return;
         hideProgress();
         if (data != null && data instanceof JsonObject) {
             JsonObject jsonObject=(JsonObject)data;
@@ -89,6 +91,7 @@ public class ProgramMainFragment extends BaseFragment implements Observer<Object
                     programData.setPostId(jsonElements.get(i).getAsJsonObject().get("postId").getAsInt());
                     programData.setParmlink(jsonElements.get(i).getAsJsonObject().get("parmlink").getAsString());
                     programData.setActiveProgram(jsonElements.get(i).getAsJsonObject().get("isActiveProgram").getAsBoolean());
+                    programData.setIsAllowedProgram(jsonElements.get(i).getAsJsonObject().get("isAllowedProgram").getAsInt());
                     itemList.add(programData);
                 }
                 myAdapter = new ProgramListAdapter(getActivity(), itemList);
