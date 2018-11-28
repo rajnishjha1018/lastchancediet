@@ -168,6 +168,8 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
 
     @Override
     public void onNext(Object o) {
+        if (!isVisible())
+            return;
         if (o instanceof JsonObject) {
             JsonObject result=(JsonObject) o;
             JsonObject dailyObject = result.get("data").getAsJsonObject().get("DailyLimit").getAsJsonObject();

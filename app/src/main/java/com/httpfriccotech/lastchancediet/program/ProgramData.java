@@ -15,6 +15,16 @@ public class ProgramData implements Serializable {
     private int postId;
     @SerializedName("isActiveProgram")
     private boolean isActiveProgram;
+    @SerializedName("isAllowedProgram")
+    private int isAllowedProgram;
+
+    public int getIsAllowedProgram() {
+        return isAllowedProgram;
+    }
+
+    public void setIsAllowedProgram(int isAllowedProgram) {
+        this.isAllowedProgram = isAllowedProgram;
+    }
 
     public String getTitle() {
         return title;

@@ -104,6 +104,10 @@ public class BlogActivity extends AppCompatActivity
     @Override
     public void onNext(List<BlogData> data) {
         this.blogData = (ArrayList<BlogData>) data;
+        if (blogData!=null && blogData.size()<=0)
+            showMessage("No data found");
+        if (myAdapter==null)
+            return;
         myAdapter = new BlogAdapter(BlogActivity.this, this.blogData);
         RecyclerView recycle=((RecyclerView)findViewById(R.id.recycleview));
         recycle.setLayoutManager(new GridLayoutManager(this,2));

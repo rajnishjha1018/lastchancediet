@@ -196,6 +196,8 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
 
     @Override
     public void onNext(Object response) {
+        if (!isVisible())
+            return;
         if (response instanceof ExcerciseResponseModel) {
             this.excerciseResponseModel = (ExcerciseResponseModel) response;
             if (excerciseResponseModel.getFoodTypeVal() != null) {
