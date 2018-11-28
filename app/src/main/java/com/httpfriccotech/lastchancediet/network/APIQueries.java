@@ -104,7 +104,8 @@ public interface APIQueries {
     Observable<List<SelectFoodData>> doAddFood(@Field("food_type") String foodTYpe, @Field("protien") String protien, @HeaderMap Map<String, String> headerData);
     @POST("wp-json/wp/v2/SendContactUsEmail")
     Observable<ContactusRes> setContactUs(@Query("userId") String userId,@Query("email") String email, @Query("name") String name,
-                                          @Query("subject") String subject, @Query("message") String message);
-    @POST("forgot-password")
-    Observable<JsonObject> resetPass(@Query("vetch_user_login_lost") String email,@Query("action") String reset);
+                                                                        @Query("subject") String subject, @Query("message") String message);
+    @FormUrlEncoded
+    @POST("forgot-password?")
+    Observable<JsonObject> resetPass(@Field("vetch_user_login_lost") String email,@Field("action") String reset);
 }
