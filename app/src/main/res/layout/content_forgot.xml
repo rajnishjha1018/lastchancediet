@@ -17,40 +17,38 @@
         tools:context="com.example.rajnish.test444.MainActivity"
         tools:ignore="HardcodedText">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.httpfriccotech.lastchancediet.ui.DietTextView
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="67.7dp"
-                android:layout_marginRight="67.7dp"
                 android:layout_marginTop="34dp"
                 android:gravity="center_horizontal"
                 android:text="Last Chance Diet"
                 android:textAlignment="center"
                 android:textColor="#154983"
-                android:textSize="24sp" />
-        </LinearLayout>
+                android:textSize="24sp"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="0.48"
+            android:minWidth="320dp"
             android:background="@color/white"
-            android:minWidth="325dp"
             android:orientation="vertical">
 
 
             <EditText
                 android:id="@+id/et_email"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="59.5dp"
+                android:minWidth="320dp"
                 android:background="@drawable/border_edittext"
                 android:drawableLeft="@drawable/email"
                 android:drawablePadding="21dp"
@@ -58,31 +56,50 @@
                 android:paddingLeft="18dp"
                 android:textColor="@color/grey"
                 android:textColorHint="@color/grey"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_centerHorizontal="true"/>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="#154983"
-            android:minWidth="325dp"
-            android:orientation="vertical"
-            android:weightSum="1">
 
             <Button
                 android:id="@+id/buttonSubmit"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_edittext"
-                android:drawablePadding="21dp"
+                android:background="@color/colorPrimary"
+                android:layout_below="@+id/et_email"
                 android:text="Send Password"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
+                android:minWidth="320dp"
+                android:padding="7dp"
                 android:textColorHint="@color/grey"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_below="@+id/buttonSubmit"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:id="@+id/message"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:padding="12dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:minWidth="320dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
         </LinearLayout>
 
 

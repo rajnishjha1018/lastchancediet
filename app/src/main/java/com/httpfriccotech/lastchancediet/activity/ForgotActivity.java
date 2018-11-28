@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
-import com.httpfriccotech.lastchancediet.util.SharedPref;
 
 import java.util.regex.Pattern;
 
@@ -21,8 +20,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ForgotActivity extends AppCompatActivity implements Observer<Object>{
-    Context context;
-    TextView textViewEmailid;
+    private Context context;
+    private TextView textViewEmailid;
+    private TextView message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +35,9 @@ public class ForgotActivity extends AppCompatActivity implements Observer<Object
 
     }
     private void initView() {
-
+        message=(TextView)findViewById(R.id.message);
         textViewEmailid = (TextView) findViewById(R.id.et_email);
-
+        message.setVisibility(View.GONE);
         findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +49,8 @@ public class ForgotActivity extends AppCompatActivity implements Observer<Object
 
                 }
                 sendEmail(textViewEmailid.getText().toString());
+                message.setVisibility(View.VISIBLE);
+                message.setText("Password send to "+textViewEmailid.getText().toString()+".\n Please check your email.");
             }
         });
 
@@ -64,7 +66,7 @@ public class ForgotActivity extends AppCompatActivity implements Observer<Object
     }
 
     protected void sendEmail(String emailid) {
-        APIClient.startQuery().resetPass(emailid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().resetPass(emailid,"reset").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
 
     }
 

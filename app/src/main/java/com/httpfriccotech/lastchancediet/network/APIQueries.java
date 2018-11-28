@@ -31,41 +31,41 @@ import retrofit2.http.Query;
  */
 
 public interface APIQueries {
-    @POST("jwt-auth/v1/token")
+    @POST("wp-json/jwt-auth/v1/token")
     Observable<LoginResponseModel> goLogin(@Body LoginModel jsonObject);
-    @POST("wp/v2/authenticate")
+    @POST("wp-json/wp/v2/authenticate")
     Observable<JsonObject> doLoginCallBack(@Query("user") String username, @Query("pass") String pass,@Query("CurrentDate") String currentDate);
-    @POST("wp/v2/UserFoodDetail")
+    @POST("wp-json/wp/v2/UserFoodDetail")
     Observable<JsonObject> doGetDashBoard(@Body GenericRequestModel genericRequestModel);
-    @POST("wp/v2/FoodList")
+    @POST("wp-json/wp/v2/FoodList")
     Observable<List<SelectFoodData>> doGetRecipies(@Query("search") String query);
-    @POST("wp/v2/getRecipes")
+    @POST("wp-json/wp/v2/getRecipes")
     Observable<JsonArray> doGetRecipieList();
-    @POST("wp/v2/getWorkouts")
+    @POST("wp-json/wp/v2/getWorkouts")
     Observable<JsonArray> doGetWorkoutList();
 
-    @POST("wp/v2/DeleteFoodItem")
+    @POST("wp-json/wp/v2/DeleteFoodItem")
     Observable<JsonObject> doDeleteFoodItem(@Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
-    @POST("wp/v2/DeleteExercisItem")
+    @POST("wp-json/wp/v2/DeleteExercisItem")
     Observable<JsonObject> doDeleteExercisItem(@Query("postId") String postId, @Query("userId") String userId, @Query("CurrentDate") String selectedDate, @Query("time") long time);
 
-    @POST("wp/v2/ExercisrList")
+    @POST("wp-json/wp/v2/ExercisrList")
     Observable<ExcerciseMainResponseModel> doGetExercisrSearchList(@Query("postName") String postName,@Query("time") long time);
 
-    @POST("wp/v2/getBlogList")
+    @POST("wp-json/wp/v2/getBlogList")
     Observable<List<BlogData>> doGetBlogs();
 
-    @POST("wp/v2/ExerciseDetail")
+    @POST("wp-json/wp/v2/ExerciseDetail")
     Observable<ExcerciseResponseModel> doGetExcercises(@Query("userId") String uid, @Query("CurrentDate") String date, @Query("time") long time);
 
-    @POST("wp/v2/FoodDetailBycategory")
+    @POST("wp-json/wp/v2/FoodDetailBycategory")
     Observable<FoodDetailResponseModel> doGetFoodDetails(@Query("userId") String uid, @Query("CurrentDate") String date, @Query("time") long time);
 
-    @POST("wp/v2/FoodDetailAdd")
+    @POST("wp-json/wp/v2/FoodDetailAdd")
     Observable<AddFoodDataResponse> doAddFoodData(@Query("userId") String uid, @Query("post_id") String post_id, @Query("is_type") String is_type, @Query("is_type_value") String is_type_value, @Query("fat_points") String fat_points, @Query("protein_points") String protein_points, @Query("carb_points") String carb_points, @Query("food_id") String food_id, @Query("title") String title, @Query("fiber") String fiber, @Query("selectedDate") String selectedDate);
 
-    @POST("wp/v2/ExerciseAdd")
+    @POST("wp-json/wp/v2/ExerciseAdd")
     Observable<JsonObject> doAddExercise(@Query("userId") String uid,
                                          @Query("post_id") String post_id,
                                          @Query("food_id") String exr_id,
@@ -80,31 +80,31 @@ public interface APIQueries {
                                          @Query("selectedDate") String selectedDate);
 
 
-    @POST("wp/v2/getBlog")
+    @POST("wp-json/wp/v2/getBlog")
     Observable<List<BlogByIdResponseData>> doGetBlogById(@Query("postId") String blogId);
-    @POST("wp/v2/getWorkout")
+    @POST("wp-json/wp/v2/getWorkout")
     Observable<List<BlogByIdResponseData>> doGetWorkoutById(@Query("postId") String blogId);
-    @POST("wp/v2/getRecipe")
+    @POST("wp-json/wp/v2/getRecipe")
     Observable<List<BlogByIdResponseData>> doGetRecipeById(@Query("postId") String blogId);
-    @POST("wp/v2/ProgramList")
+    @POST("wp-json/wp/v2/ProgramList")
     Observable<JsonObject> getProgramList(@Query("userId") String userId);
-    @POST("wp/v2/ProgramListById")
+    @POST("wp-json/wp/v2/ProgramListById")
     Observable<JsonArray> getProgramDetail(@Query("postId") String userId);
-    @POST("wp/v2/UserProfile")
+    @POST("wp-json/wp/v2/UserProfile")
     Observable<JsonObject> getUserProfileDetail(@Query("userId") String userId);
-    @POST("wp/v2/ContactUs")
+    @POST("wp-json/wp/v2/ContactUs")
     Observable<JsonObject> getContactUs();
-    @POST("wp/v2/AdminDashboard")
+    @POST("wp-json/wp/v2/AdminDashboard")
     Observable<AdminDashBordModel> getAdminDashBord(@Query("userId") String userId);
-    @POST("wp/v2/PartnerDashboard")
+    @POST("wp-json/wp/v2/PartnerDashboard")
     Observable<AdminDashBordModel> getPartnerDashBord(@Query("userId") String userId);
 
     @FormUrlEncoded
     @POST("init_session")
     Observable<List<SelectFoodData>> doAddFood(@Field("food_type") String foodTYpe, @Field("protien") String protien, @HeaderMap Map<String, String> headerData);
-    @POST("wp/v2/SendContactUsEmail")
+    @POST("wp-json/wp/v2/SendContactUsEmail")
     Observable<ContactusRes> setContactUs(@Query("userId") String userId,@Query("email") String email, @Query("name") String name,
                                           @Query("subject") String subject, @Query("message") String message);
-    @POST("wp/v2/resetPassword")
-    Observable<JsonObject> resetPass(@Query("emailId") String email);
+    @POST("forgot-password")
+    Observable<JsonObject> resetPass(@Query("vetch_user_login_lost") String email,@Query("action") String reset);
 }
