@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.httpfriccotech.lastchancediet.Exercise.ExerciseAdapter;
 import com.httpfriccotech.lastchancediet.Exercise.SelectExerciseActivity;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.base.BaseFragment;
+import com.httpfriccotech.lastchancediet.model.UpdateRadio;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -51,7 +53,6 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
     TextView dDate;
 
     String UserId, UserName;
-    String currentDate;
     Bundle bundle;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private final int CARDIO_REQ = 1001;
@@ -87,15 +88,20 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
         UserId = SharedPref.getUserId(getActivity());
         UserName = SharedPref.getUserName(getActivity());
         progressLayout = (RelativeLayout) rootView.findViewById(R.id.progressLayout);
-        final Calendar cd = Calendar.getInstance();
-        mYear = cd.get(Calendar.YEAR);
-        mMonth = cd.get(Calendar.MONTH);
-        mMonth = mMonth + 1;
-        mDay = cd.get(Calendar.DAY_OF_MONTH);
-        currentDate = mYear + "-" + mMonth + "-" + mDay;
+
+
+        if (TextUtils.isEmpty(SharedPref.getSelectedDate(getActivity()))){
+            final Calendar cd = Calendar.getInstance();
+            mYear = cd.get(Calendar.YEAR);
+            mMonth = cd.get(Calendar.MONTH);
+            mMonth = mMonth + 1;
+            mDay = cd.get(Calendar.DAY_OF_MONTH);
+            String currentDate = mYear + "-" + mMonth + "-" + mDay;
+            SharedPref.setSelectedDate(getContext(),currentDate);
+        }
         View content = getActivity().findViewById(android.R.id.content);
         dDate = (TextView) content.findViewById(R.id.selectedDate);
-        dDate.setText(currentDate);
+        dDate.setText(SharedPref.getSelectedDate(getContext()));
 
         content.findViewById(R.id.selectedDate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,9 +117,10 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         int nmonth = monthOfYear + 1;
-                        currentDate = year + "-" + nmonth + "-" + dayOfMonth;
+                        String currentDate = year + "-" + nmonth + "-" + dayOfMonth;
+                        SharedPref.setSelectedDate(getContext(),currentDate);
+                        dDate.setText(SharedPref.getSelectedDate(getContext()));
                         getData();
-                        dDate.setText(nmonth + "-" + dayOfMonth + "-" + year);
                     }
                 }, mYear, mMonth, mDay);
                 dpd.show();
@@ -135,11 +142,18 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbTraining) {
+
+                    if (TextUtils.isEmpty(SharedPref.getfoodType(getContext()))
+                            ||SharedPref.getfoodType(getContext()).equalsIgnoreCase("1") )
+                    setRadio("2");
                     SharedPref.setfoodType(context, "2");
                 } else {
+
+                    if (TextUtils.isEmpty(SharedPref.getfoodType(getContext()))
+                            ||SharedPref.getfoodType(getContext()).equalsIgnoreCase("2") )
+                    setRadio("1");
                     SharedPref.setfoodType(context, "1");
                 }
-//                getData();
             }
         });
         setRadioButton();//oncreate
@@ -158,7 +172,11 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
     }
 
     private void getData() {
-        APIClient.startQuery().doGetExcercises(SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(ExcerciseMainFragment.this);
+        APIClient.startQuery().doGetExcercises(SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getContext()), System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(ExcerciseMainFragment.this);
+        showProgress();
+    }
+    private void setRadio(String s) {
+        APIClient.startQuery().doGetRadioCheck(SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getContext()), System.currentTimeMillis(),s).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(ExcerciseMainFragment.this);
         showProgress();
     }
 
@@ -214,6 +232,11 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
             }
             getData();
             showProgress();
+        }else if (response instanceof UpdateRadio){
+            UpdateRadio updateRadio=(UpdateRadio) response;
+                if (getActivity()!=null)
+                    SharedPref.setfoodType(getActivity(),updateRadio.getData());
+            setRadioButton();
         }
     }
 
@@ -258,7 +281,7 @@ public class ExcerciseMainFragment extends BaseFragment implements Observer<Obje
     }
 
     private void deleteExcercise(String exerciseID) {
-        APIClient.startQuery().doDeleteExercisItem(exerciseID, SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
+        APIClient.startQuery().doDeleteExercisItem(exerciseID, SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getContext()), System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(this);
         showProgress();
     }
 

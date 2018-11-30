@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
     private Intent intent;
     Context context;
     Bundle bundle;
-    String UserId, UserName, profileImage, currentDate;
+    String UserId, UserName, profileImage;
     HorizontalBarChart mChart;
     ProgressDialog progressDialog;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -73,8 +74,10 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
         mMonth = cd.get(Calendar.MONTH);
         mMonth = mMonth + 1;
         mDay = cd.get(Calendar.DAY_OF_MONTH);
-        currentDate = mYear + "-" + mMonth + "-" + mDay;
-
+        String currentDate = mYear + "-" + mMonth + "-" + mDay;
+        if (TextUtils.isEmpty(SharedPref.getSelectedDate(getActivity()))){
+            SharedPref.setSelectedDate(getActivity(),currentDate);
+        }
         TextView FullName = (TextView) rootView.findViewById(R.id.UserName);
         FullName.setText("Good Job, " + this.UserName + "!");
         getData();
@@ -82,7 +85,7 @@ public class UserDashbordFragment extends BaseFragment implements Observer<Objec
     private void getData() {
 
         progressDialog = ProgressDialog.show(getActivity(), "Loading...", "please wait...", false, false);
-        getDashData(UserId, currentDate, System.currentTimeMillis() + "");
+        getDashData(UserId, SharedPref.getSelectedDate(getActivity()), System.currentTimeMillis() + "");
     }
 
     private void getDashData(String userId, String currentDate, String s) {

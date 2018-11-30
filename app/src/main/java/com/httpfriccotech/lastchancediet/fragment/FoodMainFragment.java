@@ -11,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.httpfriccotech.lastchancediet.Food.SelectFoodActivity;
 import com.httpfriccotech.lastchancediet.Food.SelectFoodData;
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.base.BaseFragment;
+import com.httpfriccotech.lastchancediet.model.UpdateRadio;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
@@ -62,7 +64,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     ArrayList<FoodData> myDatas;
     ArrayList ClassNames = new ArrayList();
     String UserId, UserName;
-    String profileId, role, currentDate, profileImage, ClassName;
+    String profileId, role, profileImage, ClassName;
     Bundle bundle;
     private int mYear, mMonth, mDay, mHour, mMinute;
     FoodDetailResponseModel foodDetailResponseModel;
@@ -93,12 +95,14 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         mMonth = cd.get(Calendar.MONTH);
         mMonth = mMonth + 1;
         mDay = cd.get(Calendar.DAY_OF_MONTH);
-        currentDate = mYear + "-" + mMonth + "-" + mDay;
-
+        String currentDate = mYear + "-" + mMonth + "-" + mDay;
+        if (TextUtils.isEmpty(SharedPref.getSelectedDate(getActivity()))){
+            SharedPref.setSelectedDate(getActivity(),currentDate);
+        }
         NavigationView navigationView = (NavigationView) rootView.findViewById(R.id.nav_view);
         View content = getActivity().findViewById(android.R.id.content);
         dDate = (TextView) content.findViewById(R.id.selectedDate);
-        dDate.setText(currentDate);
+        dDate.setText(SharedPref.getSelectedDate(getActivity()));
 
         content.findViewById(R.id.selectedDate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +118,10 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         int nmonth = monthOfYear + 1;
-                        currentDate = year + "-" + nmonth + "-" + dayOfMonth;
+                        String currentDate1 = year + "-" + nmonth + "-" + dayOfMonth;
+                        SharedPref.setSelectedDate(getActivity(),currentDate1);
                         getData();//date select
-                        dDate.setText(nmonth + "-" + dayOfMonth + "-" + year);
+                        dDate.setText(SharedPref.getSelectedDate(getActivity()));
                     }
                 }, mYear, mMonth, mDay);
                 dpd.show();
@@ -139,8 +144,16 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rbTraining) {
+
+                    if (TextUtils.isEmpty(SharedPref.getfoodType(getContext()))
+                            ||SharedPref.getfoodType(getContext()).equalsIgnoreCase("1") )
+                        setRadio("2");
                     SharedPref.setfoodType(context, "2");
                 } else {
+
+                    if (TextUtils.isEmpty(SharedPref.getfoodType(getContext()))
+                            ||SharedPref.getfoodType(getContext()).equalsIgnoreCase("2") )
+                        setRadio("1");
                     SharedPref.setfoodType(context, "1");
                 }
                 if (foodDetailResponseModel != null)
@@ -162,7 +175,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     }
 
     private void getData() {
-        APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
+        APIClient.startQuery().doGetFoodDetails(SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getActivity()), System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
     }
 
     private void showMessage(String s) {
@@ -183,7 +196,9 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(myAdapter);
     }
-
+    private void setRadio(String s) {
+        APIClient.startQuery().doGetRadioCheck(SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getContext()), System.currentTimeMillis(),s).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -192,7 +207,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
                 String type = data.getStringExtra("foodType");
                 SelectFoodData foodData = (SelectFoodData) data.getSerializableExtra("data");
 
-                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), SharedPref.getfoodType(getActivity()), foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
+                APIClient.startQuery().doAddFoodData(SharedPref.getUserId(getActivity()), "175000", "is_" + type.toLowerCase(), SharedPref.getfoodType(getActivity()), foodData.getFat(), foodData.getProtein(), foodData.getCarb(), "FOOD-006", foodData.getTitle(), foodData.getFiber(), SharedPref.getSelectedDate(getActivity())).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
             }
         }
     }
@@ -214,6 +229,11 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
             } else if (data instanceof FoodDetailResponseModel) {
                 foodDetailResponseModel = (FoodDetailResponseModel) data;
                 setUpData((FoodDetailResponseModel) data);
+            }else if (data instanceof UpdateRadio){
+                UpdateRadio updateRadio=(UpdateRadio) data;
+                if (getActivity()!=null)
+                    SharedPref.setfoodType(getActivity(),updateRadio.getData());
+                setRadioButton();
             } else {
                 getData();
                 if (data instanceof JsonObject) {
@@ -315,7 +335,7 @@ public class FoodMainFragment extends BaseFragment implements Observer<Object>, 
     }
 
     private void deleteFoodData(int pos) {
-        APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId, SharedPref.getUserId(getActivity()), currentDate, System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
+        APIClient.startQuery().doDeleteFoodItem(myDatas.get(pos).PostId, SharedPref.getUserId(getActivity()), SharedPref.getSelectedDate(getActivity()), System.currentTimeMillis()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(FoodMainFragment.this);
     }
 
 }

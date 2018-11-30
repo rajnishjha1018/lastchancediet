@@ -18,8 +18,6 @@ import com.httpfriccotech.lastchancediet.global.GlobalManage;
 import com.httpfriccotech.lastchancediet.network.APIClient;
 import com.httpfriccotech.lastchancediet.util.SharedPref;
 
-import java.util.Calendar;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -39,7 +37,6 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
     private int mYear;
     private int mMonth;
     private int mDay;
-    private String currentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +47,12 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
         setContentView(R.layout.activity_select_exercise);
         UserId = GlobalManage.getInstance().getUserId();
         UserName = GlobalManage.getInstance().getUserName();
-        final Calendar cd = Calendar.getInstance();
-        mYear = cd.get(Calendar.YEAR);
-        mMonth = cd.get(Calendar.MONTH);
-        mMonth = mMonth + 1;
-        mDay = cd.get(Calendar.DAY_OF_MONTH);
-        currentDate = mYear + "-" + mMonth + "-" + mDay;
-
+//        final Calendar cd = Calendar.getInstance();
+//        mYear = cd.get(Calendar.YEAR);
+//        mMonth = cd.get(Calendar.MONTH);
+//        mMonth = mMonth + 1;
+//        mDay = cd.get(Calendar.DAY_OF_MONTH);
+//        currentDate = mYear + "-" + mMonth + "-" + mDay;
         recyclerView = (RecyclerView) findViewById(R.id.search_recycle);
         progressLayout = (RelativeLayout) findViewById(R.id.progressLayout);
         if (getSupportActionBar() != null) {
@@ -86,7 +82,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                 AddExerciseFragmentDialog addExerciseFragmentDialog = null;
                 if (type.equalsIgnoreCase("cardio")) {
-                    addExerciseFragmentDialog = AddExerciseFragmentDialog.newInstance("c", "Add New Calories Exercise");
+                    addExerciseFragmentDialog = AddExerciseFragmentDialog.newInstance("c", "Add New Cardio Exercise");
                 } else if (type.equalsIgnoreCase("strength")) {
                     addExerciseFragmentDialog = AddExerciseFragmentDialog.newInstance("s", "Add New Strength Exercise");
                 } else {
@@ -190,7 +186,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
     }
 
     private void addExercise1(SelectExerciseData excercise, String type) {
-        APIClient.startQuery().doAddExercise(SharedPref.getUserId(this),System.currentTimeMillis()+"", excercise.getExerciseID(), SharedPref.getfoodType(this), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
+        APIClient.startQuery().doAddExercise(SharedPref.getUserId(this),System.currentTimeMillis()+"", excercise.getExerciseID(), SharedPref.getfoodType(this), excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), SharedPref.getSelectedDate(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
 
     }
 
@@ -204,6 +200,6 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
 
     @Override
     public void addExercise(SelectExerciseData excercise, String type) {
-        APIClient.startQuery().doAddExercise(SharedPref.getUserId(this), System.currentTimeMillis()+"", excercise.getExerciseID(), SharedPref.getfoodType(this),excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
+        APIClient.startQuery().doAddExercise(SharedPref.getUserId(this), System.currentTimeMillis()+"", excercise.getExerciseID(), SharedPref.getfoodType(this),excercise.getTitle(), type, excercise.getHowlong(), excercise.getCalories(), excercise.getStrength_training_set(), excercise.getStrength_training_reps_set(), excercise.getStrength_training_weight_set(), SharedPref.getSelectedDate(this)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(SelectExerciseActivity.this);
     }
 }

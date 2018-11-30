@@ -46,7 +46,8 @@
             android:gravity="center"
             android:hint="Sets"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:inputType="number"/>
 
         <EditText
             android:id="@+id/et_s_reps"
@@ -57,7 +58,8 @@
             android:gravity="center"
             android:hint="Reps/Sets"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:inputType="number"/>
 
         <EditText
             android:id="@+id/et_s_weight"
@@ -68,7 +70,8 @@
             android:gravity="center"
             android:hint="Weight"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:inputType="number"/>
 
     </LinearLayout>
 
