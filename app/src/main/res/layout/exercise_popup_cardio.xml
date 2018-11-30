@@ -46,7 +46,8 @@
             android:gravity="center"
             android:hint="Minutes"
             android:textColor="#000"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:inputType="number"/>
     </LinearLayout>
 
     <Button

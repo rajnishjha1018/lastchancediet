@@ -29,7 +29,8 @@
             android:layout_weight="1"
             android:text="Minutes"
             android:textSize="14sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:inputType="number"/>
 
     </LinearLayout>
     <LinearLayout

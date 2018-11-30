@@ -23,20 +23,36 @@ public class SharedPref {
         String password = "password";
         String userType = "setUserType";
         String payStatus = "payStatus";
-        String foodType ="foodType";
+        String foodType = "foodType";
+        String selectedDate = "selectedDate";
 
     }
+
+    public static String getSelectedDate(Context context) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        return preferences.getString(PREF_KEYS.selectedDate, "");
+    }
+
+    public static void setSelectedDate(Context context, String str) {
+        final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(PREF_KEYS.selectedDate, str);
+        editor.apply();
+    }
+
     public static String getfoodType(Context context) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         String referral = preferences.getString(PREF_KEYS.foodType, "");
         return referral;
     }
-    public static void setfoodType(Context context, String str){
+
+    public static void setfoodType(Context context, String str) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(PREF_KEYS.foodType, str);
         editor.commit();
     }
+
     public static String getPayStatus(Context context) {
         final SharedPreferences preferences = context.getSharedPreferences(PREF_USER_INFO, Context.MODE_PRIVATE);
         String referral = preferences.getString(PREF_KEYS.payStatus, "");

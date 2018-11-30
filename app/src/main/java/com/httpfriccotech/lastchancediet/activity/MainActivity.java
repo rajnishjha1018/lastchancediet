@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 loginPrefsEditor.putString("username", editTextUser.getText().toString());
                 loginPrefsEditor.putString("password", editTextPassword.getText().toString());
                 loginPrefsEditor.commit();
+                SharedPref.setToken(MainActivity.this,"");
                 login(editTextUser.getText().toString(), editTextPassword.getText().toString());
             }
         });
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                     SharedPref.setPayStatus(this,payStatus);
-                    if (!payStatus.equalsIgnoreCase("true")){
+                    if (!payStatus.equalsIgnoreCase("Success")){
                         openSignup();
                         return;
                     }

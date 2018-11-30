@@ -14,6 +14,7 @@ import com.httpfriccotech.lastchancediet.model.ContactusRes;
 import com.httpfriccotech.lastchancediet.model.GenericRequestModel;
 import com.httpfriccotech.lastchancediet.model.LoginModel;
 import com.httpfriccotech.lastchancediet.model.LoginResponseModel;
+import com.httpfriccotech.lastchancediet.model.UpdateRadio;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,9 @@ import retrofit2.http.Query;
  */
 
 public interface APIQueries {
+    @POST("wp-json/wp/v2/UpdateRadioTypeVal")
+    Observable<UpdateRadio> doGetRadioCheck(@Query("userId") String uid, @Query("selectedDate") String date, @Query("time") long time, @Query("is_type_value") String is_type_value);
+
     @POST("wp-json/jwt-auth/v1/token")
     Observable<LoginResponseModel> goLogin(@Body LoginModel jsonObject);
     @POST("wp-json/wp/v2/authenticate")
