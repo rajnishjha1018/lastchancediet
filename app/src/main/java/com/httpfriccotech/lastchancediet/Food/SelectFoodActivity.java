@@ -15,7 +15,6 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.R;
 import com.httpfriccotech.lastchancediet.network.APIClient;
@@ -80,6 +79,7 @@ public class SelectFoodActivity extends AppCompatActivity implements Observer<Li
                 AddFoodPopupFragment editNameDialog = new AddFoodPopupFragment();
                 editNameDialog.setArguments(bundle);
                 editNameDialog.show(manager, "fragment_edit_name");
+                editNameDialog.setCancelable(false);
                 //close the popup window on button click
 
             }

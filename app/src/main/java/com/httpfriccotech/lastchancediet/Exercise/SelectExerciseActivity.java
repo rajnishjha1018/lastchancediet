@@ -90,6 +90,7 @@ public class SelectExerciseActivity extends AppCompatActivity implements Observe
                 }
                 addExerciseFragmentDialog.addExercise(SelectExerciseActivity.this);
                 addExerciseFragmentDialog.show(fm, "");
+                addExerciseFragmentDialog.setCancelable(false);
 
             }
         });
