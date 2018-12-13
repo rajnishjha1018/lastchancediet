@@ -39,7 +39,13 @@ public class AddExerciseFragmentDialog extends DialogFragment {
             ((TextView)rootView.findViewById(R.id.title)).setText(title);
 
         if (type!=null&& type.equalsIgnoreCase("c")){
-            ((Button)rootView.findViewById(R.id.btn_add_c)).setOnClickListener(new View.OnClickListener() {
+            ((Button)rootView.findViewById(R.id.btn_add_c_cancel)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                }
+            });
+            (rootView.findViewById(R.id.btn_add_c)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SelectExerciseData selectExerciseData=new SelectExerciseData();
@@ -53,6 +59,7 @@ public class AddExerciseFragmentDialog extends DialogFragment {
             });
         }
         else if (type!=null&& type.equalsIgnoreCase("s")){
+
             ((Button)rootView.findViewById(R.id.btn_add_s)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,6 +74,12 @@ public class AddExerciseFragmentDialog extends DialogFragment {
                         addExerciseListener.addExercise(selectExerciseData,"strength_training");
                 }
             });
+                ((Button)rootView.findViewById(R.id.btn_add_s_cancel)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dismiss();
+                    }
+                });
         }
         return rootView;
     }

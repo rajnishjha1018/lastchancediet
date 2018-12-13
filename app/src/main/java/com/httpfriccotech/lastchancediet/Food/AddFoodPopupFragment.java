@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.httpfriccotech.lastchancediet.R;
@@ -31,6 +29,12 @@ public class AddFoodPopupFragment extends DialogFragment {
         parentView = inflater.inflate(R.layout.activity_select_food, container, false);
         Bundle bundle = this.getArguments();
          fTypeValue = bundle.getString("fType");
+        rootView.findViewById(R.id.closePopupBtn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         rootView.findViewById(R.id.closePopupBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
